@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "107188871771",
+    "firebase_url": "https://pay-as-you-drive.firebaseio.com",
+    "project_id": "pay-as-you-drive",
+    "storage_bucket": "pay-as-you-drive.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:107188871771:android:4689a5ee8552d533c7157e",
+        "android_client_info": {
+          "package_name": "com.rhyderQuinlan.payasyoudrive"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "107188871771-qn48hegne2e8bk6q3lusd280i2rhi0u6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOUavWBrj3JZCKS-1iIHDCWpLxk9U6u5E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "107188871771-qn48hegne2e8bk6q3lusd280i2rhi0u6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

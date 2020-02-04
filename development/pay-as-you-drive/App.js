@@ -4,15 +4,16 @@ import {
   View,
 } from 'react-native';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
+import {createStackNavigator} from 'react-navigation-stack';
+import { createAppContainer } from 'react-navigation';
+import { Icon } from 'react-native-elements';
 
 import HomeScreen from './src/screens/HomeScreen';
 import TrackJourney from './src/screens/TrackJourney';
 import MakeClaim from './src/screens/MakeClaim';
+import LoginScreen from './src/screens/LoginScreen';
 
-import { createAppContainer } from 'react-navigation';
-import { Icon } from 'react-native-elements'
-
-export const BottomTab = createMaterialBottomTabNavigator(
+const BottomTab = createMaterialBottomTabNavigator(
   {
     Home: { 
       screen: HomeScreen,
@@ -71,8 +72,27 @@ export const BottomTab = createMaterialBottomTabNavigator(
   }
 );
 
-const styles = StyleSheet.create({
-  
-});
+const MainNavigator = createStackNavigator(
+  {
+    LoginScreen: {
+      screen: LoginScreen,
+      navigationOptions: {
+        title: 'Login Screen',
+        headerShown: false
+      }
+    },
+    BottomTab: {
+      screen: BottomTab,
+      navigationOptions: {
+        headerShown: false
+      }
+    }
+  },
+  {
+    initialRouteName: 'LoginScreen'
+  }
+)
 
-export default createAppContainer(BottomTab);
+const App = createAppContainer(MainNavigator);
+
+export default App;

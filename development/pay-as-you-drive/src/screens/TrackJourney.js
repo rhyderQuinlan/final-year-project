@@ -7,17 +7,15 @@ import {
     Dimensions,
     PermissionsAndroid
 } from 'react-native';
+import haversine from 'haversine';
+import pick from 'lodash/pick';
 import Toast from 'react-native-simple-toast';
+import firebase from 'firebase';
 import { Icon } from 'react-native-elements';
 import { CountDown } from 'react-native-countdown-component';
 import { Stopwatch } from 'react-native-stopwatch-timer';
 
-import haversine from 'haversine';
-import pick from 'lodash/pick';
-
 const { width, height } = Dimensions.get('window')
-
-const timer = require('react-native-timer');
 
 class TrackJourney extends Component {
     constructor(props) {
@@ -31,6 +29,7 @@ class TrackJourney extends Component {
             showStopwatch: false,
 
             distanceTravelled: 0,
+            speed: 0,
             prevLatLng: {},
 
             score: 90,
@@ -48,6 +47,10 @@ class TrackJourney extends Component {
 
     endJourney() {
         this.setState({running: false, stopwatchStart: false, stopwatchReset: true});
+        const time = this.currentTime;
+        const distance = this.state.distanceTravelled;
+        const cost = this.calcCost(time, distance);
+        this.journeyCreate(distance, time, cost);
     }
 
     //3 2 1 countdown section
@@ -76,15 +79,18 @@ class TrackJourney extends Component {
         )
         this.watchID = navigator.geolocation.watchPosition(
             (position) => {
+                console.log(JSON.stringify(position))
                 const { distanceTravelled } = this.state
                 const newLatLngs = {latitude: position.coords.latitude, longitude: position.coords.longitude }
                 const positionLatLngs = pick(position.coords, ['latitude', 'longitude'])
+                const newSpeed = position.coords.speed
                 this.setState({
                     distanceTravelled: distanceTravelled + this.calcDistance(newLatLngs),
-                    prevLatLng: newLatLngs
+                    prevLatLng: newLatLngs,
+                    speed: newSpeed
                 })
-                console.log('Distance Travelled: ')
-                console.log(JSON.stringify(this.state.distanceTravelled))
+
+                console.log('Speed --- ' + newSpeed)
             },
             () => Toast.show('Error watching position'),
             { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 }
@@ -95,6 +101,17 @@ class TrackJourney extends Component {
         const { prevLatLng } = this.state
         const distance = haversine(prevLatLng, newLatLng) || 0
         return distance
+    }
+
+    calcCost(time, distance){
+        const cost = (distance * 0.1) + (time * 0.001)
+        return cost
+    }
+
+    journeyCreate(distance, time, cost){
+        // const { currentUser } = firebase.auth();
+        // firebase.database().ref(`users/${currentUser.uid}/journey`)
+        //     .push({ distance, time, cost })
     }
 
     render() {
@@ -122,11 +139,12 @@ class TrackJourney extends Component {
                         <View style={styles.summary}>
                             <Text>SUMMARY</Text>
                             <Text style={{ fontSize: 40 }}>{parseFloat(this.state.distanceTravelled).toFixed(2)} km</Text>
+                            <Text style={{ fontSize: 40 }}>{parseFloat(this.state.speed).toFixed(2)} km/hr</Text>
                             <Stopwatch 
                                 start={this.state.stopwatchStart}
                                 reset={this.state.stopwatchReset}
                                 options={stopwatchOptions}
-                                getTime={this.getFormattedTime()} 
+                                getTime={(time) => this.getFormattedTime(time)} 
                             />  
                         </View>           
                     ) : (
