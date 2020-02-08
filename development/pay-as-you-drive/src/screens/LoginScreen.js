@@ -23,6 +23,21 @@ class LoginScreen extends Component {
     }
   }
 
+  componentDidMount(){
+    if (!firebase.apps.length) {
+        firebase.initializeApp({
+            apiKey: "AIzaSyDKm0rXYcIzsl7sx3-e-GPsUFrco_Qhtqo",
+            authDomain: "pay-as-you-drive-2c4ca.firebaseapp.com",
+            databaseURL: "https://pay-as-you-drive-2c4ca.firebaseio.com",
+            projectId: "pay-as-you-drive-2c4ca",
+            storageBucket: "pay-as-you-drive-2c4ca.appspot.com",
+            messagingSenderId: "1015176964135",
+            appId: "1:1015176964135:web:d0b7c221fec9bb10ee0602",
+            measurementId: "G-E2XJQPSRZL"
+        });
+    }
+  }
+
   onClickListener = (viewId) => {
     Alert.alert("Alert", "Button pressed "+viewId);
   }

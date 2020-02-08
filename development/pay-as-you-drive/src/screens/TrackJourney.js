@@ -104,14 +104,15 @@ class TrackJourney extends Component {
     }
 
     calcCost(time, distance){
-        const cost = (distance * 0.1) + (time * 0.001)
+        //need to work out cost algorthm
+        const cost = 10 + (distance * 0.1)
         return cost
     }
 
     journeyCreate(distance, time, cost){
-        // const { currentUser } = firebase.auth();
-        // firebase.database().ref(`users/${currentUser.uid}/journey`)
-        //     .push({ distance, time, cost })
+        const { currentUser } = firebase.auth();
+        firebase.database().ref(`users/${currentUser.uid}/journeys`)
+            .push({ distance, time, cost })
     }
 
     render() {
