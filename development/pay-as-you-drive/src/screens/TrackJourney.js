@@ -14,6 +14,7 @@ import firebase from 'firebase';
 import { Icon } from 'react-native-elements';
 import { CountDown } from 'react-native-countdown-component';
 import { Stopwatch } from 'react-native-stopwatch-timer';
+import humanize from 'humanize-plus';
 
 const { width, height } = Dimensions.get('window')
 
@@ -47,10 +48,87 @@ class TrackJourney extends Component {
 
     endJourney() {
         this.setState({running: false, stopwatchStart: false, stopwatchReset: true});
-        const time = this.currentTime;
-        const distance = this.state.distanceTravelled;
-        const cost = this.calcCost(time, distance);
-        this.journeyCreate(distance, time, cost);
+        const duration = this.currentTime;
+        const distance = Math.round((this.state.distanceTravelled * 100) / 100);
+        const cost = Math.round((this.calcCost(distance) * 100) / 100);
+
+        const hours = new Date().getHours()
+        const date = new Date().getDate()
+        const month = new Date().getMonth()
+        const year = new Date().getFullYear()
+
+        const humanized_string = this.humanizeDate(hours, date, month);
+        
+        const date_string = `${date}/${month}/${year}`
+        this.journeyCreate(distance, duration, cost, date_string, humanized_string);
+    }
+
+    calcCost(distance){
+        //TODO refine algorithm
+        const cost = 10 + (distance * 0.1)
+        return cost
+    }
+
+    journeyCreate(distance, duration, cost, date, humanized_date){
+        const { currentUser } = firebase.auth();
+        firebase.database().ref(`users/${currentUser.uid}/journeys`)
+            .push({ distance, duration, cost, date, humanized_date})
+    }
+
+    humanizeDate(hours, date, month){
+        switch (hours > 12) {
+            case true:
+                hours = hours - 12 + "pm"
+                break;
+            case false:
+                hours = hours + "am"
+            default:
+                break;
+        }
+
+        date = humanize.ordinal(date)
+
+        switch (month) {
+            case 1:
+                month = "Jan"
+                break;
+            case 2:
+                month = "Feb"
+                break;
+            case 3:
+                month = "Mar"
+                break;
+            case 4:
+                month = "Apr"
+                break;
+            case 5:
+                month = "May"
+                break;
+            case 6:
+                month = "Jun"
+                break;
+            case 7:
+                month = "Jul"
+                break;
+            case 8:
+                month = "Aug"
+                break;
+            case 9:
+                month = "Sep"
+                break;
+            case 10:
+                month = "Oct"
+                break;
+            case 11:
+                month = "Nov"
+                break;
+            case 12:
+                month = "Dec"
+                break;        
+            default:
+                break;
+        }
+        return `${date} ${month} ${hours}`
     }
 
     //3 2 1 countdown section
@@ -73,13 +151,11 @@ class TrackJourney extends Component {
 
     componentDidMount() {
         navigator.geolocation.getCurrentPosition(
-            (position) => console.log('Succesfully got current position.'),
             () => Toast.show('Error getting current position.'),
             {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
         )
         this.watchID = navigator.geolocation.watchPosition(
             (position) => {
-                console.log(JSON.stringify(position))
                 const { distanceTravelled } = this.state
                 const newLatLngs = {latitude: position.coords.latitude, longitude: position.coords.longitude }
                 const positionLatLngs = pick(position.coords, ['latitude', 'longitude'])
@@ -101,18 +177,6 @@ class TrackJourney extends Component {
         const { prevLatLng } = this.state
         const distance = haversine(prevLatLng, newLatLng) || 0
         return distance
-    }
-
-    calcCost(time, distance){
-        //need to work out cost algorthm
-        const cost = 10 + (distance * 0.1)
-        return cost
-    }
-
-    journeyCreate(distance, time, cost){
-        const { currentUser } = firebase.auth();
-        firebase.database().ref(`users/${currentUser.uid}/journeys`)
-            .push({ distance, time, cost })
     }
 
     render() {
