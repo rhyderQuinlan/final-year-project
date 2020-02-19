@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { LineChart } from "react-native-chart-kit";
 import firebase from 'firebase';
+import humanize from 'humanize-plus';
 
 import Journey from '../components/Journey'
 import { ScrollView, FlatList } from 'react-native-gesture-handler';
@@ -24,25 +25,32 @@ class HomeScreen extends Component {
         this.state = {
             totalAmount: 0,
             showJourneys: true,
-            list: []
+            list: [],
         };
-        console.ignoredYellowBox = [
-            'Setting a timer'
-        ];
     }
 
     componentDidMount(){
         const { currentUser } = firebase.auth();
-        const list = []
+        
+        var list = []
+
+        if(this.state.list > 0){
+            console.log("clearing list")
+            this.state.list.forEach((element) => {
+                this.state.list.pop()
+            })
+        }
+        
         firebase.database().ref(`/users/${currentUser.uid}/journeys/`).on('value', snapshot => {
             var amount = 0
             snapshot.forEach((childSub) => {
                 list.push(childSub.val())
                 amount = amount + childSub.val().cost
-                console.log(amount)
             })
-            this.setState({totalAmount: amount, list: list})
+            this.setState({totalAmount: amount, list: list.reverse()})
         })
+
+        console.log("List: " + list)
     }
 
     // buildAnalytics(){
@@ -55,54 +63,66 @@ class HomeScreen extends Component {
     //     })
     // }
 
+    generateData() {
+        data = {labels: [ "January", "February", "March", "April", "May", "June" ],
+        dataset: [
+            {
+                data: [ 20, 45, 28, 80, 99, 43 ]
+            }
+        ]}
+        console.log(data)
+        return data
+    }
+
+    generateChartConfig() {
+        chartConfig = {
+            backgroundGradientFrom: "#1E2923",
+            backgroundGradientFromOpacity: 0,
+            backgroundGradientTo: "#08130D",
+            backgroundGradientToOpacity: 0.5,
+            // color: ( opacity = 1 ) => `rgba(26, 255, 146, ${opacity})`,
+            // labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+            strokeWidth: 2, // optional, default 3
+            barPercentage: 0.5
+        }
+        console.log(chartConfig)
+        return chartConfig
+    }
+
     renderJourney(distance, cost){
         return <Journey distance={distance} cost={cost}/>
     }
 
     render() { 
-        const journey_list = [] 
-        this.state.list.forEach((element) => {
-            journey_list.push(this.state.list.pop())
-        })
-
         return(
             <View style={styles.main}>
                 <View style={styles.contentContainer}>
                     <View style={styles.amount}>
-                        <Text style={styles.amountHeader}>€{Math.round((this.state.totalAmount) * 100) /100}</Text>
+                        <View>
+                            <Text style={styles.amountHeader}>€{Math.round((this.state.totalAmount) * 100) /100}</Text>
+                        </View>
+                            
+                        <View>
+                            <Text>  Monthly bill</Text>
+                        </View>
                     </View>
                     <View style={styles.analytics}>
                         {/* <LineChart
-                            data={{
-                                labels: [ "January", "February", "March", "April", "May", "June" ],
-                                dataset: [
-                                    {
-                                        data: [ 20, 45, 28, 80, 99, 43 ]
-                                    }
-                                ]
-                            }}
+                            data={() => this.generateData}
                             width={screenWidth}
                             height={256}
                             verticalLabelRotation={30}
-                            chartConfig={{
-                                backgroundGradientFrom: "#1E2923",
-                                backgroundGradientFromOpacity: 0,
-                                backgroundGradientTo: "#08130D",
-                                backgroundGradientToOpacity: 0.5,
-                                // color: ( opacity = 1 ) => `rgba(26, 255, 146, ${opacity})`,
-                                // labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                                strokeWidth: 2, // optional, default 3
-                                barPercentage: 0.5,
-                            }}
+                            chartConfig={() => this.generateChartConfig}
                             bezier
                         /> */}
                     </View>
                 </View>
                 <View style={styles.journeysContainer}>
                     <Text style={styles.journeysHeader}>Past Journeys</Text>
+                    <Text style={{alignSelf: 'flex-end', paddingRight: 10}}>{this.state.list.length} {humanize.pluralize(this.state.list.length, "past journey")}</Text>
                     <ScrollView>
                         <FlatList
-                            data={journey_list}
+                            data={this.state.list}
                             renderItem={({item}) => 
                                 <Journey 
                                     style={styles.item}
@@ -112,8 +132,9 @@ class HomeScreen extends Component {
                                 />}
                         />
                     </ScrollView>
-                </View>
+                </View>           
             </View>
+            
         )
     }
 }
@@ -130,7 +151,9 @@ const styles = StyleSheet.create({
     },
     amount:{
         flex: 2,
-        flexDirection: 'column-reverse'
+        flexDirection: 'row',
+        alignItems: 'flex-end',
+        alignSelf: 'center',
     },
     analytics:{
         borderColor: 'black',
@@ -140,17 +163,17 @@ const styles = StyleSheet.create({
     amountHeader:{
         paddingTop: 20,
         textAlign: 'center',
-        fontSize: 30
+        fontSize: 35,
+        textAlignVertical: 'bottom'
     },
     journeysContainer:{
         flex: 3
     },
     journeysHeader: {
-        borderTopWidth: 1,
-        borderTopColor: 'black',
         textAlign: 'center',
         fontSize: 24,
-        paddingTop: 15
+        paddingTop: 15,
+        color: '#191BAF'
     }
 });
 

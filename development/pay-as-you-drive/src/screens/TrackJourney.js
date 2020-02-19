@@ -15,8 +15,13 @@ import { Icon } from 'react-native-elements';
 import { CountDown } from 'react-native-countdown-component';
 import { Stopwatch } from 'react-native-stopwatch-timer';
 import humanize from 'humanize-plus';
+import ButtonComponent from '../components/ButtonComponent';
 
 const { width, height } = Dimensions.get('window')
+
+var db_input = {
+    distance: 0
+}
 
 class TrackJourney extends Component {
     constructor(props) {
@@ -49,8 +54,8 @@ class TrackJourney extends Component {
     endJourney() {
         this.setState({running: false, stopwatchStart: false, stopwatchReset: true});
         const duration = this.currentTime;
-        const distance = Math.round((this.state.distanceTravelled * 100) / 100);
-        const cost = Math.round((this.calcCost(distance) * 100) / 100);
+        const distance = Math.round(this.state.distanceTravelled);
+        const cost_total = this.calcCost(distance);
 
         const hours = new Date().getHours()
         const date = new Date().getDate()
@@ -60,19 +65,28 @@ class TrackJourney extends Component {
         const humanized_string = this.humanizeDate(hours, date, month);
         
         const date_string = `${date}/${month}/${year}`
-        this.journeyCreate(distance, duration, cost, date_string, humanized_string);
+        this.journeyCreate(distance, duration, cost_total, date_string, humanized_string);
     }
 
     calcCost(distance){
+        var cost_total = distance * (db_input.distance / 100)
+        
+        return cost_total
         //TODO refine algorithm
-        const cost = 10 + (distance * 0.1)
-        return cost
     }
 
-    journeyCreate(distance, duration, cost, date, humanized_date){
+    journeyCreate(distance, duration, cost_total, date, humanized_date){
+        const data = {
+            distance: distance,
+            duration: duration,
+            cost: cost_total,
+            date: date,
+            humanized_date: humanized_date
+        }
         const { currentUser } = firebase.auth();
+        console.log(data)
         firebase.database().ref(`users/${currentUser.uid}/journeys`)
-            .push({ distance, duration, cost, date, humanized_date})
+            .push(data)
     }
 
     humanizeDate(hours, date, month){
@@ -81,6 +95,10 @@ class TrackJourney extends Component {
                 hours = hours - 12 + "pm"
                 break;
             case false:
+                if(hours == 0){
+                    hours = "12am"
+                    break;
+                }
                 hours = hours + "am"
             default:
                 break;
@@ -165,12 +183,17 @@ class TrackJourney extends Component {
                     prevLatLng: newLatLngs,
                     speed: newSpeed
                 })
-
-                console.log('Speed --- ' + newSpeed)
             },
             () => Toast.show('Error watching position'),
             { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 }
         );
+        firebase.database().ref(`/users/I0QJcZvnkZV3WkqgXvyMkoIIysY2/algorithm/`).once('value')
+            .then((snapshot) => {
+                db_input.distance = snapshot.val().distance
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     }
 
     calcDistance(newLatLng) {
@@ -190,7 +213,7 @@ class TrackJourney extends Component {
                                 size={50}
                                 digitStyle={{backgroundColor: ''}}
                                 onFinish={() => this.startJourney()}
-                                digitTxtStyle={{color: '#D90429'}}
+                                digitTxtStyle={{color: '#191BAF'}}
                                 timeToShow={['S']}
                                 timeLabels={{s: ' '}}
                             />
@@ -220,21 +243,12 @@ class TrackJourney extends Component {
                 </View>
 
                 <View style={styles.button}>
-                    <TouchableOpacity
-                        style={styles.journeyButton}
+                    <ButtonComponent 
+                        text={!this.state.running ? "Start" : "End"}
+                        icon={!this.state.running ? "arrowright" : "stop"}
+                        type={!this.state.running ? "antdesign" : "foundation"}
                         onPress={() => requestAnimationFrame(() => this.toggleJourney())}
-                    >
-                        <View>
-                            <Text style={styles.buttonText}>{!this.state.running ? "Start" : "End"}</Text>
-                        </View>
-                        <View>
-                            <Icon 
-                                name='arrow-forward'
-                                color='#D90429'
-                                style={styles.buttonIcon}
-                            />
-                        </View>
-                    </TouchableOpacity>
+                    />
                 </View>                
             </View>
         )}
@@ -267,30 +281,6 @@ const styles = StyleSheet.create({
     },
     button:{
         flex: 1
-    },
-    journeyButton:{
-        alignSelf: 'center',
-        width: 300,
-        borderRadius: 5,
-        borderWidth: 2,
-        borderColor: '#D90429',
-        padding: 30,
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        marginBottom: 60
-    },
-    buttonText: {
-        fontSize: 26,
-        textAlign: 'center',
-        color: '#D90429',
-
-        //this positioning needs work
-        position: 'relative',
-        bottom: 12
-    },
-    buttonIcon: {
-
     },
     summary:{
         alignItems: 'center',

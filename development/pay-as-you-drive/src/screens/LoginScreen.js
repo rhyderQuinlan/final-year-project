@@ -20,35 +20,48 @@ import firebase from 'firebase';
 import Toast from 'react-native-simple-toast';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
+import ButtonComponent from '../components/ButtonComponent';
+
 class LoginScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
       email: '',
       password: '',
-      rememberMe: false
+      rememberMe: false,
+      error: ''
     }
   }
 
   async componentDidMount(){
     if (!firebase.apps.length) {
-        firebase.initializeApp({
-            apiKey: "AIzaSyDKm0rXYcIzsl7sx3-e-GPsUFrco_Qhtqo",
-            authDomain: "pay-as-you-drive-2c4ca.firebaseapp.com",
-            databaseURL: "https://pay-as-you-drive-2c4ca.firebaseio.com",
-            projectId: "pay-as-you-drive-2c4ca",
-            storageBucket: "pay-as-you-drive-2c4ca.appspot.com",
-            messagingSenderId: "1015176964135",
-            appId: "1:1015176964135:web:d0b7c221fec9bb10ee0602",
-            measurementId: "G-E2XJQPSRZL"
-        });
+      firebase.initializeApp({
+          apiKey: "AIzaSyDKm0rXYcIzsl7sx3-e-GPsUFrco_Qhtqo",
+          authDomain: "pay-as-you-drive-2c4ca.firebaseapp.com",
+          databaseURL: "https://pay-as-you-drive-2c4ca.firebaseio.com",
+          projectId: "pay-as-you-drive-2c4ca",
+          storageBucket: "pay-as-you-drive-2c4ca.appspot.com",
+          messagingSenderId: "1015176964135",
+          appId: "1:1015176964135:web:d0b7c221fec9bb10ee0602",
+          measurementId: "G-E2XJQPSRZL"
+      });
     }
-
+    
     const email = await this.getRememberedUser();
 
     this.setState({ 
       email: email || "", 
       rememberMe: email ? true : false });
+
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        console.log("User logged in: " + user)
+      } else {
+        console.log("User logged out: " + user)
+        this.setState({rememberMe: false, email: '', password: ''})
+        this.forgetUser()
+      }
+    });
    }
   
 
@@ -69,17 +82,15 @@ class LoginScreen extends Component {
         this.setState({ email: email, password: password })
         this.signinUser();
         return email;
-      } else {
-        console.log("User not remembered")
       }
     } catch (error) {
-      console.log("async getRememberedUser error: " + error)
+        console.log("async getRememberedUser error: " + error)
     }
   };
+
     
   forgetUser = async () => {
       try {
-        console.log("forget user")
         await AsyncStorage.removeItem('EMAIL');
         await AsyncStorage.removeItem('PASSWORD')
       } catch (error) {
@@ -93,17 +104,17 @@ class LoginScreen extends Component {
 
   signinUser(){
     firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then(() => {
-        Toast.show("Login succesful")
+        this.passwordInput.clear()
+        this.emailInput.clear()
         this.props.navigation.navigate('BottomTab')
     }).catch((error) => {
-        console.log("Login: " + error.code + ": " + error.message)
+      this.setState({error:error.message})
     });
   }
 
   createUser(){
-    console.log("Register attempt...")
-    firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).catch(function(error) {
-        console.log("Sign up:" + error.code + ": " + error.message)
+    firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).catch((error) => {
+        this.setState({error: error.message})
     });
   }
 
@@ -121,7 +132,7 @@ class LoginScreen extends Component {
       <View style={styles.container}>
         <View style={{ flex: 1, justifyContent: 'flex-end'}}>
           <Image 
-            source={require('../../assets/logo.png')}
+            source={require('../../assets/logo-yellow-blue.png')}
             style={styles.logo}
           />
         </View>
@@ -133,9 +144,11 @@ class LoginScreen extends Component {
                     name='email-outline'
                     type='material-community'
                     style={styles.inputIcon}
-                    color="#D90429"
+                    color="#191BAF"
                 />
-                <TextInput style={styles.inputs}
+                <TextInput 
+                    ref={input => { this.emailInput = input }}
+                    style={styles.inputs}
                     placeholder="Email"
                     keyboardType="email-address"
                     underlineColorAndroid='transparent'
@@ -146,17 +159,23 @@ class LoginScreen extends Component {
           <View style={styles.inputContainer}>
             <View style={styles.iconTextContainer}>
               <Icon 
-                name='key'
+                name='account-key-outline'
                 type='material-community'
                 style={styles.inputIcon}
-                color="#D90429"
+                color="#191BAF"
               />
-              <TextInput style={styles.inputs}
+              <TextInput 
+                ref={input => { this.passwordInput = input }}
+                style={styles.inputs}
                 placeholder="Password"
                 secureTextEntry={true}
                 underlineColorAndroid='transparent'
                 onChangeText={(password) => this.setState({password})}/>
             </View>
+          </View>
+
+          <View style={{width: 250, alignSelf: 'center'}}>
+            <Text style={{textAlign: 'center', color: 'red'}}>{this.state.error}</Text>
           </View>
 
           <View style={[styles.inputContainer, styles.rememberMe]}>
@@ -172,9 +191,12 @@ class LoginScreen extends Component {
               </View>
           </View>
 
-          <TouchableHighlight underlayColor='#D8DCDE' style={ styles.loginButton} onPress={() => this.signinUser()}>
-            <Text style={styles.loginText}>Login</Text>
-          </TouchableHighlight>
+          <ButtonComponent 
+            text="Login"
+            onPress={() => this.signinUser()}
+            icon="login"
+            type="antdesign"
+          />
 
           <TouchableHighlight style={styles.buttonContainer} onPress={() => this.onClickListener('restore_password')}>
               <Text>Forgot your password?</Text>
@@ -196,10 +218,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   inputContainer: {
-    borderColor: '#2B2D42',
+    borderBottomColor: '#FED766',
     backgroundColor: '#FFFFFF',
-    borderWidth: 1,
-    borderRadius: 4,
+    borderBottomWidth: 2,
     width:'80%',
     height:55,
     marginBottom:20,
@@ -211,7 +232,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignSelf: 'center',
     justifyContent: 'space-around',
-    borderColor: 'transparent',
+    borderBottomColor: 'transparent',
     width:'40%',
   },
   inputs:{
@@ -237,28 +258,6 @@ const styles = StyleSheet.create({
     marginBottom:10,
     width:250,
     borderRadius:5,
-  },
-  loginButton:{
-    alignSelf: 'center',
-    alignContent: 'center',
-    width: '50%',
-    borderRadius: 5,
-    borderWidth: 2,
-    borderColor: '#D90429',
-    padding: 10,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginBottom: '5%'
-  },
-  loginText: {
-    fontSize: 26,
-    flexDirection: 'row',
-    alignSelf: 'center',
-    justifyContent: 'space-around',
-    position: 'relative',
-    left: 20,
-    color: '#D90429',
-    top: 2
   },
   logo:{
     width: 100,

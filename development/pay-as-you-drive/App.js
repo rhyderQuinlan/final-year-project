@@ -10,8 +10,11 @@ import { Icon } from 'react-native-elements';
 
 import HomeScreen from './src/screens/HomeScreen';
 import TrackJourney from './src/screens/TrackJourney';
-import MakeClaim from './src/screens/MakeClaim';
+import MoreScreen from './src/screens/MoreScreen';
 import LoginScreen from './src/screens/LoginScreen';
+import AdminScreen from './src/screens/AdminScreen';
+
+console.disableYellowBox = true
 
 const BottomTab = createMaterialBottomTabNavigator(
   {
@@ -45,14 +48,15 @@ const BottomTab = createMaterialBottomTabNavigator(
         }
       }
      },
-    Claim: { 
-      screen: MakeClaim,
+    More: { 
+      screen: MoreScreen,
       navigationOptions: {
         tabBarIcon: ({ tintColor }) => {
           return (
             <View>
               <Icon
-                name='attach-money'
+                name='more-horizontal'
+                type='feather'
                 color={tintColor}
               />
             </View>
@@ -63,7 +67,7 @@ const BottomTab = createMaterialBottomTabNavigator(
   },
   {
     initialRouteName: 'Home',
-    activeColor: '#EF233C',
+    activeColor: '#191BAF',
     inactiveColor: '#2B2D42',
     barStyle: { 
       backgroundColor: 'white',
@@ -81,6 +85,12 @@ const MainNavigator = createStackNavigator(
         headerShown: false
       }
     },
+    AdminScreen:{
+      screen: AdminScreen,
+      navigationOptions: {
+        title: 'Admin Settings',
+      }
+    },
     BottomTab: {
       screen: BottomTab,
       navigationOptions: {
@@ -92,6 +102,16 @@ const MainNavigator = createStackNavigator(
     initialRouteName: 'LoginScreen'
   }
 )
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 50,
+    backgroundColor: '#ecf0f1',
+  },
+});
 
 const App = createAppContainer(MainNavigator);
 
