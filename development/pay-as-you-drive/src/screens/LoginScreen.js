@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   inputContainer: {
-    borderBottomColor: '#FED766',
+    borderBottomColor: '#F1D302',
     backgroundColor: '#FFFFFF',
     borderBottomWidth: 2,
     width:'80%',
