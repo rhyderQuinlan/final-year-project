@@ -1,6 +1,3 @@
-//TODO sign out
-//TODO unremember user when sign out
-
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -14,11 +11,9 @@ import {
   Switch,
   AsyncStorage
 } from 'react-native';
-import { NavigationEvents } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 import firebase from 'firebase';
 import Toast from 'react-native-simple-toast';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import ButtonComponent from '../components/ButtonComponent';
 
@@ -187,6 +182,8 @@ class LoginScreen extends Component {
                 <Switch
                   value={this.state.rememberMe}
                   onValueChange={(value) => this.toggleRememberMe(value)}
+                  onTintColor='#191BAF'
+                  thumbColor='#F1D302'
                 />
               </View>
           </View>
@@ -214,7 +211,6 @@ class LoginScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 4,
-    
     alignItems: 'center',
   },
   inputContainer: {

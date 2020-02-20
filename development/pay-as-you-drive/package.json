@@ -29,6 +29,7 @@
     "react-native-paper": "^3.4.0",
     "react-native-popup-menu": "^0.15.7",
     "react-native-reanimated": "~1.4.0",
+    "react-native-responsive-linechart": "^2.2.0",
     "react-native-safe-area-context": "0.6.0",
     "react-native-safe-area-view": "^1.0.0",
     "react-native-screens": "^2.0.0-beta.1",

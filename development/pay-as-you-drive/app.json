@@ -13,9 +13,9 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
-      "image": "./assets/steering-wheel.png",
+      "image": "./assets/logo-yellow-blue.png",
       "resizeMode": "contain",
-      "backgroundColor": "#D90429"
+      "backgroundColor": "#009FB7"
     },
     "updates": {
       "fallbackToCacheTimeout": 0

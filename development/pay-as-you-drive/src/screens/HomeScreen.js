@@ -9,9 +9,18 @@ import {
     Dimensions,
     SectionList
 } from 'react-native';
-import { LineChart } from "react-native-chart-kit";
+import LineChart from "react-native-responsive-linechart";
 import firebase from 'firebase';
 import humanize from 'humanize-plus';
+
+// import {
+//     LineChart,
+//     BarChart,
+//     PieChart,
+//     ProgressChart,
+//     ContributionGraph,
+//     StackedBarChart
+//   } from 'react-native-chart-kit';
 
 import Journey from '../components/Journey'
 import { ScrollView, FlatList } from 'react-native-gesture-handler';
@@ -63,31 +72,6 @@ class HomeScreen extends Component {
     //     })
     // }
 
-    generateData() {
-        data = {labels: [ "January", "February", "March", "April", "May", "June" ],
-        dataset: [
-            {
-                data: [ 20, 45, 28, 80, 99, 43 ]
-            }
-        ]}
-        console.log(data)
-        return data
-    }
-
-    generateChartConfig() {
-        chartConfig = {
-            backgroundGradientFrom: "#1E2923",
-            backgroundGradientFromOpacity: 0,
-            backgroundGradientTo: "#08130D",
-            backgroundGradientToOpacity: 0.5,
-            // color: ( opacity = 1 ) => `rgba(26, 255, 146, ${opacity})`,
-            // labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-            strokeWidth: 2, // optional, default 3
-            barPercentage: 0.5
-        }
-        console.log(chartConfig)
-        return chartConfig
-    }
 
     renderJourney(distance, cost){
         return <Journey distance={distance} cost={cost}/>
@@ -107,14 +91,7 @@ class HomeScreen extends Component {
                         </View>
                     </View>
                     <View style={styles.analytics}>
-                        {/* <LineChart
-                            data={() => this.generateData}
-                            width={screenWidth}
-                            height={256}
-                            verticalLabelRotation={30}
-                            chartConfig={() => this.generateChartConfig}
-                            bezier
-                        /> */}
+                        {/* <LineChart style={{ flex: 1 }} config={config1} data={data1} /> */}
                     </View>
                 </View>
                 <View style={styles.journeysContainer}>
@@ -138,7 +115,6 @@ class HomeScreen extends Component {
         )
     }
 }
-//<Journey distance={childSub.val().distance} cost={childSub.val().cost}/>
 
 const styles = StyleSheet.create({
     main: {

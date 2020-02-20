@@ -31,6 +31,7 @@ class AdminScreen extends Component {
     }
 
     submitChanges(){
+        const { currentUser } = firebase.auth();
         var Data = {
             distance: Number(this.state.algo_distance)
           };
@@ -78,7 +79,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         padding: 20,
         fontSize: 28,
-        color: '#006EB7'
+        color: '#191BAF'
     }
 })
 
