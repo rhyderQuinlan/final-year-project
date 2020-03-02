@@ -37,10 +37,9 @@ class TrackJourney extends Component {
             distanceTravelled: 0,
             speed: 0,
             prevLatLng: {},
-
-            score: 90,
+            error: ''
         };
-    }
+    }   
 
     //stopwatch and timer section
     getFormattedTime(time) {
@@ -49,10 +48,42 @@ class TrackJourney extends Component {
 
     startJourney() {
         this.setState({running: true, stopwatchStart: true, showCountdown: false});
+
+        this.watchID = navigator.geolocation.watchPosition(
+            (position) => {
+                if(position.coords.speed > 1){
+                    const { distanceTravelled, prevLatLng } = this.state
+                    const newLatLngs = {latitude: position.coords.latitude, longitude: position.coords.longitude }
+                    const positionLatLngs = pick(position.coords, ['latitude', 'longitude'])
+                    const newSpeed = position.coords.speed
+                    this.setState({
+                        distanceTravelled: distanceTravelled + haversine(prevLatLng, newLatLngs) || 0,
+                        prevLatLng: newLatLngs,
+                        speed: newSpeed
+                    })
+                }
+            },
+            (error) => this.errorMessage.setState({ value: error}),
+            { 
+                enableHighAccuracy: true, 
+                timeout: 1000, 
+                maximumAge: 0,
+                distanceFilter: 0,
+                useSignificantChanges: false
+            }
+        );
     }
 
     endJourney() {
-        this.setState({running: false, stopwatchStart: false, stopwatchReset: true});
+        this.setState({
+            distanceTravelled: 0,
+            speed: 0,
+            prevLatLng: {},
+            running: false, 
+            stopwatchStart: false, 
+            stopwatchReset: true
+        });
+
         const duration = this.currentTime;
         const distance = Math.round(this.state.distanceTravelled);
         const cost_total = this.calcCost(distance);
@@ -66,6 +97,7 @@ class TrackJourney extends Component {
         
         const date_string = `${date}/${month}/${year}`
         this.journeyCreate(distance, duration, cost_total, date_string, humanized_string);
+        navigator.geolocation.clearWatch(this.watchID)
     }
 
     calcCost(distance){
@@ -167,26 +199,7 @@ class TrackJourney extends Component {
         }
     }
 
-    componentDidMount() {
-        navigator.geolocation.getCurrentPosition(
-            () => Toast.show('Error getting current position.'),
-            {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
-        )
-        this.watchID = navigator.geolocation.watchPosition(
-            (position) => {
-                const { distanceTravelled } = this.state
-                const newLatLngs = {latitude: position.coords.latitude, longitude: position.coords.longitude }
-                const positionLatLngs = pick(position.coords, ['latitude', 'longitude'])
-                const newSpeed = position.coords.speed
-                this.setState({
-                    distanceTravelled: distanceTravelled + this.calcDistance(newLatLngs),
-                    prevLatLng: newLatLngs,
-                    speed: newSpeed
-                })
-            },
-            () => Toast.show('Error watching position'),
-            { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 }
-        );
+    componentDidMount() {        
         firebase.database().ref(`/users/I0QJcZvnkZV3WkqgXvyMkoIIysY2/algorithm/`).once('value')
             .then((snapshot) => {
                 db_input.distance = snapshot.val().distance
@@ -196,16 +209,13 @@ class TrackJourney extends Component {
             })
     }
 
-    calcDistance(newLatLng) {
-        const { prevLatLng } = this.state
-        const distance = haversine(prevLatLng, newLatLng) || 0
-        return distance
-    }
-
     render() {
         return(
             <View style={styles.main}>
                 <View style={styles.content}>
+                    <Text 
+                        ref={(info) => this.errorMessage = info}
+                    />
                     {this.state.showCountdown ? (
                         <View>
                             <CountDown
