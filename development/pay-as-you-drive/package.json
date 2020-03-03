@@ -7,6 +7,7 @@
     "postinstall": "jetify"
   },
   "dependencies": {
+    "@googlemaps/google-maps-services-js": "^2.1.2",
     "@react-native-community/masked-view": "0.1.5",
     "expo": "^36.0.0",
     "firebase": "^7.8.0",
@@ -14,6 +15,8 @@
     "haversine": "^1.1.1",
     "humanize-plus": "^1.8.2",
     "lodash": "^4.17.15",
+    "mathjs": "^6.6.1",
+    "moment": "^2.24.0",
     "os": "^0.1.1",
     "prop-types": "^15.7.2",
     "react": "~16.9.0",
@@ -24,7 +27,11 @@
     "react-native-countdown-component": "^2.6.0",
     "react-native-elements": "^1.2.7",
     "react-native-firebase": "^5.6.0",
+    "react-native-fused-location": "^1.1.1",
+    "react-native-geolocation-service": "^4.0.0",
     "react-native-gesture-handler": "~1.5.0",
+    "react-native-google-maps-services": "^0.5.1",
+    "react-native-location": "^2.5.0",
     "react-native-maps": "0.26.1",
     "react-native-paper": "^3.4.0",
     "react-native-popup-menu": "^0.15.7",
@@ -32,7 +39,7 @@
     "react-native-responsive-linechart": "^2.2.0",
     "react-native-safe-area-context": "0.6.0",
     "react-native-safe-area-view": "^1.0.0",
-    "react-native-screens": "^2.0.0-beta.1",
+    "react-native-screens": "^2.2.0",
     "react-native-simple-toast": "^1.0.0",
     "react-native-stopwatch-timer": "0.0.21",
     "react-native-svg": "^11.0.1",
@@ -42,7 +49,8 @@
     "react-navigation": "^4.0.10",
     "react-navigation-drawer": "^2.3.3",
     "react-navigation-material-bottom-tabs": "^2.1.5",
-    "react-navigation-stack": "^2.0.13"
+    "react-navigation-stack": "^2.0.13",
+    "sunrise-sunset-js": "^2.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",

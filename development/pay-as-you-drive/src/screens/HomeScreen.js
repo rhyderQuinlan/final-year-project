@@ -7,11 +7,13 @@ import {
     View,
     Text,
     Dimensions,
-    SectionList
+    SectionList,
+    ToastAndroid
 } from 'react-native';
 import LineChart from "react-native-responsive-linechart";
 import firebase from 'firebase';
 import humanize from 'humanize-plus';
+import Toast from 'react-native-simple-toast';
 
 // import {
 //     LineChart,
@@ -24,7 +26,6 @@ import humanize from 'humanize-plus';
 
 import Journey from '../components/Journey'
 import { ScrollView, FlatList } from 'react-native-gesture-handler';
-import { element } from 'prop-types';
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -39,9 +40,8 @@ class HomeScreen extends Component {
     }
 
     componentDidMount(){
+        Toast.show("ComponentDidMount")
         const { currentUser } = firebase.auth();
-        
-        var list = []
 
         if(this.state.list > 0){
             console.log("clearing list")
@@ -51,15 +51,19 @@ class HomeScreen extends Component {
         }
         
         firebase.database().ref(`/users/${currentUser.uid}/journeys/`).on('value', snapshot => {
+            Toast.show("Calling DB function")
+            var journey_list = []
             var amount = 0
             snapshot.forEach((childSub) => {
-                list.push(childSub.val())
+                journey_list.push(childSub.val())
                 amount = amount + childSub.val().cost
             })
-            this.setState({totalAmount: amount, list: list.reverse()})
+            this.setState({totalAmount: amount, list: journey_list.reverse()})
         })
+    }
 
-        console.log("List: " + list)
+    componentWillMount(){
+        Toast.show("ComponentWillMount")
     }
 
     // buildAnalytics(){
@@ -74,8 +78,10 @@ class HomeScreen extends Component {
 
 
     renderJourney(distance, cost){
-        return <Journey distance={distance} cost={cost}/>
+        return <Journey distance={distance} cost={cost} />
     }
+
+    
 
     render() { 
         return(
@@ -83,7 +89,7 @@ class HomeScreen extends Component {
                 <View style={styles.contentContainer}>
                     <View style={styles.amount}>
                         <View>
-                            <Text style={styles.amountHeader}>€{Math.round((this.state.totalAmount) * 100) /100}</Text>
+                            <Text style={styles.amountHeader}>€{this.state.totalAmount}</Text>
                         </View>
                             
                         <View>
@@ -106,6 +112,7 @@ class HomeScreen extends Component {
                                     date={item.humanized_date} 
                                     distance={item.distance} 
                                     cost={item.cost}
+                                    safeTime={item.safeTime}
                                 />}
                         />
                     </ScrollView>

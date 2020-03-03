@@ -2,15 +2,30 @@ import React, { Component } from 'react';
 import { 
     View, 
     Text, 
-    StyleSheet } from 'react-native';
+    StyleSheet
+ } from 'react-native';
+ import { Icon } from 'react-native-elements';
 
 const Journey = (props) => {
-    const {distance, cost, date} = props;
+    const {distance, cost, date, safeTime} = props;
     return(
         <View style={styles.container}>
             <View style={styles.leftContainer}>
                 <Text style={styles.date}>{date}</Text>
                 <Text>{distance} Km</Text>
+                { safeTime ? 
+                    (<Icon 
+                        name='eye'
+                        type='feather'
+                        color="green"
+                    />)
+                    :
+                    (<Icon 
+                        name='eye-off'
+                        type='feather'
+                        color="red"
+                    />)
+                 }
             </View>
             <View style={styles.rightContainer}>
                 <Text style={styles.cost}>€{cost}</Text>

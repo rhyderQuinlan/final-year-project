@@ -1,3 +1,11 @@
+//TODO car details
+//verification api
+
+//acting as verify in system
+
+//TODO day/night
+
+
 import React, { Component } from 'react';
 import {
     View,
@@ -5,41 +13,193 @@ import {
     StyleSheet,
     TouchableOpacity,
     Dimensions,
-    PermissionsAndroid
+    PermissionsAndroid,
+    Platform
 } from 'react-native';
-import haversine from 'haversine';
-import pick from 'lodash/pick';
+
 import Toast from 'react-native-simple-toast';
 import firebase from 'firebase';
-import { Icon } from 'react-native-elements';
 import { CountDown } from 'react-native-countdown-component';
 import { Stopwatch } from 'react-native-stopwatch-timer';
 import humanize from 'humanize-plus';
 import ButtonComponent from '../components/ButtonComponent';
 
+import { Client } from "@googlemaps/google-maps-services-js"; //speed limit task
+import { getSunrise, getSunset } from 'sunrise-sunset-js'; //sunrise-sunset task
+import { Icon } from 'react-native-elements';
+
 const { width, height } = Dimensions.get('window')
+const haversine = require('haversine')
 
 var db_input = {
-    distance: 0
+    distance: 0,
+    safeTime_multiplier: 0
 }
+
+//TODO Speed limit using Road API
+// const client = new Client({});
+
+// // client
+// //     .elevation({
+// //         params: {
+// //             locations: [{ lat: 45, lng: -110 }],
+// //             key: "AIzaSyCFtPuCVniR5CEPGkcvwnHHQAJuX_y-DsA"
+// //         },
+// //         timeout: 1000
+// //     })
+// //     .then(r => {
+// //         console.log(r.data.error_message);
+// //     })
+// //     .catch(e => {
+// //         console.log(e);
+// //     });
 
 class TrackJourney extends Component {
     constructor(props) {
         super(props);
         this.state = {
             running: false,
+            
             stopwatchStart: false,
             stopwatchReset: false,
-
             showCountdown: false,
             showStopwatch: false,
 
             distanceTravelled: 0,
             speed: 0,
-            prevLatLng: {},
-            error: ''
+            error: '',
+            prevTimestamp: 0,
+            prevCoords: {},
+            speed_test: 0,
+
+            updatesEnabled: true,
+            location: {},
+            safeTime: true
         };
-    }   
+    }  
+    
+    componentDidMount() {
+        this.hasLocationPermission()
+        this.getLocation()
+
+        firebase.database().ref(`/users/I0QJcZvnkZV3WkqgXvyMkoIIysY2/algorithm/`).once('value')
+            .then((snapshot) => {
+                db_input.distance = snapshot.val().distance
+                db_input.safeTime_multiplier = snapshot.val().safeTime_multiplier
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+    
+    hasLocationPermission = async () => {
+        if (Platform.OS === 'ios' ||
+            (Platform.OS === 'android' && Platform.Version < 23)) {
+        return true;
+        }
+    
+        const hasPermission = await PermissionsAndroid.check(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
+        );
+    
+        if (hasPermission) return true;
+    
+        const status = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
+        );
+    
+        if (status === PermissionsAndroid.RESULTS.GRANTED) return true;
+    
+        if (status === PermissionsAndroid.RESULTS.DENIED) {
+        Toast.show('Location permission denied by user.', Toast.LONG);
+        } else if (status === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN) {
+        Toast.show('Location permission revoked by user.', Toast.LONG);
+        }
+    
+        return false;
+    }
+
+    getLocation = async () => {
+        const hasLocationPermission = await this.hasLocationPermission();
+    
+        if (!hasLocationPermission) return;
+    
+        this.setState({ loading: true }, () => {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              this.setState({ 
+                    location: position, 
+                    loading: false,
+                    prevTimestamp: position.timestamp,
+                    prevCoords: {
+                        latitude: position.coords.latitude, 
+                        longitude: position.coords.longitude 
+                    } 
+                });
+              console.log(position);
+            },
+            (error) => {
+              this.setState({ location: error, loading: false });
+              console.log(error);
+            },
+            { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000, distanceFilter: 50, forceRequestLocation: true }
+          );
+        });
+    }
+
+    getLocationUpdates = async () => {
+        const hasLocationPermission = await this.hasLocationPermission();
+    
+        if (!hasLocationPermission) return;
+    
+        this.setState({ updatesEnabled: true }, () => {
+          this.watchId = navigator.geolocation.watchPosition(
+            (position) => {
+              this.setState({ location: position });
+              const { distanceTravelled, prevCoords, prevTimestamp } = this.state
+              
+              const newCoords = {
+                  latitude: position.coords.latitude, 
+                  longitude: position.coords.longitude
+              }
+              
+              const distance = this.calcDistance(
+                  prevCoords,
+                  newCoords
+              )
+              
+              const currentTimestamp = position.timestamp
+              
+              console.log("--- \nSpeed: " + position.coords.speed + "\n---")
+              
+              const speed_test = this.calcSpeed(
+                  prevTimestamp, 
+                  currentTimestamp, 
+                  distance
+              )
+              
+              this.setState({
+                  distanceTravelled: distanceTravelled + distance,
+                  prevCoords: newCoords,
+                  speed_test: speed_test,
+                  prevTimestamp: currentTimestamp
+              })
+            },
+            (error) => {
+              this.setState({ location: error });
+              console.log(error);
+            },
+            { enableHighAccuracy: true, distanceFilter: 5.0, interval: 5000, fastestInterval: 2000 }
+          );
+        });
+    }
+
+    removeLocationUpdates = () => {
+        if (this.watchId !== null) {
+            navigator.geolocation.clearWatch(this.watchId);
+            this.setState({ updatesEnabled: false })
+        }
+    }
 
     //stopwatch and timer section
     getFormattedTime(time) {
@@ -47,47 +207,32 @@ class TrackJourney extends Component {
     };
 
     startJourney() {
-        this.setState({running: true, stopwatchStart: true, showCountdown: false});
+        const { prevCoords  } = this.state
+        this.setState({
+            running: true, 
+            stopwatchStart: true, 
+            showCountdown: false, 
+        })
 
-        this.watchID = navigator.geolocation.watchPosition(
-            (position) => {
-                if(position.coords.speed > 1){
-                    const { distanceTravelled, prevLatLng } = this.state
-                    const newLatLngs = {latitude: position.coords.latitude, longitude: position.coords.longitude }
-                    const positionLatLngs = pick(position.coords, ['latitude', 'longitude'])
-                    const newSpeed = position.coords.speed
-                    this.setState({
-                        distanceTravelled: distanceTravelled + haversine(prevLatLng, newLatLngs) || 0,
-                        prevLatLng: newLatLngs,
-                        speed: newSpeed
-                    })
-                }
-            },
-            (error) => this.errorMessage.setState({ value: error}),
-            { 
-                enableHighAccuracy: true, 
-                timeout: 1000, 
-                maximumAge: 0,
-                distanceFilter: 0,
-                useSignificantChanges: false
-            }
-        );
+        this.getLocation()
+
+        //check driving time is unsafe
+        const currentTime = new Date().getTime()
+        if (currentTime > getSunset(prevCoords.latitude, prevCoords.longitude) || currentTime < getSunrise(prevCoords.latitude, prevCoords.longitude)) {
+            this.setState({ safeTime: false })
+        }
+
+        this.getLocationUpdates()
     }
 
     endJourney() {
-        this.setState({
-            distanceTravelled: 0,
-            speed: 0,
-            prevLatLng: {},
-            running: false, 
-            stopwatchStart: false, 
-            stopwatchReset: true
-        });
+        this.removeLocationUpdates()
 
         const duration = this.currentTime;
-        const distance = Math.round(this.state.distanceTravelled);
-        const cost_total = this.calcCost(distance);
-
+        const distance = Number(this.state.distanceTravelled).toFixed(3);
+        const cost_total = Number(this.calcCost(distance));
+        const safeTime = this.state.safeTime
+        
         const hours = new Date().getHours()
         const date = new Date().getDate()
         const month = new Date().getMonth()
@@ -96,24 +241,78 @@ class TrackJourney extends Component {
         const humanized_string = this.humanizeDate(hours, date, month);
         
         const date_string = `${date}/${month}/${year}`
-        this.journeyCreate(distance, duration, cost_total, date_string, humanized_string);
-        navigator.geolocation.clearWatch(this.watchID)
+        this.journeyCreate(distance, duration, cost_total, date_string, humanized_string, safeTime);
+        
+        this.setState({
+            distanceTravelled: 0,
+            speed: 0,
+            prevCoords: {},
+            prevTimestamp: 0,
+            running: false, 
+            stopwatchStart: false, 
+            stopwatchReset: true,
+            speed_test: 0,
+            safeTime: true,
+            updatesEnabled: false
+        });
+        Toast.show("Journey has come to an end")
     }
 
     calcCost(distance){
-        var cost_total = distance * (db_input.distance / 100)
         
-        return cost_total
+        //driving after sunset or before sunrise multiplier
+        var unsafetime_addition = 0
+        if (!this.state.safeTime) {
+            unsafetime_addition = (distance * (db_input.safeTime_multiplier/100))
+        }
+
+        const distance_addition = distance * (db_input.distance / 100)
+
+        const total = distance_addition + unsafetime_addition
+        Toast.show(distance_addition + " + " + unsafetime_addition + " = " + total, Toast.LONG)
+        return total.toFixed(2)
         //TODO refine algorithm
     }
 
-    journeyCreate(distance, duration, cost_total, date, humanized_date){
+    calcSpeed(prevTimestamp, newTimestamp, distance) {
+        console.log("\n-----------\nPrevious Time Stamp: " + prevTimestamp)
+        console.log(new Date(prevTimestamp).getMilliseconds())
+        console.log(new Date(prevTimestamp).getSeconds())
+        console.log(new Date(prevTimestamp).getMinutes())
+        console.log(new Date(prevTimestamp).getHours() + "\n--------------\n")
+
+        console.log("\n-----------\nNew Time Stamp: " + newTimestamp)
+        console.log(new Date(newTimestamp).getMilliseconds())
+        console.log(new Date(newTimestamp).getSeconds())
+        console.log(new Date(newTimestamp).getMinutes())
+        console.log(new Date(newTimestamp).getHours() + "\n-------------\n")
+
+        const unix_time = new Date(newTimestamp).getTime() - new Date(prevTimestamp).getTime()
+
+        console.log("\n---------------\nTime interval: " + unix_time + "\n------------\n")
+    
+        var speed = 0
+        if(distance != 0){
+            speed = distance / ((((unix_time)/1000)/60)/60) //convert to km/hr
+        }
+
+        console.log("\n\n\n----------- \nDistance: " + distance + "\nUnix Time Seconds: " + unix_time + "\nSpeed: " + speed + "\n--------\n\n\n")
+        return speed
+    }
+
+    calcDistance(start, end){
+        const distance = haversine(start, end, {unit: 'km'}) || 0
+        return distance
+    }
+
+    journeyCreate(distance, duration, cost_total, date, humanized_date, safeTime){
         const data = {
             distance: distance,
             duration: duration,
             cost: cost_total,
             date: date,
-            humanized_date: humanized_date
+            humanized_date: humanized_date,
+            safeTime: safeTime
         }
         const { currentUser } = firebase.auth();
         console.log(data)
@@ -199,16 +398,6 @@ class TrackJourney extends Component {
         }
     }
 
-    componentDidMount() {        
-        firebase.database().ref(`/users/I0QJcZvnkZV3WkqgXvyMkoIIysY2/algorithm/`).once('value')
-            .then((snapshot) => {
-                db_input.distance = snapshot.val().distance
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-    }
-
     render() {
         return(
             <View style={styles.main}>
@@ -237,13 +426,26 @@ class TrackJourney extends Component {
                         <View style={styles.summary}>
                             <Text>SUMMARY</Text>
                             <Text style={{ fontSize: 40 }}>{parseFloat(this.state.distanceTravelled).toFixed(2)} km</Text>
-                            <Text style={{ fontSize: 40 }}>{parseFloat(this.state.speed).toFixed(2)} km/hr</Text>
+                            <Text style={{ fontSize: 40 }}>{parseFloat(this.state.speed_test.toString()).toFixed(2)} km/hr</Text>
                             <Stopwatch 
                                 start={this.state.stopwatchStart}
                                 reset={this.state.stopwatchReset}
                                 options={stopwatchOptions}
                                 getTime={(time) => this.getFormattedTime(time)} 
-                            />  
+                            /> 
+                            { this.state.safeTime ? 
+                                (<Icon 
+                                    name='eye'
+                                    type='feather'
+                                    color="green"
+                                />)
+                                :
+                                (<Icon 
+                                    name='eye-off'
+                                    type='feather'
+                                    color="red"
+                                />)
+                            } 
                         </View>           
                     ) : (
                         <View>

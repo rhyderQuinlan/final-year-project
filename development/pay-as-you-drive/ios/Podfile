@@ -43,4 +43,6 @@ target 'pay_as_you_drive' do
 
   # Automatically detect installed unimodules
   use_unimodules!
+  pod 'react-native-location', :path => '../node_modules/react-native-location'
+
 end

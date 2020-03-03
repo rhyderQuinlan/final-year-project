@@ -13,6 +13,7 @@ import TrackJourney from './src/screens/TrackJourney';
 import MoreScreen from './src/screens/MoreScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import AdminScreen from './src/screens/AdminScreen';
+import RNLocationScreen from './src/screens/RNLocationScreen';
 
 console.disableYellowBox = true
 
@@ -89,6 +90,12 @@ const MainNavigator = createStackNavigator(
       screen: AdminScreen,
       navigationOptions: {
         title: 'Admin Settings',
+      }
+    },
+    RNLocationScreen:{
+      screen: RNLocationScreen,
+      navigationOptions: {
+        title: 'RNLocation Screen',
       }
     },
     BottomTab: {

@@ -1,0 +1,538 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:1:1-55:12
+INJECTED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:1:1-55:12
+INJECTED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:1:1-55:12
+INJECTED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:1:1-55:12
+MERGED from [:react-native-fused-location] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/react-native-fused-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
+MERGED from [:react-native-location] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/react-native-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
+MERGED from [:react-native-screens] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/react-native-screens/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
+MERGED from [:react-native-reanimated] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/react-native-reanimated/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
+MERGED from [:react-native-gesture-handler] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/react-native-gesture-handler/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
+MERGED from [:expo-permissions] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-permissions/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
+MERGED from [:unimodules-react-native-adapter] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/@unimodules/react-native-adapter/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
+MERGED from [com.facebook.react:react-native:0.61.5] /root/.gradle/caches/transforms-1/files-1.1/jetified-react-native-0.61.5.aar/8cf6d86898b5d91b4c6856a848293cd7/AndroidManifest.xml:2:1-13:12
+MERGED from [com.google.android.material:material:1.1.0] /root/.gradle/caches/transforms-1/files-1.1/material-1.1.0.aar/78a387eebbdb3387544638b106c0a98e/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.appcompat:appcompat:1.1.0] /root/.gradle/caches/transforms-1/files-1.1/appcompat-1.1.0.aar/4f2bb82c1f33baf42572776ea4b96218/AndroidManifest.xml:17:1-24:12
+MERGED from [:expo-app-loader-provider] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-app-loader-provider/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
+MERGED from [:expo-constants] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-constants/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
+MERGED from [:expo-error-recovery] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-error-recovery/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
+MERGED from [:expo-file-system] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-30:12
+MERGED from [:expo-font] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-font/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
+MERGED from [:expo-keep-awake] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-keep-awake/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
+MERGED from [:expo-linear-gradient] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-linear-gradient/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
+MERGED from [:expo-location] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-21:12
+MERGED from [:expo-sqlite] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-sqlite/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
+MERGED from [:expo-web-browser] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-web-browser/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
+MERGED from [:unimodules-barcode-scanner-interface] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/unimodules-barcode-scanner-interface/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
+MERGED from [:unimodules-camera-interface] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/unimodules-camera-interface/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
+MERGED from [:unimodules-constants-interface] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/unimodules-constants-interface/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
+MERGED from [:unimodules-face-detector-interface] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/unimodules-face-detector-interface/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
+MERGED from [:unimodules-file-system-interface] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/unimodules-file-system-interface/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
+MERGED from [:unimodules-font-interface] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/unimodules-font-interface/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
+MERGED from [:unimodules-permissions-interface] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/unimodules-permissions-interface/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
+MERGED from [:unimodules-task-manager-interface] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/unimodules-task-manager-interface/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
+MERGED from [:unimodules-core] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/@unimodules/core/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
+MERGED from [:unimodules-image-loader-interface] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/unimodules-image-loader-interface/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
+MERGED from [:unimodules-sensors-interface] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/unimodules-sensors-interface/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
+MERGED from [org.webkit:android-jsc:r245459] /root/.gradle/caches/transforms-1/files-1.1/android-jsc-r245459.aar/f1b296ee42c839f77028fbb6d0db2119/AndroidManifest.xml:2:1-11:12
+MERGED from [com.google.android.gms:play-services-location:16.0.0] /root/.gradle/caches/transforms-1/files-1.1/jetified-play-services-location-16.0.0.aar/b52246382c81ee9cd1df14fafb470c6e/AndroidManifest.xml:2:1-9:12
+MERGED from [com.github.bumptech.glide:glide:4.9.0] /root/.gradle/caches/transforms-1/files-1.1/jetified-glide-4.9.0.aar/daaea7ddbf775b51ebd41af2552f72fd/AndroidManifest.xml:2:1-12:12
+MERGED from [com.google.android.gms:play-services-base:16.0.1] /root/.gradle/caches/transforms-1/files-1.1/jetified-play-services-base-16.0.1.aar/7affd837f3c002e0b31887403846f464/AndroidManifest.xml:17:1-29:12
+MERGED from [com.google.android.gms:play-services-places-placereport:16.0.0] /root/.gradle/caches/transforms-1/files-1.1/play-services-places-placereport-16.0.0.aar/b460b95f35c9ec7ac81b7df91928369e/AndroidManifest.xml:17:1-24:12
+MERGED from [com.google.android.gms:play-services-tasks:16.0.1] /root/.gradle/caches/transforms-1/files-1.1/jetified-play-services-tasks-16.0.1.aar/5c511697567c05f99993cbc85daf69f7/AndroidManifest.xml:2:1-9:12
+MERGED from [com.google.android.gms:play-services-basement:16.0.1] /root/.gradle/caches/transforms-1/files-1.1/jetified-play-services-basement-16.0.1.aar/9b3930ac53b0f7badce53b7f5cb20ea7/AndroidManifest.xml:17:1-28:12
+MERGED from [androidx.legacy:legacy-support-v4:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/legacy-support-v4-1.0.0.aar/659e30f83b4fe64d647d16ccb92e54d4/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.viewpager2:viewpager2:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/viewpager2-1.0.0.aar/0828b237cd79ba4775e0e882846a912c/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.fragment:fragment:1.2.1] /root/.gradle/caches/transforms-1/files-1.1/fragment-1.2.1.aar/ed652709daa0f1e47fd75e32afa78597/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.browser:browser:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/browser-1.0.0.aar/b5e7c4f62a718a6317f21d2d85661232/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/legacy-support-core-ui-1.0.0.aar/56cfeef8503e5d95429ff2181fdaa964/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.1.0] /root/.gradle/caches/transforms-1/files-1.1/coordinatorlayout-1.1.0.aar/d087a1018200d0555303a57ba0471a22/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/swiperefreshlayout-1.0.0.aar/30a7d28d49c84a8142dcf0424da499ae/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.transition:transition:1.2.0] /root/.gradle/caches/transforms-1/files-1.1/transition-1.2.0.aar/91743015ea5eaf5c0ba0813f069f65cc/AndroidManifest.xml:17:1-24:12
+MERGED from [com.facebook.fresco:fresco:2.0.0] /root/.gradle/caches/transforms-1/files-1.1/fresco-2.0.0.aar/5b43058d8465b7e4411e1b61ca9324fd/AndroidManifest.xml:2:1-9:12
+MERGED from [com.facebook.fresco:imagepipeline-okhttp3:2.0.0] /root/.gradle/caches/transforms-1/files-1.1/imagepipeline-okhttp3-2.0.0.aar/0092c8bb04344023a0dbc53c4739442e/AndroidManifest.xml:2:1-9:12
+MERGED from [com.facebook.fresco:drawee:2.0.0] /root/.gradle/caches/transforms-1/files-1.1/drawee-2.0.0.aar/c75d31d23a2717666c0028775bfe7402/AndroidManifest.xml:2:1-9:12
+MERGED from [com.facebook.fresco:nativeimagefilters:2.0.0] /root/.gradle/caches/transforms-1/files-1.1/nativeimagefilters-2.0.0.aar/5cc3df3080c972ad2f200f4f0616461c/AndroidManifest.xml:2:1-9:12
+MERGED from [com.facebook.fresco:imagepipeline:2.0.0] /root/.gradle/caches/transforms-1/files-1.1/imagepipeline-2.0.0.aar/770d4a5962b4739c63912c9a01e897d1/AndroidManifest.xml:2:1-9:12
+MERGED from [com.facebook.fresco:nativeimagetranscoder:2.0.0] /root/.gradle/caches/transforms-1/files-1.1/nativeimagetranscoder-2.0.0.aar/449bf4ada7b642397230832e9fcef529/AndroidManifest.xml:2:1-9:12
+MERGED from [com.facebook.fresco:imagepipeline-base:2.0.0] /root/.gradle/caches/transforms-1/files-1.1/imagepipeline-base-2.0.0.aar/13e22fa7acc1fb332fa3b3db56c6fe94/AndroidManifest.xml:2:1-9:12
+MERGED from [com.facebook.soloader:soloader:0.6.0] /root/.gradle/caches/transforms-1/files-1.1/soloader-0.6.0.aar/380887e895b98b3b336625ac565474f4/AndroidManifest.xml:2:1-13:12
+MERGED from [com.github.bumptech.glide:gifdecoder:4.9.0] /root/.gradle/caches/transforms-1/files-1.1/jetified-gifdecoder-4.9.0.aar/98472d72e415ba4f54f144f230353187/AndroidManifest.xml:2:1-11:12
+MERGED from [androidx.appcompat:appcompat-resources:1.1.0] /root/.gradle/caches/transforms-1/files-1.1/appcompat-resources-1.1.0.aar/a919bedf5fe23cf0b21470a4690d1838/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/drawerlayout-1.0.0.aar/97a6e390ecb5045cd81ba65506e40f02/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.viewpager:viewpager:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/viewpager-1.0.0.aar/795f5b26a7858939edef73828a81bbea/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/legacy-support-core-utils-1.0.0.aar/7460731ad7e98a0b29fc3331200a30c7/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.loader:loader:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/loader-1.0.0.aar/664a747cbe6f727af57dda328e61b041/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.activity:activity:1.1.0] /root/.gradle/caches/transforms-1/files-1.1/activity-1.1.0.aar/6b072d433f22288ec43cb7498479ed19/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.recyclerview:recyclerview:1.1.0] /root/.gradle/caches/transforms-1/files-1.1/recyclerview-1.1.0.aar/4d08f498bc0b5f44524fc5a3b3caeb56/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.slidingpanelayout:slidingpanelayout:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/slidingpanelayout-1.0.0.aar/613fcd4341f7683440b53801da54f44c/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.customview:customview:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/customview-1.0.0.aar/88720283d752734c9b39ba436a0bca39/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /root/.gradle/caches/transforms-1/files-1.1/vectordrawable-animated-1.1.0.aar/533cea2659f33e794baca1d03c08deb4/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /root/.gradle/caches/transforms-1/files-1.1/vectordrawable-1.1.0.aar/dd4c8ed698aa720338f5418614c8466b/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.media:media:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/media-1.0.0.aar/cb90f846974978c8c5f293951eba482b/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/asynclayoutinflater-1.0.0.aar/ea9266ac8b93ec15a50eb384f831cfd0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.core:core:1.1.0] /root/.gradle/caches/transforms-1/files-1.1/core-1.1.0.aar/1ccc7b22b8551eb31d61fd38261c43df/AndroidManifest.xml:17:1-26:12
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/cursoradapter-1.0.0.aar/06c8506437f69f675f38c58e201e4e83/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] /root/.gradle/caches/transforms-1/files-1.1/versionedparcelable-1.1.0.aar/002b6e97d5b1e573080a76693732bda7/AndroidManifest.xml:17:1-27:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.2.0] /root/.gradle/caches/transforms-1/files-1.1/lifecycle-viewmodel-savedstate-2.2.0.aar/ada1e971cab7ca7abf723f9f5d024ee9/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.2.0] /root/.gradle/caches/transforms-1/files-1.1/lifecycle-viewmodel-2.2.0.aar/312254acc7f0f98cfb8827f97ac92a54/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.interpolator:interpolator:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/interpolator-1.0.0.aar/bd49b7e3f0e6afc9d1c77fed1f730f1b/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.cardview:cardview:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/cardview-1.0.0.aar/c899dfefed90fe5fa04c017d7f0d4224/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.2.0] /root/.gradle/caches/transforms-1/files-1.1/lifecycle-runtime-2.2.0.aar/aa2e5a8379ba73b1247483b9927c17bc/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.savedstate:savedstate:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/savedstate-1.0.0.aar/d538e9b0528c2fd28d8aca878c1aa4ac/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] /root/.gradle/caches/transforms-1/files-1.1/lifecycle-livedata-2.0.0.aar/205177009475e0644dba7924376d8db1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.2.0] /root/.gradle/caches/transforms-1/files-1.1/lifecycle-livedata-core-2.2.0.aar/a8196df62c98447e62916929783f40a5/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.arch.core:core-runtime:2.1.0] /root/.gradle/caches/transforms-1/files-1.1/core-runtime-2.1.0.aar/a0917f5be7dfbd13e9b8cd63760cd085/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.documentfile:documentfile:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/documentfile-1.0.0.aar/c9a69cbe41c7689c0a3c73de18e8f5a2/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/localbroadcastmanager-1.0.0.aar/59968fe46031533354ae4eed217621ae/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.print:print:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/print-1.0.0.aar/53e7ebb4b1bd927302849c2d7324ec75/AndroidManifest.xml:17:1-22:12
+MERGED from [io.nlopez.smartlocation:library:3.2.11] /root/.gradle/caches/transforms-1/files-1.1/jetified-library-3.2.11.aar/9dcbee9584be74edf6b75d9609d3d3b9/AndroidManifest.xml:2:1-30:12
+MERGED from [com.facebook.fresco:fbcore:2.0.0] /root/.gradle/caches/transforms-1/files-1.1/jetified-fbcore-2.0.0.aar/41051a488d93edb4e37492b955044264/AndroidManifest.xml:2:1-9:12
+INJECTED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:1:1-55:12
+INJECTED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:1:1-55:12
+INJECTED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:1:1-55:12
+	package
+		ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:2:5-35
+		INJECTED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml
+		INJECTED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml
+		ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:1:1-55:12
+		INJECTED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml
+	android:versionCode
+		INJECTED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml
+		ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:1:1-55:12
+		INJECTED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:1:11-69
+uses-permission#android.permission.INTERNET
+ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:4:5-67
+MERGED from [:expo-file-system] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:12:5-67
+MERGED from [:expo-file-system] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:12:5-67
+	android:name
+		ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:4:22-64
+uses-permission#android.permission.SYSTEM_ALERT_WINDOW
+ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:5:5-77
+	android:name
+		ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:5:22-75
+uses-permission#android.permission.MANAGE_DOCUMENTS
+ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:8:5-75
+	android:name
+		ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:8:22-72
+uses-permission#android.permission.READ_INTERNAL_STORAGE
+ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:9:5-80
+	android:name
+		ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:9:22-77
+uses-permission#android.permission.READ_PHONE_STATE
+ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:10:5-75
+	android:name
+		ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:10:22-72
+uses-permission#android.permission.USE_FINGERPRINT
+ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:11:5-74
+	android:name
+		ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:11:22-71
+uses-permission#android.permission.VIBRATE
+ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:12:5-66
+	android:name
+		ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:12:22-63
+uses-permission#android.permission.MODIFY_AUDIO_SETTINGS
+ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:13:5-80
+	android:name
+		ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:13:22-77
+uses-permission#android.permission.ACCESS_COARSE_LOCATION
+ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:16:5-81
+MERGED from [:react-native-location] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/react-native-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:9:5-81
+MERGED from [:react-native-location] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/react-native-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:9:5-81
+MERGED from [:expo-location] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:11:5-81
+MERGED from [:expo-location] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:11:5-81
+MERGED from [io.nlopez.smartlocation:library:3.2.11] /root/.gradle/caches/transforms-1/files-1.1/jetified-library-3.2.11.aar/9dcbee9584be74edf6b75d9609d3d3b9/AndroidManifest.xml:12:5-81
+MERGED from [io.nlopez.smartlocation:library:3.2.11] /root/.gradle/caches/transforms-1/files-1.1/jetified-library-3.2.11.aar/9dcbee9584be74edf6b75d9609d3d3b9/AndroidManifest.xml:12:5-81
+	android:name
+		ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:16:22-78
+uses-permission#android.permission.ACCESS_FINE_LOCATION
+ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:17:5-79
+MERGED from [:expo-location] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:12:5-79
+MERGED from [:expo-location] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:12:5-79
+MERGED from [io.nlopez.smartlocation:library:3.2.11] /root/.gradle/caches/transforms-1/files-1.1/jetified-library-3.2.11.aar/9dcbee9584be74edf6b75d9609d3d3b9/AndroidManifest.xml:14:5-79
+MERGED from [io.nlopez.smartlocation:library:3.2.11] /root/.gradle/caches/transforms-1/files-1.1/jetified-library-3.2.11.aar/9dcbee9584be74edf6b75d9609d3d3b9/AndroidManifest.xml:14:5-79
+	android:name
+		ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:17:22-76
+uses-permission#android.permission.CAMERA
+ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:18:5-65
+	android:name
+		ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:18:22-62
+uses-permission#android.permission.READ_CONTACTS
+ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:19:5-72
+	android:name
+		ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:19:22-69
+uses-permission#android.permission.READ_CALENDAR
+ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:20:5-72
+	android:name
+		ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:20:22-69
+uses-permission#android.permission.WRITE_CALENDAR
+ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:21:5-73
+	android:name
+		ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:21:22-70
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:22:5-80
+MERGED from [:expo-file-system] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:14:5-80
+MERGED from [:expo-file-system] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:14:5-80
+	android:name
+		ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:22:22-77
+uses-permission#android.permission.RECORD_AUDIO
+ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:23:5-71
+	android:name
+		ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:23:22-68
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:24:5-81
+MERGED from [:expo-file-system] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:13:5-81
+MERGED from [:expo-file-system] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:13:5-81
+	android:name
+		ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:24:22-78
+uses-permission#android.permission.WRITE_SETTINGS
+ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:25:5-73
+	android:name
+		ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:25:22-70
+permission#android.permission.ACCESS_COARSE_LOCATION
+ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:28:5-30:51
+	android:protectionLevel
+		ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:30:13-48
+	android:name
+		ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:29:13-69
+permission#android.permission.ACCESS_FINE_LOCATION
+ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:31:5-33:50
+	android:protectionLevel
+		ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:33:13-48
+	android:name
+		ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:32:13-67
+application
+ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:35:5-53:19
+MERGED from [com.facebook.react:react-native:0.61.5] /root/.gradle/caches/transforms-1/files-1.1/jetified-react-native-0.61.5.aar/8cf6d86898b5d91b4c6856a848293cd7/AndroidManifest.xml:11:5-20
+MERGED from [com.facebook.react:react-native:0.61.5] /root/.gradle/caches/transforms-1/files-1.1/jetified-react-native-0.61.5.aar/8cf6d86898b5d91b4c6856a848293cd7/AndroidManifest.xml:11:5-20
+MERGED from [com.google.android.material:material:1.1.0] /root/.gradle/caches/transforms-1/files-1.1/material-1.1.0.aar/78a387eebbdb3387544638b106c0a98e/AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.material:material:1.1.0] /root/.gradle/caches/transforms-1/files-1.1/material-1.1.0.aar/78a387eebbdb3387544638b106c0a98e/AndroidManifest.xml:22:5-20
+MERGED from [:expo-file-system] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:17:5-28:19
+MERGED from [:expo-file-system] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:17:5-28:19
+MERGED from [:expo-location] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:15:5-19:19
+MERGED from [:expo-location] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:15:5-19:19
+MERGED from [com.google.android.gms:play-services-location:16.0.0] /root/.gradle/caches/transforms-1/files-1.1/jetified-play-services-location-16.0.0.aar/b52246382c81ee9cd1df14fafb470c6e/AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-location:16.0.0] /root/.gradle/caches/transforms-1/files-1.1/jetified-play-services-location-16.0.0.aar/b52246382c81ee9cd1df14fafb470c6e/AndroidManifest.xml:7:5-20
+MERGED from [com.github.bumptech.glide:glide:4.9.0] /root/.gradle/caches/transforms-1/files-1.1/jetified-glide-4.9.0.aar/daaea7ddbf775b51ebd41af2552f72fd/AndroidManifest.xml:10:5-20
+MERGED from [com.github.bumptech.glide:glide:4.9.0] /root/.gradle/caches/transforms-1/files-1.1/jetified-glide-4.9.0.aar/daaea7ddbf775b51ebd41af2552f72fd/AndroidManifest.xml:10:5-20
+MERGED from [com.google.android.gms:play-services-base:16.0.1] /root/.gradle/caches/transforms-1/files-1.1/jetified-play-services-base-16.0.1.aar/7affd837f3c002e0b31887403846f464/AndroidManifest.xml:22:5-27:19
+MERGED from [com.google.android.gms:play-services-base:16.0.1] /root/.gradle/caches/transforms-1/files-1.1/jetified-play-services-base-16.0.1.aar/7affd837f3c002e0b31887403846f464/AndroidManifest.xml:22:5-27:19
+MERGED from [com.google.android.gms:play-services-places-placereport:16.0.0] /root/.gradle/caches/transforms-1/files-1.1/play-services-places-placereport-16.0.0.aar/b460b95f35c9ec7ac81b7df91928369e/AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.gms:play-services-places-placereport:16.0.0] /root/.gradle/caches/transforms-1/files-1.1/play-services-places-placereport-16.0.0.aar/b460b95f35c9ec7ac81b7df91928369e/AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.gms:play-services-tasks:16.0.1] /root/.gradle/caches/transforms-1/files-1.1/jetified-play-services-tasks-16.0.1.aar/5c511697567c05f99993cbc85daf69f7/AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-tasks:16.0.1] /root/.gradle/caches/transforms-1/files-1.1/jetified-play-services-tasks-16.0.1.aar/5c511697567c05f99993cbc85daf69f7/AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-basement:16.0.1] /root/.gradle/caches/transforms-1/files-1.1/jetified-play-services-basement-16.0.1.aar/9b3930ac53b0f7badce53b7f5cb20ea7/AndroidManifest.xml:22:5-26:19
+MERGED from [com.google.android.gms:play-services-basement:16.0.1] /root/.gradle/caches/transforms-1/files-1.1/jetified-play-services-basement-16.0.1.aar/9b3930ac53b0f7badce53b7f5cb20ea7/AndroidManifest.xml:22:5-26:19
+MERGED from [com.facebook.soloader:soloader:0.6.0] /root/.gradle/caches/transforms-1/files-1.1/soloader-0.6.0.aar/380887e895b98b3b336625ac565474f4/AndroidManifest.xml:11:5-20
+MERGED from [com.facebook.soloader:soloader:0.6.0] /root/.gradle/caches/transforms-1/files-1.1/soloader-0.6.0.aar/380887e895b98b3b336625ac565474f4/AndroidManifest.xml:11:5-20
+MERGED from [com.github.bumptech.glide:gifdecoder:4.9.0] /root/.gradle/caches/transforms-1/files-1.1/jetified-gifdecoder-4.9.0.aar/98472d72e415ba4f54f144f230353187/AndroidManifest.xml:9:5-20
+MERGED from [com.github.bumptech.glide:gifdecoder:4.9.0] /root/.gradle/caches/transforms-1/files-1.1/jetified-gifdecoder-4.9.0.aar/98472d72e415ba4f54f144f230353187/AndroidManifest.xml:9:5-20
+MERGED from [androidx.core:core:1.1.0] /root/.gradle/caches/transforms-1/files-1.1/core-1.1.0.aar/1ccc7b22b8551eb31d61fd38261c43df/AndroidManifest.xml:24:5-89
+MERGED from [androidx.core:core:1.1.0] /root/.gradle/caches/transforms-1/files-1.1/core-1.1.0.aar/1ccc7b22b8551eb31d61fd38261c43df/AndroidManifest.xml:24:5-89
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] /root/.gradle/caches/transforms-1/files-1.1/versionedparcelable-1.1.0.aar/002b6e97d5b1e573080a76693732bda7/AndroidManifest.xml:24:5-25:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] /root/.gradle/caches/transforms-1/files-1.1/versionedparcelable-1.1.0.aar/002b6e97d5b1e573080a76693732bda7/AndroidManifest.xml:24:5-25:19
+MERGED from [io.nlopez.smartlocation:library:3.2.11] /root/.gradle/caches/transforms-1/files-1.1/jetified-library-3.2.11.aar/9dcbee9584be74edf6b75d9609d3d3b9/AndroidManifest.xml:18:5-28:19
+MERGED from [io.nlopez.smartlocation:library:3.2.11] /root/.gradle/caches/transforms-1/files-1.1/jetified-library-3.2.11.aar/9dcbee9584be74edf6b75d9609d3d3b9/AndroidManifest.xml:18:5-28:19
+	android:appComponentFactory
+		ADDED from [androidx.core:core:1.1.0] /root/.gradle/caches/transforms-1/files-1.1/core-1.1.0.aar/1ccc7b22b8551eb31d61fd38261c43df/AndroidManifest.xml:24:18-86
+	android:label
+		ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:37:7-39
+	android:roundIcon
+		ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:39:7-52
+	android:icon
+		ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:38:7-41
+	android:allowBackup
+		ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:40:7-34
+	android:theme
+		ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:41:7-38
+	android:name
+		ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:36:7-38
+activity#com.pay_as_you_drive.MainActivity
+ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:42:7-51:18
+	android:label
+		ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:44:9-41
+	android:windowSoftInputMode
+		ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:46:9-51
+	android:configChanges
+		ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:45:9-79
+	android:name
+		ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:43:9-37
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:47:9-50:25
+action#android.intent.action.MAIN
+ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:48:13-65
+	android:name
+		ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:48:21-62
+category#android.intent.category.LAUNCHER
+ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:49:13-73
+	android:name
+		ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:49:23-70
+activity#com.facebook.react.devsupport.DevSettingsActivity
+ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:52:7-84
+	android:name
+		ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:52:17-81
+uses-sdk
+INJECTED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml
+INJECTED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml
+MERGED from [:react-native-fused-location] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/react-native-fused-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:react-native-fused-location] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/react-native-fused-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:react-native-location] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/react-native-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:react-native-location] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/react-native-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:react-native-screens] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/react-native-screens/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:react-native-screens] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/react-native-screens/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:react-native-reanimated] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/react-native-reanimated/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:react-native-reanimated] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/react-native-reanimated/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:react-native-gesture-handler] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/react-native-gesture-handler/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:react-native-gesture-handler] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/react-native-gesture-handler/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:expo-permissions] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-permissions/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:expo-permissions] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-permissions/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:unimodules-react-native-adapter] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/@unimodules/react-native-adapter/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:unimodules-react-native-adapter] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/@unimodules/react-native-adapter/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [com.facebook.react:react-native:0.61.5] /root/.gradle/caches/transforms-1/files-1.1/jetified-react-native-0.61.5.aar/8cf6d86898b5d91b4c6856a848293cd7/AndroidManifest.xml:7:5-9:41
+MERGED from [com.facebook.react:react-native:0.61.5] /root/.gradle/caches/transforms-1/files-1.1/jetified-react-native-0.61.5.aar/8cf6d86898b5d91b4c6856a848293cd7/AndroidManifest.xml:7:5-9:41
+MERGED from [com.google.android.material:material:1.1.0] /root/.gradle/caches/transforms-1/files-1.1/material-1.1.0.aar/78a387eebbdb3387544638b106c0a98e/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.material:material:1.1.0] /root/.gradle/caches/transforms-1/files-1.1/material-1.1.0.aar/78a387eebbdb3387544638b106c0a98e/AndroidManifest.xml:20:5-44
+MERGED from [androidx.appcompat:appcompat:1.1.0] /root/.gradle/caches/transforms-1/files-1.1/appcompat-1.1.0.aar/4f2bb82c1f33baf42572776ea4b96218/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.appcompat:appcompat:1.1.0] /root/.gradle/caches/transforms-1/files-1.1/appcompat-1.1.0.aar/4f2bb82c1f33baf42572776ea4b96218/AndroidManifest.xml:20:5-22:41
+MERGED from [:expo-app-loader-provider] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-app-loader-provider/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:expo-app-loader-provider] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-app-loader-provider/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:expo-constants] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-constants/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:expo-constants] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-constants/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:expo-error-recovery] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-error-recovery/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:expo-error-recovery] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-error-recovery/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:expo-file-system] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:8:5-10:41
+MERGED from [:expo-file-system] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:8:5-10:41
+MERGED from [:expo-font] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-font/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:expo-font] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-font/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:expo-keep-awake] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-keep-awake/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:expo-keep-awake] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-keep-awake/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:expo-linear-gradient] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-linear-gradient/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:expo-linear-gradient] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-linear-gradient/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:expo-location] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:expo-location] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:expo-sqlite] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-sqlite/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:expo-sqlite] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-sqlite/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:expo-web-browser] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-web-browser/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:expo-web-browser] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-web-browser/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:unimodules-barcode-scanner-interface] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/unimodules-barcode-scanner-interface/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:unimodules-barcode-scanner-interface] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/unimodules-barcode-scanner-interface/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:unimodules-camera-interface] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/unimodules-camera-interface/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:unimodules-camera-interface] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/unimodules-camera-interface/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:unimodules-constants-interface] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/unimodules-constants-interface/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:unimodules-constants-interface] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/unimodules-constants-interface/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:unimodules-face-detector-interface] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/unimodules-face-detector-interface/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:unimodules-face-detector-interface] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/unimodules-face-detector-interface/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:unimodules-file-system-interface] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/unimodules-file-system-interface/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:unimodules-file-system-interface] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/unimodules-file-system-interface/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:unimodules-font-interface] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/unimodules-font-interface/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:unimodules-font-interface] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/unimodules-font-interface/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:unimodules-permissions-interface] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/unimodules-permissions-interface/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:unimodules-permissions-interface] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/unimodules-permissions-interface/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:unimodules-task-manager-interface] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/unimodules-task-manager-interface/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:unimodules-task-manager-interface] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/unimodules-task-manager-interface/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:unimodules-core] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/@unimodules/core/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:unimodules-core] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/@unimodules/core/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:unimodules-image-loader-interface] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/unimodules-image-loader-interface/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:unimodules-image-loader-interface] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/unimodules-image-loader-interface/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:unimodules-sensors-interface] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/unimodules-sensors-interface/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:unimodules-sensors-interface] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/unimodules-sensors-interface/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [org.webkit:android-jsc:r245459] /root/.gradle/caches/transforms-1/files-1.1/android-jsc-r245459.aar/f1b296ee42c839f77028fbb6d0db2119/AndroidManifest.xml:7:5-9:41
+MERGED from [org.webkit:android-jsc:r245459] /root/.gradle/caches/transforms-1/files-1.1/android-jsc-r245459.aar/f1b296ee42c839f77028fbb6d0db2119/AndroidManifest.xml:7:5-9:41
+MERGED from [com.google.android.gms:play-services-location:16.0.0] /root/.gradle/caches/transforms-1/files-1.1/jetified-play-services-location-16.0.0.aar/b52246382c81ee9cd1df14fafb470c6e/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-location:16.0.0] /root/.gradle/caches/transforms-1/files-1.1/jetified-play-services-location-16.0.0.aar/b52246382c81ee9cd1df14fafb470c6e/AndroidManifest.xml:5:5-44
+MERGED from [com.github.bumptech.glide:glide:4.9.0] /root/.gradle/caches/transforms-1/files-1.1/jetified-glide-4.9.0.aar/daaea7ddbf775b51ebd41af2552f72fd/AndroidManifest.xml:6:5-8:41
+MERGED from [com.github.bumptech.glide:glide:4.9.0] /root/.gradle/caches/transforms-1/files-1.1/jetified-glide-4.9.0.aar/daaea7ddbf775b51ebd41af2552f72fd/AndroidManifest.xml:6:5-8:41
+MERGED from [com.google.android.gms:play-services-base:16.0.1] /root/.gradle/caches/transforms-1/files-1.1/jetified-play-services-base-16.0.1.aar/7affd837f3c002e0b31887403846f464/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-base:16.0.1] /root/.gradle/caches/transforms-1/files-1.1/jetified-play-services-base-16.0.1.aar/7affd837f3c002e0b31887403846f464/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-places-placereport:16.0.0] /root/.gradle/caches/transforms-1/files-1.1/play-services-places-placereport-16.0.0.aar/b460b95f35c9ec7ac81b7df91928369e/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-places-placereport:16.0.0] /root/.gradle/caches/transforms-1/files-1.1/play-services-places-placereport-16.0.0.aar/b460b95f35c9ec7ac81b7df91928369e/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-tasks:16.0.1] /root/.gradle/caches/transforms-1/files-1.1/jetified-play-services-tasks-16.0.1.aar/5c511697567c05f99993cbc85daf69f7/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-tasks:16.0.1] /root/.gradle/caches/transforms-1/files-1.1/jetified-play-services-tasks-16.0.1.aar/5c511697567c05f99993cbc85daf69f7/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-basement:16.0.1] /root/.gradle/caches/transforms-1/files-1.1/jetified-play-services-basement-16.0.1.aar/9b3930ac53b0f7badce53b7f5cb20ea7/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-basement:16.0.1] /root/.gradle/caches/transforms-1/files-1.1/jetified-play-services-basement-16.0.1.aar/9b3930ac53b0f7badce53b7f5cb20ea7/AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-v4:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/legacy-support-v4-1.0.0.aar/659e30f83b4fe64d647d16ccb92e54d4/AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-v4:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/legacy-support-v4-1.0.0.aar/659e30f83b4fe64d647d16ccb92e54d4/AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager2:viewpager2:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/viewpager2-1.0.0.aar/0828b237cd79ba4775e0e882846a912c/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.viewpager2:viewpager2:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/viewpager2-1.0.0.aar/0828b237cd79ba4775e0e882846a912c/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.fragment:fragment:1.2.1] /root/.gradle/caches/transforms-1/files-1.1/fragment-1.2.1.aar/ed652709daa0f1e47fd75e32afa78597/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.fragment:fragment:1.2.1] /root/.gradle/caches/transforms-1/files-1.1/fragment-1.2.1.aar/ed652709daa0f1e47fd75e32afa78597/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.browser:browser:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/browser-1.0.0.aar/b5e7c4f62a718a6317f21d2d85661232/AndroidManifest.xml:20:5-44
+MERGED from [androidx.browser:browser:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/browser-1.0.0.aar/b5e7c4f62a718a6317f21d2d85661232/AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/legacy-support-core-ui-1.0.0.aar/56cfeef8503e5d95429ff2181fdaa964/AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/legacy-support-core-ui-1.0.0.aar/56cfeef8503e5d95429ff2181fdaa964/AndroidManifest.xml:20:5-44
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.1.0] /root/.gradle/caches/transforms-1/files-1.1/coordinatorlayout-1.1.0.aar/d087a1018200d0555303a57ba0471a22/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.1.0] /root/.gradle/caches/transforms-1/files-1.1/coordinatorlayout-1.1.0.aar/d087a1018200d0555303a57ba0471a22/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/swiperefreshlayout-1.0.0.aar/30a7d28d49c84a8142dcf0424da499ae/AndroidManifest.xml:20:5-44
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/swiperefreshlayout-1.0.0.aar/30a7d28d49c84a8142dcf0424da499ae/AndroidManifest.xml:20:5-44
+MERGED from [androidx.transition:transition:1.2.0] /root/.gradle/caches/transforms-1/files-1.1/transition-1.2.0.aar/91743015ea5eaf5c0ba0813f069f65cc/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.transition:transition:1.2.0] /root/.gradle/caches/transforms-1/files-1.1/transition-1.2.0.aar/91743015ea5eaf5c0ba0813f069f65cc/AndroidManifest.xml:20:5-22:41
+MERGED from [com.facebook.fresco:fresco:2.0.0] /root/.gradle/caches/transforms-1/files-1.1/fresco-2.0.0.aar/5b43058d8465b7e4411e1b61ca9324fd/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:fresco:2.0.0] /root/.gradle/caches/transforms-1/files-1.1/fresco-2.0.0.aar/5b43058d8465b7e4411e1b61ca9324fd/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:imagepipeline-okhttp3:2.0.0] /root/.gradle/caches/transforms-1/files-1.1/imagepipeline-okhttp3-2.0.0.aar/0092c8bb04344023a0dbc53c4739442e/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:imagepipeline-okhttp3:2.0.0] /root/.gradle/caches/transforms-1/files-1.1/imagepipeline-okhttp3-2.0.0.aar/0092c8bb04344023a0dbc53c4739442e/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:drawee:2.0.0] /root/.gradle/caches/transforms-1/files-1.1/drawee-2.0.0.aar/c75d31d23a2717666c0028775bfe7402/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:drawee:2.0.0] /root/.gradle/caches/transforms-1/files-1.1/drawee-2.0.0.aar/c75d31d23a2717666c0028775bfe7402/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:nativeimagefilters:2.0.0] /root/.gradle/caches/transforms-1/files-1.1/nativeimagefilters-2.0.0.aar/5cc3df3080c972ad2f200f4f0616461c/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:nativeimagefilters:2.0.0] /root/.gradle/caches/transforms-1/files-1.1/nativeimagefilters-2.0.0.aar/5cc3df3080c972ad2f200f4f0616461c/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:imagepipeline:2.0.0] /root/.gradle/caches/transforms-1/files-1.1/imagepipeline-2.0.0.aar/770d4a5962b4739c63912c9a01e897d1/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:imagepipeline:2.0.0] /root/.gradle/caches/transforms-1/files-1.1/imagepipeline-2.0.0.aar/770d4a5962b4739c63912c9a01e897d1/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:nativeimagetranscoder:2.0.0] /root/.gradle/caches/transforms-1/files-1.1/nativeimagetranscoder-2.0.0.aar/449bf4ada7b642397230832e9fcef529/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:nativeimagetranscoder:2.0.0] /root/.gradle/caches/transforms-1/files-1.1/nativeimagetranscoder-2.0.0.aar/449bf4ada7b642397230832e9fcef529/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:imagepipeline-base:2.0.0] /root/.gradle/caches/transforms-1/files-1.1/imagepipeline-base-2.0.0.aar/13e22fa7acc1fb332fa3b3db56c6fe94/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:imagepipeline-base:2.0.0] /root/.gradle/caches/transforms-1/files-1.1/imagepipeline-base-2.0.0.aar/13e22fa7acc1fb332fa3b3db56c6fe94/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.soloader:soloader:0.6.0] /root/.gradle/caches/transforms-1/files-1.1/soloader-0.6.0.aar/380887e895b98b3b336625ac565474f4/AndroidManifest.xml:7:5-9:41
+MERGED from [com.facebook.soloader:soloader:0.6.0] /root/.gradle/caches/transforms-1/files-1.1/soloader-0.6.0.aar/380887e895b98b3b336625ac565474f4/AndroidManifest.xml:7:5-9:41
+MERGED from [com.github.bumptech.glide:gifdecoder:4.9.0] /root/.gradle/caches/transforms-1/files-1.1/jetified-gifdecoder-4.9.0.aar/98472d72e415ba4f54f144f230353187/AndroidManifest.xml:5:5-7:41
+MERGED from [com.github.bumptech.glide:gifdecoder:4.9.0] /root/.gradle/caches/transforms-1/files-1.1/jetified-gifdecoder-4.9.0.aar/98472d72e415ba4f54f144f230353187/AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.appcompat:appcompat-resources:1.1.0] /root/.gradle/caches/transforms-1/files-1.1/appcompat-resources-1.1.0.aar/a919bedf5fe23cf0b21470a4690d1838/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.appcompat:appcompat-resources:1.1.0] /root/.gradle/caches/transforms-1/files-1.1/appcompat-resources-1.1.0.aar/a919bedf5fe23cf0b21470a4690d1838/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/drawerlayout-1.0.0.aar/97a6e390ecb5045cd81ba65506e40f02/AndroidManifest.xml:20:5-44
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/drawerlayout-1.0.0.aar/97a6e390ecb5045cd81ba65506e40f02/AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/viewpager-1.0.0.aar/795f5b26a7858939edef73828a81bbea/AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/viewpager-1.0.0.aar/795f5b26a7858939edef73828a81bbea/AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/legacy-support-core-utils-1.0.0.aar/7460731ad7e98a0b29fc3331200a30c7/AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/legacy-support-core-utils-1.0.0.aar/7460731ad7e98a0b29fc3331200a30c7/AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/loader-1.0.0.aar/664a747cbe6f727af57dda328e61b041/AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/loader-1.0.0.aar/664a747cbe6f727af57dda328e61b041/AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity:1.1.0] /root/.gradle/caches/transforms-1/files-1.1/activity-1.1.0.aar/6b072d433f22288ec43cb7498479ed19/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.activity:activity:1.1.0] /root/.gradle/caches/transforms-1/files-1.1/activity-1.1.0.aar/6b072d433f22288ec43cb7498479ed19/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.recyclerview:recyclerview:1.1.0] /root/.gradle/caches/transforms-1/files-1.1/recyclerview-1.1.0.aar/4d08f498bc0b5f44524fc5a3b3caeb56/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.recyclerview:recyclerview:1.1.0] /root/.gradle/caches/transforms-1/files-1.1/recyclerview-1.1.0.aar/4d08f498bc0b5f44524fc5a3b3caeb56/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.slidingpanelayout:slidingpanelayout:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/slidingpanelayout-1.0.0.aar/613fcd4341f7683440b53801da54f44c/AndroidManifest.xml:20:5-44
+MERGED from [androidx.slidingpanelayout:slidingpanelayout:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/slidingpanelayout-1.0.0.aar/613fcd4341f7683440b53801da54f44c/AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/customview-1.0.0.aar/88720283d752734c9b39ba436a0bca39/AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/customview-1.0.0.aar/88720283d752734c9b39ba436a0bca39/AndroidManifest.xml:20:5-44
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /root/.gradle/caches/transforms-1/files-1.1/vectordrawable-animated-1.1.0.aar/533cea2659f33e794baca1d03c08deb4/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /root/.gradle/caches/transforms-1/files-1.1/vectordrawable-animated-1.1.0.aar/533cea2659f33e794baca1d03c08deb4/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /root/.gradle/caches/transforms-1/files-1.1/vectordrawable-1.1.0.aar/dd4c8ed698aa720338f5418614c8466b/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /root/.gradle/caches/transforms-1/files-1.1/vectordrawable-1.1.0.aar/dd4c8ed698aa720338f5418614c8466b/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.media:media:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/media-1.0.0.aar/cb90f846974978c8c5f293951eba482b/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media:media:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/media-1.0.0.aar/cb90f846974978c8c5f293951eba482b/AndroidManifest.xml:20:5-44
+MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/asynclayoutinflater-1.0.0.aar/ea9266ac8b93ec15a50eb384f831cfd0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/asynclayoutinflater-1.0.0.aar/ea9266ac8b93ec15a50eb384f831cfd0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.1.0] /root/.gradle/caches/transforms-1/files-1.1/core-1.1.0.aar/1ccc7b22b8551eb31d61fd38261c43df/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.core:core:1.1.0] /root/.gradle/caches/transforms-1/files-1.1/core-1.1.0.aar/1ccc7b22b8551eb31d61fd38261c43df/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/cursoradapter-1.0.0.aar/06c8506437f69f675f38c58e201e4e83/AndroidManifest.xml:20:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/cursoradapter-1.0.0.aar/06c8506437f69f675f38c58e201e4e83/AndroidManifest.xml:20:5-44
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] /root/.gradle/caches/transforms-1/files-1.1/versionedparcelable-1.1.0.aar/002b6e97d5b1e573080a76693732bda7/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] /root/.gradle/caches/transforms-1/files-1.1/versionedparcelable-1.1.0.aar/002b6e97d5b1e573080a76693732bda7/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.2.0] /root/.gradle/caches/transforms-1/files-1.1/lifecycle-viewmodel-savedstate-2.2.0.aar/ada1e971cab7ca7abf723f9f5d024ee9/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.2.0] /root/.gradle/caches/transforms-1/files-1.1/lifecycle-viewmodel-savedstate-2.2.0.aar/ada1e971cab7ca7abf723f9f5d024ee9/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.2.0] /root/.gradle/caches/transforms-1/files-1.1/lifecycle-viewmodel-2.2.0.aar/312254acc7f0f98cfb8827f97ac92a54/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.2.0] /root/.gradle/caches/transforms-1/files-1.1/lifecycle-viewmodel-2.2.0.aar/312254acc7f0f98cfb8827f97ac92a54/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.interpolator:interpolator:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/interpolator-1.0.0.aar/bd49b7e3f0e6afc9d1c77fed1f730f1b/AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/interpolator-1.0.0.aar/bd49b7e3f0e6afc9d1c77fed1f730f1b/AndroidManifest.xml:20:5-44
+MERGED from [androidx.cardview:cardview:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/cardview-1.0.0.aar/c899dfefed90fe5fa04c017d7f0d4224/AndroidManifest.xml:20:5-44
+MERGED from [androidx.cardview:cardview:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/cardview-1.0.0.aar/c899dfefed90fe5fa04c017d7f0d4224/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.2.0] /root/.gradle/caches/transforms-1/files-1.1/lifecycle-runtime-2.2.0.aar/aa2e5a8379ba73b1247483b9927c17bc/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.2.0] /root/.gradle/caches/transforms-1/files-1.1/lifecycle-runtime-2.2.0.aar/aa2e5a8379ba73b1247483b9927c17bc/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.savedstate:savedstate:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/savedstate-1.0.0.aar/d538e9b0528c2fd28d8aca878c1aa4ac/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.savedstate:savedstate:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/savedstate-1.0.0.aar/d538e9b0528c2fd28d8aca878c1aa4ac/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] /root/.gradle/caches/transforms-1/files-1.1/lifecycle-livedata-2.0.0.aar/205177009475e0644dba7924376d8db1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] /root/.gradle/caches/transforms-1/files-1.1/lifecycle-livedata-2.0.0.aar/205177009475e0644dba7924376d8db1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.2.0] /root/.gradle/caches/transforms-1/files-1.1/lifecycle-livedata-core-2.2.0.aar/a8196df62c98447e62916929783f40a5/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.2.0] /root/.gradle/caches/transforms-1/files-1.1/lifecycle-livedata-core-2.2.0.aar/a8196df62c98447e62916929783f40a5/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.arch.core:core-runtime:2.1.0] /root/.gradle/caches/transforms-1/files-1.1/core-runtime-2.1.0.aar/a0917f5be7dfbd13e9b8cd63760cd085/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.arch.core:core-runtime:2.1.0] /root/.gradle/caches/transforms-1/files-1.1/core-runtime-2.1.0.aar/a0917f5be7dfbd13e9b8cd63760cd085/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.documentfile:documentfile:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/documentfile-1.0.0.aar/c9a69cbe41c7689c0a3c73de18e8f5a2/AndroidManifest.xml:20:5-44
+MERGED from [androidx.documentfile:documentfile:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/documentfile-1.0.0.aar/c9a69cbe41c7689c0a3c73de18e8f5a2/AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/localbroadcastmanager-1.0.0.aar/59968fe46031533354ae4eed217621ae/AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/localbroadcastmanager-1.0.0.aar/59968fe46031533354ae4eed217621ae/AndroidManifest.xml:20:5-44
+MERGED from [androidx.print:print:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/print-1.0.0.aar/53e7ebb4b1bd927302849c2d7324ec75/AndroidManifest.xml:20:5-44
+MERGED from [androidx.print:print:1.0.0] /root/.gradle/caches/transforms-1/files-1.1/print-1.0.0.aar/53e7ebb4b1bd927302849c2d7324ec75/AndroidManifest.xml:20:5-44
+MERGED from [io.nlopez.smartlocation:library:3.2.11] /root/.gradle/caches/transforms-1/files-1.1/jetified-library-3.2.11.aar/9dcbee9584be74edf6b75d9609d3d3b9/AndroidManifest.xml:8:5-10:41
+MERGED from [io.nlopez.smartlocation:library:3.2.11] /root/.gradle/caches/transforms-1/files-1.1/jetified-library-3.2.11.aar/9dcbee9584be74edf6b75d9609d3d3b9/AndroidManifest.xml:8:5-10:41
+MERGED from [com.facebook.fresco:fbcore:2.0.0] /root/.gradle/caches/transforms-1/files-1.1/jetified-fbcore-2.0.0.aar/41051a488d93edb4e37492b955044264/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:fbcore:2.0.0] /root/.gradle/caches/transforms-1/files-1.1/jetified-fbcore-2.0.0.aar/41051a488d93edb4e37492b955044264/AndroidManifest.xml:5:5-7:41
+INJECTED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml
+INJECTED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml
+		ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml
+		INJECTED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml
+		ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml
+		INJECTED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml
+uses-permission#android.permission.STORAGE
+ADDED from [:expo-file-system] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:15:5-66
+	android:name
+		ADDED from [:expo-file-system] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:15:22-63
+provider#expo.modules.filesystem.FileSystemFileProvider
+ADDED from [:expo-file-system] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:18:9-27:20
+	android:grantUriPermissions
+		ADDED from [:expo-file-system] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:22:13-47
+	android:authorities
+		ADDED from [:expo-file-system] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:20:13-74
+	android:exported
+		ADDED from [:expo-file-system] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:21:13-37
+	tools:replace
+		ADDED from [:expo-file-system] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:23:13-48
+	android:name
+		ADDED from [:expo-file-system] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:19:13-74
+meta-data#android.support.FILE_PROVIDER_PATHS
+ADDED from [:expo-file-system] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:24:13-26:70
+	android:resource
+		ADDED from [:expo-file-system] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:26:17-67
+	android:name
+		ADDED from [:expo-file-system] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:25:17-67
+uses-permission#android.permission.FOREGROUND_SERVICE
+ADDED from [:expo-location] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:13:5-77
+	android:name
+		ADDED from [:expo-location] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:13:22-74
+service#expo.modules.location.services.LocationTaskService
+ADDED from [:expo-location] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:16:9-18:40
+	android:exported
+		ADDED from [:expo-location] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:18:13-37
+	android:name
+		ADDED from [:expo-location] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/expo-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:17:13-78
+activity#com.google.android.gms.common.api.GoogleApiActivity
+ADDED from [com.google.android.gms:play-services-base:16.0.1] /root/.gradle/caches/transforms-1/files-1.1/jetified-play-services-base-16.0.1.aar/7affd837f3c002e0b31887403846f464/AndroidManifest.xml:23:9-26:75
+	android:exported
+		ADDED from [com.google.android.gms:play-services-base:16.0.1] /root/.gradle/caches/transforms-1/files-1.1/jetified-play-services-base-16.0.1.aar/7affd837f3c002e0b31887403846f464/AndroidManifest.xml:25:13-37
+	android:theme
+		ADDED from [com.google.android.gms:play-services-base:16.0.1] /root/.gradle/caches/transforms-1/files-1.1/jetified-play-services-base-16.0.1.aar/7affd837f3c002e0b31887403846f464/AndroidManifest.xml:26:13-72
+	android:name
+		ADDED from [com.google.android.gms:play-services-base:16.0.1] /root/.gradle/caches/transforms-1/files-1.1/jetified-play-services-base-16.0.1.aar/7affd837f3c002e0b31887403846f464/AndroidManifest.xml:24:13-79
+meta-data#com.google.android.gms.version
+ADDED from [com.google.android.gms:play-services-basement:16.0.1] /root/.gradle/caches/transforms-1/files-1.1/jetified-play-services-basement-16.0.1.aar/9b3930ac53b0f7badce53b7f5cb20ea7/AndroidManifest.xml:23:9-25:69
+	android:value
+		ADDED from [com.google.android.gms:play-services-basement:16.0.1] /root/.gradle/caches/transforms-1/files-1.1/jetified-play-services-basement-16.0.1.aar/9b3930ac53b0f7badce53b7f5cb20ea7/AndroidManifest.xml:25:13-66
+	android:name
+		ADDED from [com.google.android.gms:play-services-basement:16.0.1] /root/.gradle/caches/transforms-1/files-1.1/jetified-play-services-basement-16.0.1.aar/9b3930ac53b0f7badce53b7f5cb20ea7/AndroidManifest.xml:24:13-58
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from [io.nlopez.smartlocation:library:3.2.11] /root/.gradle/caches/transforms-1/files-1.1/jetified-library-3.2.11.aar/9dcbee9584be74edf6b75d9609d3d3b9/AndroidManifest.xml:13:5-79
+	android:name
+		ADDED from [io.nlopez.smartlocation:library:3.2.11] /root/.gradle/caches/transforms-1/files-1.1/jetified-library-3.2.11.aar/9dcbee9584be74edf6b75d9609d3d3b9/AndroidManifest.xml:13:22-76
+uses-permission#com.google.android.providers.gsf.permission.READ_GSERVICES
+ADDED from [io.nlopez.smartlocation:library:3.2.11] /root/.gradle/caches/transforms-1/files-1.1/jetified-library-3.2.11.aar/9dcbee9584be74edf6b75d9609d3d3b9/AndroidManifest.xml:15:5-98
+	android:name
+		ADDED from [io.nlopez.smartlocation:library:3.2.11] /root/.gradle/caches/transforms-1/files-1.1/jetified-library-3.2.11.aar/9dcbee9584be74edf6b75d9609d3d3b9/AndroidManifest.xml:15:22-95
+uses-permission#com.google.android.gms.permission.ACTIVITY_RECOGNITION
+ADDED from [io.nlopez.smartlocation:library:3.2.11] /root/.gradle/caches/transforms-1/files-1.1/jetified-library-3.2.11.aar/9dcbee9584be74edf6b75d9609d3d3b9/AndroidManifest.xml:16:5-94
+	android:name
+		ADDED from [io.nlopez.smartlocation:library:3.2.11] /root/.gradle/caches/transforms-1/files-1.1/jetified-library-3.2.11.aar/9dcbee9584be74edf6b75d9609d3d3b9/AndroidManifest.xml:16:22-91
+service#io.nlopez.smartlocation.activity.providers.ActivityGooglePlayServicesProvider$ActivityRecognitionService
+ADDED from [io.nlopez.smartlocation:library:3.2.11] /root/.gradle/caches/transforms-1/files-1.1/jetified-library-3.2.11.aar/9dcbee9584be74edf6b75d9609d3d3b9/AndroidManifest.xml:19:9-21:40
+	android:exported
+		ADDED from [io.nlopez.smartlocation:library:3.2.11] /root/.gradle/caches/transforms-1/files-1.1/jetified-library-3.2.11.aar/9dcbee9584be74edf6b75d9609d3d3b9/AndroidManifest.xml:21:13-37
+	android:name
+		ADDED from [io.nlopez.smartlocation:library:3.2.11] /root/.gradle/caches/transforms-1/files-1.1/jetified-library-3.2.11.aar/9dcbee9584be74edf6b75d9609d3d3b9/AndroidManifest.xml:20:13-132
+service#io.nlopez.smartlocation.geofencing.providers.GeofencingGooglePlayServicesProvider$GeofencingService
+ADDED from [io.nlopez.smartlocation:library:3.2.11] /root/.gradle/caches/transforms-1/files-1.1/jetified-library-3.2.11.aar/9dcbee9584be74edf6b75d9609d3d3b9/AndroidManifest.xml:22:9-24:40
+	android:exported
+		ADDED from [io.nlopez.smartlocation:library:3.2.11] /root/.gradle/caches/transforms-1/files-1.1/jetified-library-3.2.11.aar/9dcbee9584be74edf6b75d9609d3d3b9/AndroidManifest.xml:24:13-37
+	android:name
+		ADDED from [io.nlopez.smartlocation:library:3.2.11] /root/.gradle/caches/transforms-1/files-1.1/jetified-library-3.2.11.aar/9dcbee9584be74edf6b75d9609d3d3b9/AndroidManifest.xml:23:13-127
+service#io.nlopez.smartlocation.geocoding.providers.AndroidGeocodingProvider$AndroidGeocodingService
+ADDED from [io.nlopez.smartlocation:library:3.2.11] /root/.gradle/caches/transforms-1/files-1.1/jetified-library-3.2.11.aar/9dcbee9584be74edf6b75d9609d3d3b9/AndroidManifest.xml:25:9-27:40
+	android:exported
+		ADDED from [io.nlopez.smartlocation:library:3.2.11] /root/.gradle/caches/transforms-1/files-1.1/jetified-library-3.2.11.aar/9dcbee9584be74edf6b75d9609d3d3b9/AndroidManifest.xml:27:13-37
+	android:name
+		ADDED from [io.nlopez.smartlocation:library:3.2.11] /root/.gradle/caches/transforms-1/files-1.1/jetified-library-3.2.11.aar/9dcbee9584be74edf6b75d9609d3d3b9/AndroidManifest.xml:26:13-120
