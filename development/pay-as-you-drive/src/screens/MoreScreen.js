@@ -33,7 +33,6 @@ class MoreScreen extends Component {
           );
     }
     render() {
-        console.log(firebase.auth().currentUser.email)
         return(
             <View style={styles.container}>
                 <View style={styles.iconContainer}>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   View,
+  YellowBox
 } from 'react-native';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import {createStackNavigator} from 'react-navigation-stack';
@@ -15,7 +16,7 @@ import LoginScreen from './src/screens/LoginScreen';
 import AdminScreen from './src/screens/AdminScreen';
 import RNLocationScreen from './src/screens/RNLocationScreen';
 
-console.disableYellowBox = true
+console.disableYellowBox = true;
 
 const BottomTab = createMaterialBottomTabNavigator(
   {

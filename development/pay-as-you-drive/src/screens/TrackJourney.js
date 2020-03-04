@@ -14,7 +14,8 @@ import {
     TouchableOpacity,
     Dimensions,
     PermissionsAndroid,
-    Platform
+    Platform,
+    YellowBox
 } from 'react-native';
 
 import Toast from 'react-native-simple-toast';
@@ -35,6 +36,8 @@ var db_input = {
     distance: 0,
     safeTime_multiplier: 0
 }
+
+YellowBox.ignoreWarnings(['Setting a timer'])
 
 //TODO Speed limit using Road API
 // const client = new Client({});
@@ -236,6 +239,7 @@ class TrackJourney extends Component {
         const hours = new Date().getHours()
         const date = new Date().getDate()
         const month = new Date().getMonth()
+        console.log("Month: " + month)
         const year = new Date().getFullYear()
 
         const humanized_string = this.humanizeDate(hours, date, month);
@@ -338,40 +342,40 @@ class TrackJourney extends Component {
         date = humanize.ordinal(date)
 
         switch (month) {
-            case 1:
+            case 0:
                 month = "Jan"
                 break;
-            case 2:
+            case 1:
                 month = "Feb"
                 break;
-            case 3:
+            case 2:
                 month = "Mar"
                 break;
-            case 4:
+            case 3:
                 month = "Apr"
                 break;
-            case 5:
+            case 4:
                 month = "May"
                 break;
-            case 6:
+            case 5:
                 month = "Jun"
                 break;
-            case 7:
+            case 6:
                 month = "Jul"
                 break;
-            case 8:
+            case 7:
                 month = "Aug"
                 break;
-            case 9:
+            case 8:
                 month = "Sep"
                 break;
-            case 10:
+            case 9:
                 month = "Oct"
                 break;
-            case 11:
+            case 10:
                 month = "Nov"
                 break;
-            case 12:
+            case 11:
                 month = "Dec"
                 break;        
             default:

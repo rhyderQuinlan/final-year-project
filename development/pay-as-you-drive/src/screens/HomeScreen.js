@@ -8,7 +8,9 @@ import {
     Text,
     Dimensions,
     SectionList,
-    ToastAndroid
+    ToastAndroid,
+    YellowBox,
+    SafeAreaView
 } from 'react-native';
 import LineChart from "react-native-responsive-linechart";
 import firebase from 'firebase';
@@ -40,7 +42,6 @@ class HomeScreen extends Component {
     }
 
     componentDidMount(){
-        Toast.show("ComponentDidMount")
         const { currentUser } = firebase.auth();
 
         if(this.state.list > 0){
@@ -51,7 +52,6 @@ class HomeScreen extends Component {
         }
         
         firebase.database().ref(`/users/${currentUser.uid}/journeys/`).on('value', snapshot => {
-            Toast.show("Calling DB function")
             var journey_list = []
             var amount = 0
             snapshot.forEach((childSub) => {
@@ -60,10 +60,6 @@ class HomeScreen extends Component {
             })
             this.setState({totalAmount: amount, list: journey_list.reverse()})
         })
-    }
-
-    componentWillMount(){
-        Toast.show("ComponentWillMount")
     }
 
     // buildAnalytics(){
@@ -106,7 +102,7 @@ class HomeScreen extends Component {
                     <ScrollView>
                         <FlatList
                             data={this.state.list}
-                            renderItem={({item}) => 
+                            renderItem={({item, index}) => 
                                 <Journey 
                                     style={styles.item}
                                     date={item.humanized_date} 
@@ -114,6 +110,7 @@ class HomeScreen extends Component {
                                     cost={item.cost}
                                     safeTime={item.safeTime}
                                 />}
+                            keyExtractor={(item, index) => index.toString()}
                         />
                     </ScrollView>
                 </View>           

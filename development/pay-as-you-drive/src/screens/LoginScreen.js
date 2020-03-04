@@ -9,13 +9,16 @@ import {
   Image,
   Alert,
   Switch,
-  AsyncStorage
+  AsyncStorage,
+  YellowBox
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import firebase from 'firebase';
 import Toast from 'react-native-simple-toast';
 
 import ButtonComponent from '../components/ButtonComponent';
+
+import _ from 'lodash';
 
 class LoginScreen extends Component {
   constructor(props) {
@@ -182,7 +185,7 @@ class LoginScreen extends Component {
                 <Switch
                   value={this.state.rememberMe}
                   onValueChange={(value) => this.toggleRememberMe(value)}
-                  onTintColor='#191BAF'
+                  trackColor='#191BAF'
                   thumbColor='#F1D302'
                 />
               </View>
