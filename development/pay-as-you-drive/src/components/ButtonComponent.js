@@ -19,7 +19,7 @@ const ButtonComponent = (props) => {
                     name={icon}
                     type={type}
                     style={{marginRight: 10}}
-                    color="#191BAF"
+                    color="white"
                 />
             </TouchableOpacity>
         </View>
@@ -31,7 +31,7 @@ const styles=StyleSheet.create({
         alignSelf: 'center',
         alignContent: 'center',
         width: 250,
-        backgroundColor: '#F1D302',
+        backgroundColor: '#007FF3',
         borderRadius: 400,
         padding: 15,
         flexDirection: 'row',
@@ -41,7 +41,7 @@ const styles=StyleSheet.create({
     text: {
         fontSize: 20,
         marginLeft: 20,
-        color: '#191BAF',
+        color: 'white',
         fontWeight: 'normal'
     },
 });

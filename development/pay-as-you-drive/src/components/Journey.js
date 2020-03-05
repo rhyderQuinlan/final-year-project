@@ -7,40 +7,76 @@ import {
  import { Icon } from 'react-native-elements';
 
 const Journey = (props) => {
-    const {distance, cost, date, safeTime} = props;
+    const {address, distance, cost, date, safeTime} = props;
     return(
-        <View style={styles.container}>
-            <View style={styles.leftContainer}>
-                <Text style={styles.date}>{date}</Text>
-                <Text>{distance} Km</Text>
-                { safeTime ? 
-                    (<Icon 
-                        name='eye'
-                        type='feather'
-                        color="green"
-                    />)
-                    :
-                    (<Icon 
-                        name='eye-off'
-                        type='feather'
-                        color="red"
-                    />)
-                 }
+        <View style={styles.maincontainer}>
+            <View style={styles.uppercontainer}>
+                <View style={styles.leftContainer}>
+                    <View>
+                        <Text style={styles.date}>{date}</Text>
+                        <Text style={{color: '#84828C'}}>{address}</Text>
+                    </View>                
+                </View>
+                <View style={styles.rightContainer}>
+                    <Text style={styles.cost}>€{cost}</Text>
+                </View>
             </View>
-            <View style={styles.rightContainer}>
-                <Text style={styles.cost}>€{cost}</Text>
+            <View style={styles.lowercontainer}>
+                <View style={styles.icon_text_view}>
+                    <Icon 
+                        name='car'
+                        type='antdesign'
+                        color='#84828C'
+                    />
+                    <Text style={{color: '#84828C'}}>  {distance} Km</Text>
+                </View>
+
+                { safeTime ? 
+                    (
+                    <View style={styles.icon_text_view}>
+                        <Icon 
+                            name='eye'
+                            type='feather'
+                            color='#84828C'
+                        />
+                        <Text style={{color: '#84828C'}}>   Good Visibility</Text>
+                    </View>    
+                    )
+                    :
+                    (
+                    <View style={styles.icon_text_view}>
+                        <Icon 
+                            name='eye-off'
+                            type='feather'
+                            color='#84828C'
+                        />
+                        <Text style={{color: '#84828C'}}>   Poor Visibility</Text>
+                    </View> 
+                    )
+                }
             </View>
         </View>
     )
 };
 
 const styles=StyleSheet.create({
-    container: {
-        borderBottomColor: '#8D99AE',
-        borderBottomWidth: 1,
+    maincontainer: {
+        flexDirection: 'column'
+    },
+    uppercontainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        padding: 30
+        paddingLeft: 40,
+        paddingRight: 40,
+        paddingBottom: 15,
+        paddingTop: 15
+    },
+    lowercontainer: {
+        flexDirection: 'row', 
+        justifyContent: 'space-around',
+        borderBottomColor: '#84828C',
+        borderBottomWidth: 1,
+        paddingBottom: 15,
     },
     leftContainer:{
 
@@ -50,11 +86,16 @@ const styles=StyleSheet.create({
     },
     cost:{
         fontSize: 20,
-        fontWeight: 'bold'
+        color: '#007FF3'
     },
     date: {
-        fontSize: 20,
-        fontWeight: 'bold'
+        fontSize: 16,
+    },
+
+    icon_text_view: {
+        flexDirection: 'row', 
+        justifyContent: 'space-between', 
+        textAlignVertical: 'bottom',
     }
 });
 

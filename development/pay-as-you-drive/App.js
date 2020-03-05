@@ -15,6 +15,8 @@ import MoreScreen from './src/screens/MoreScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import AdminScreen from './src/screens/AdminScreen';
 import RNLocationScreen from './src/screens/RNLocationScreen';
+import UserRegistration from './src/screens/Registration/UserRegistration';
+import VehicleRegistration from './src/screens/Registration/VehicleRegistration';
 
 console.disableYellowBox = true;
 
@@ -69,10 +71,10 @@ const BottomTab = createMaterialBottomTabNavigator(
   },
   {
     initialRouteName: 'Home',
-    activeColor: '#191BAF',
-    inactiveColor: '#2B2D42',
+    activeColor: '#FFD559',
+    inactiveColor: '#EFF1F3',
     barStyle: { 
-      backgroundColor: 'white',
+      backgroundColor: '#007FF3',
       elevation: 10
      },
   }
@@ -99,6 +101,20 @@ const MainNavigator = createStackNavigator(
         title: 'RNLocation Screen',
       }
     },
+    UserRegistration:{
+      screen: UserRegistration,
+      navigationOptions: {
+        title: 'User Registration',
+        headerShown: false
+      }
+    },
+    VehicleRegistration:{
+      screen: VehicleRegistration,
+      navigationOptions: {
+        title: 'Vehicle Registration',
+        headerShown: false
+      }
+    },
     BottomTab: {
       screen: BottomTab,
       navigationOptions: {
@@ -117,7 +133,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingTop: 50,
-    backgroundColor: '#ecf0f1',
+    backgroundColor: '#007FF3',
   },
 });
 

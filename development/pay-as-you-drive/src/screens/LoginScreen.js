@@ -19,6 +19,7 @@ import Toast from 'react-native-simple-toast';
 import ButtonComponent from '../components/ButtonComponent';
 
 import _ from 'lodash';
+import FormInput from '../components/FormInput';
 
 class LoginScreen extends Component {
   constructor(props) {
@@ -102,17 +103,11 @@ class LoginScreen extends Component {
 
   signinUser(){
     firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then(() => {
-        this.passwordInput.clear()
-        this.emailInput.clear()
+        // this.passwordInput.clear()
+        // this.emailInput.clear() TODO: commented until fixed
         this.props.navigation.navigate('BottomTab')
     }).catch((error) => {
       this.setState({error:error.message})
-    });
-  }
-
-  createUser(){
-    firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).catch((error) => {
-        this.setState({error: error.message})
     });
   }
 
@@ -136,41 +131,25 @@ class LoginScreen extends Component {
         </View>
         
         <View style={{ flex: 2, justifyContent: 'center' }}>
-          <View style={styles.inputContainer}>
-            <View style={styles.iconTextContainer}>
-              <Icon 
-                    name='email-outline'
-                    type='material-community'
-                    style={styles.inputIcon}
-                    color="#191BAF"
-                />
-                <TextInput 
-                    ref={input => { this.emailInput = input }}
-                    style={styles.inputs}
-                    placeholder="Email"
-                    keyboardType="email-address"
-                    underlineColorAndroid='transparent'
-                    onChangeText={(email) => this.setState({email})}/>
-            </View>
-          </View>
-          
-          <View style={styles.inputContainer}>
-            <View style={styles.iconTextContainer}>
-              <Icon 
-                name='account-key-outline'
-                type='material-community'
-                style={styles.inputIcon}
-                color="#191BAF"
-              />
-              <TextInput 
-                ref={input => { this.passwordInput = input }}
-                style={styles.inputs}
-                placeholder="Password"
-                secureTextEntry={true}
-                underlineColorAndroid='transparent'
-                onChangeText={(password) => this.setState({password})}/>
-            </View>
-          </View>
+          <FormInput
+              icon="email-outline"
+              type="material-community"
+              placeholder="Email"
+              keyboardType='email-address'
+              onChangeText={(email) => this.setState({email})}
+              ref={(input) => { this.emailInput = input }}
+              secureTextEntry={false}
+            />
+
+          <FormInput
+              icon="account-key-outline"
+              type="material-community"
+              placeholder="Password"
+              keyboardType="default"
+              onChangeText={(password) => this.setState({password})}
+              ref={(input) => { this.passwordInput = input }}
+              secureTextEntry={true}
+            />
 
           <View style={{width: 250, alignSelf: 'center'}}>
             <Text style={{textAlign: 'center', color: 'red'}}>{this.state.error}</Text>
@@ -185,8 +164,8 @@ class LoginScreen extends Component {
                 <Switch
                   value={this.state.rememberMe}
                   onValueChange={(value) => this.toggleRememberMe(value)}
-                  trackColor='#191BAF'
-                  thumbColor='#F1D302'
+                  trackColor='#007FF3'
+                  thumbColor='#007FF3'
                 />
               </View>
           </View>
@@ -202,7 +181,7 @@ class LoginScreen extends Component {
               <Text>Forgot your password?</Text>
           </TouchableHighlight>
 
-          <TouchableHighlight style={styles.buttonContainer} onPress={() => this.createUser()}>
+          <TouchableHighlight style={styles.buttonContainer} onPress={() => this.props.navigation.navigate('UserRegistration')}>
               <Text>Register</Text>
           </TouchableHighlight>
         </View>
@@ -216,16 +195,6 @@ const styles = StyleSheet.create({
     flex: 4,
     alignItems: 'center',
   },
-  inputContainer: {
-    borderBottomColor: '#F1D302',
-    backgroundColor: '#FFFFFF',
-    borderBottomWidth: 2,
-    width:'80%',
-    height:55,
-    marginBottom:20,
-    flexDirection: 'row',
-    alignItems:'center'
-  },
   rememberMe: {
     backgroundColor: 'transparent',
     flexDirection: 'row',
@@ -233,15 +202,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     borderBottomColor: 'transparent',
     width:'40%',
-  },
-  inputs:{
-    height:25,
-    marginLeft: 10,
-    width: '80%'
-  },
-  inputIcon:{
-    width:100,
-    height:100,
   },
   iconTextContainer:{
     marginLeft: 10,

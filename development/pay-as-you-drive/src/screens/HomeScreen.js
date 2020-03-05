@@ -43,13 +43,6 @@ class HomeScreen extends Component {
 
     componentDidMount(){
         const { currentUser } = firebase.auth();
-
-        if(this.state.list > 0){
-            console.log("clearing list")
-            this.state.list.forEach((element) => {
-                this.state.list.pop()
-            })
-        }
         
         firebase.database().ref(`/users/${currentUser.uid}/journeys/`).on('value', snapshot => {
             var journey_list = []
@@ -85,7 +78,7 @@ class HomeScreen extends Component {
                 <View style={styles.contentContainer}>
                     <View style={styles.amount}>
                         <View>
-                            <Text style={styles.amountHeader}>€{this.state.totalAmount}</Text>
+                            <Text style={styles.amountHeader}>€{this.state.totalAmount.toFixed(2)}</Text>
                         </View>
                             
                         <View>
@@ -105,6 +98,7 @@ class HomeScreen extends Component {
                             renderItem={({item, index}) => 
                                 <Journey 
                                     style={styles.item}
+                                    address={item.address}
                                     date={item.humanized_date} 
                                     distance={item.distance} 
                                     cost={item.cost}
@@ -136,8 +130,8 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
     },
     analytics:{
-        borderColor: 'black',
-        borderWidth: 1,
+        // borderColor: 'black',
+        // borderWidth: 1,
         flex: 2,
     },
     amountHeader:{
@@ -153,7 +147,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 24,
         paddingTop: 15,
-        color: '#191BAF'
+        color: '#007FF3'
     }
 });
 
