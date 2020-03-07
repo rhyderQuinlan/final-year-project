@@ -7,7 +7,7 @@ import {
  import { Icon } from 'react-native-elements';
 
 const Journey = (props) => {
-    const {address, distance, cost, date, safeTime} = props;
+    const {address, distance, cost, date, nightdrive, vehiclename} = props;
     return(
         <View style={styles.maincontainer}>
             <View style={styles.uppercontainer}>
@@ -15,6 +15,7 @@ const Journey = (props) => {
                     <View>
                         <Text style={styles.date}>{date}</Text>
                         <Text style={{color: '#84828C'}}>{address}</Text>
+                        <Text style={{color: '#84828C'}}>{vehiclename}</Text>
                     </View>                
                 </View>
                 <View style={styles.rightContainer}>
@@ -31,26 +32,26 @@ const Journey = (props) => {
                     <Text style={{color: '#84828C'}}>  {distance} Km</Text>
                 </View>
 
-                { safeTime ? 
+                { nightdrive ? 
                     (
                     <View style={styles.icon_text_view}>
                         <Icon 
-                            name='eye'
+                            name='moon'
                             type='feather'
                             color='#84828C'
                         />
-                        <Text style={{color: '#84828C'}}>   Good Visibility</Text>
+                        <Text style={{color: '#84828C'}}>   Night drive</Text>
                     </View>    
                     )
                     :
                     (
                     <View style={styles.icon_text_view}>
                         <Icon 
-                            name='eye-off'
+                            name='sun'
                             type='feather'
                             color='#84828C'
                         />
-                        <Text style={{color: '#84828C'}}>   Poor Visibility</Text>
+                        <Text style={{color: '#84828C'}}>   Day Drive</Text>
                     </View> 
                     )
                 }

@@ -1,9 +1,10 @@
 //TODO car details
 //verification api
 
-//acting as verify in system
-
-//TODO day/night
+//show no charge when stationary
+//flat rate
+//monthly reset
+//acting as verify in system    
 
 
 import React, { Component } from 'react';
@@ -15,7 +16,8 @@ import {
     Dimensions,
     PermissionsAndroid,
     Platform,
-    YellowBox
+    YellowBox,
+    Picker
 } from 'react-native';
 
 import Toast from 'react-native-simple-toast';
@@ -27,6 +29,7 @@ import Geocoder from 'react-native-geocoding';
 import Geolocation from 'react-native-geolocation-service';
 import ButtonComponent from '../components/ButtonComponent';
 import Select2 from 'react-native-select-two';
+import _ from 'lodash';
 
 import { Client } from "@googlemaps/google-maps-services-js"; //speed limit task
 import { getSunrise, getSunset } from 'sunrise-sunset-js'; //sunrise-sunset task
@@ -34,14 +37,12 @@ import { Icon } from 'react-native-elements';
 import DropdownInput from '../components/DropdownInput';
 
 import { ScrollView, FlatList } from 'react-native-gesture-handler';
+import JourneyOption from '../components/JourneyOption';
 
 const { width, height } = Dimensions.get('window')
 const haversine = require('haversine')
 
-var db_input = {
-    distance: 0,
-    safeTime_multiplier: 0
-}
+var db_input = {}
 
 Geocoder.init("AIzaSyBsJhvcHPCNm5heLKAO69RCtST6oqloGJE")
 
@@ -79,27 +80,33 @@ class TrackJourney extends Component {
             error: '',
             prevTimestamp: 0,
             prevCoords: {},
-            speed_test: 0,
+            journeyCost: 0,
 
             updatesEnabled: true,
             location: {},
-            safeTime: true,
+            nightdrive: false,
             address: null,
+            currentTime: 0,
 
             vehiclelist: [],
-            vehiclekey: '',
-            vehiclename: ''
+            vehiclename: '',
+            vehicletype: '',
+            vehicleyear: 0,
+            vehiclekey: ''
         };
     }  
     
-    componentDidMount() {
+    async componentDidMount() {
         this.hasLocationPermission()
         this.getLocation()
 
-        firebase.database().ref(`/users/I0QJcZvnkZV3WkqgXvyMkoIIysY2/algorithm/`).once('value')
+        await firebase.database().ref(`/algorithm/`).once('value')
             .then((snapshot) => {
                 db_input.distance = snapshot.val().distance
-                db_input.safeTime_multiplier = snapshot.val().safeTime_multiplier
+                db_input.nightdrive_multiplier = snapshot.val().nightdrive_multiplier
+                db_input.lightclass = snapshot.val().lightclass
+                db_input.middleclass = snapshot.val().middleclass
+                db_input.heavyclass = snapshot.val().lightclass
             })
             .catch((error) => {
                 console.log(error)
@@ -110,10 +117,11 @@ class TrackJourney extends Component {
         firebase.database().ref(`/users/${currentUser.uid}/vehicles/`).on('value', snapshot => {
             var vehicle_list = []
             snapshot.forEach((childSub) => {
-                vehicle_list.push({id: childSub.key(), name: childSub.val().name})
+                vehicle_list.push({id: childSub.key, name: childSub.val().name, type: childSub.val().type, year: Number(childSub.val().year)})
             })
             this.setState({vehiclelist: vehicle_list})
         })
+
     }
     
     hasLocationPermission = async () => {
@@ -160,7 +168,6 @@ class TrackJourney extends Component {
                         longitude: position.coords.longitude 
                     } 
                 });
-              console.log(position);
               Geocoder.from(position.coords.latitude, position.coords.longitude)
                 .then(json => {
                     const json_address = json.results[0].address_components
@@ -203,8 +210,6 @@ class TrackJourney extends Component {
               
               const currentTimestamp = position.timestamp
               
-              console.log("--- \nSpeed: " + position.coords.speed + "\n---")
-              
               const speed = this.calcSpeed(
                   prevTimestamp, 
                   currentTimestamp, 
@@ -217,6 +222,8 @@ class TrackJourney extends Component {
                   speed: speed,
                   prevTimestamp: currentTimestamp
               })
+
+              this.calcCost(this.state.distanceTravelled)
             },
             (error) => {
               this.setState({ location: error });
@@ -252,8 +259,14 @@ class TrackJourney extends Component {
         //check driving time is unsafe
         const currentTime = new Date().getTime()
         if (currentTime > getSunset(prevCoords.latitude, prevCoords.longitude) || currentTime < getSunrise(prevCoords.latitude, prevCoords.longitude)) {
-            this.setState({ safeTime: false })
+            this.setState({ nightdrive: true })
         }
+
+        this.state.vehiclelist.forEach((child, index) => {
+            if(child.checked == true){
+                this.setState({ vehiclename: child.name, vehicletype: child.type, vehicleyear: child.year })
+            }
+        })
 
         this.getLocationUpdates()
     }
@@ -264,8 +277,10 @@ class TrackJourney extends Component {
         const duration = this.currentTime;
         const distance = Number(this.state.distanceTravelled).toFixed(3);
         const cost_total = Number(this.calcCost(distance));
-        const safeTime = this.state.safeTime
+        const nightdrive = this.state.nightdrive
         const address = this.state.address
+        const vehiclename = this.state.vehiclename
+        const vehiclekey = this.state.vehiclekey
         
         const hours = new Date().getHours()
         const date = new Date().getDate()
@@ -275,7 +290,7 @@ class TrackJourney extends Component {
         const humanized_string = this.humanizeDate(hours, date, month);
         
         const date_string = `${date}/${month}/${year}`
-        this.journeyCreate(address, distance, duration, cost_total, date_string, humanized_string, safeTime);
+        this.journeyCreate(address, distance, duration, cost_total, date_string, humanized_string, nightdrive, vehiclename, vehiclekey);
         
         this.setState({
             distanceTravelled: 0,
@@ -286,51 +301,55 @@ class TrackJourney extends Component {
             stopwatchStart: false, 
             stopwatchReset: true,
             speed: 0,
-            safeTime: true,
+            nightdrive: false,
             updatesEnabled: false
         });
+
         Toast.show("Journey has come to an end")
     }
 
     calcCost(distance){
-        
         //driving after sunset or before sunrise multiplier
-        var unsafetime_addition = 0
-        if (!this.state.safeTime) {
-            unsafetime_addition = (distance * (db_input.safeTime_multiplier/100))
+        var nightdrive_addition = 0
+        if (!this.state.nightdrive) {
+            nightdrive_addition = distance * db_input.nightdrive_multiplier/100
         }
 
-        const distance_addition = distance * (db_input.distance / 100)
+        switch (this.state.vehicletype) {
+            case 'SUV' || 'Pickup' || 'Minivan':
+                var vehicletype_addition = distance * (db_input.heavyclass / 100)
+                break;
+            case 'Coupe' || 'Roadster' || 'Sedan':
+                var vehicletype_addition = distance * (db_input.middleclass / 100)
+                break;
+            case 'Hatchback':
+                var vehicletype_addition = distance * (db_input.lightclass / 100)
+                break;
+            default:
+                break;
+        }
 
-        const total = distance_addition + unsafetime_addition
-        Toast.show(distance_addition + " + " + unsafetime_addition + " = " + total, Toast.LONG)
-        return total.toFixed(2)
+        var vehicletype_addition = 0
+
+        const distance_addition = distance * db_input.distance / 100
+
+        console.log("------------------------- Algorithm ---------------------------\nDistance: " + distance + " nightdrive_multiplier: " + db_input.nightdrive_multiplier + " vehicletype_addition: " + vehicletype_addition + "\n")
+        console.log(distance_addition + " + " + vehicletype_addition + " + " + nightdrive_addition + "\n---------------------------------------------------------")
+
+        const total = distance_addition + nightdrive_addition + vehicletype_addition
+        this.setState({journeyCost: total})
+        return total
         //TODO refine algorithm
     }
 
     calcSpeed(prevTimestamp, newTimestamp, distance) {
-        console.log("\n-----------\nPrevious Time Stamp: " + prevTimestamp)
-        console.log(new Date(prevTimestamp).getMilliseconds())
-        console.log(new Date(prevTimestamp).getSeconds())
-        console.log(new Date(prevTimestamp).getMinutes())
-        console.log(new Date(prevTimestamp).getHours() + "\n--------------\n")
-
-        console.log("\n-----------\nNew Time Stamp: " + newTimestamp)
-        console.log(new Date(newTimestamp).getMilliseconds())
-        console.log(new Date(newTimestamp).getSeconds())
-        console.log(new Date(newTimestamp).getMinutes())
-        console.log(new Date(newTimestamp).getHours() + "\n-------------\n")
-
         const unix_time = new Date(newTimestamp).getTime() - new Date(prevTimestamp).getTime()
-
-        console.log("\n---------------\nTime interval: " + unix_time + "\n------------\n")
     
         var speed = 0
         if(distance != 0){
             speed = distance / ((((unix_time)/1000)/60)/60) //convert to km/hr
         }
 
-        console.log("\n\n\n----------- \nDistance: " + distance + "\nUnix Time Seconds: " + unix_time + "\nSpeed: " + speed + "\n--------\n\n\n")
         return speed
     }
 
@@ -339,7 +358,7 @@ class TrackJourney extends Component {
         return distance
     }
 
-    journeyCreate(address, distance, duration, cost_total, date, humanized_date, safeTime){
+    journeyCreate(address, distance, duration, cost_total, date, humanized_date, nightdrive, vehiclename, vehiclekey){
         const data = {
             address: address,
             distance: distance,
@@ -347,7 +366,9 @@ class TrackJourney extends Component {
             cost: cost_total,
             date: date,
             humanized_date: humanized_date,
-            safeTime: safeTime
+            nightdrive: nightdrive,
+            vehiclename: vehiclename,
+            vehiclekey: vehiclekey
         }
         const { currentUser } = firebase.auth();
         console.log(data)
@@ -435,76 +456,86 @@ class TrackJourney extends Component {
     render() {
         return(
             <View style={styles.main}>
-                <View>
-                    <Text>Track Journey</Text>
-                </View>
                 <View style={styles.content}>
                     <Text 
                         ref={(info) => this.errorMessage = info}
                     />
-                    <Select2
-                        isSelectSingle
-                        style={{ borderRadius: 5 }}
-                        colorTheme={'#007FF3'}
-                        popupTitle='Select vehicle'
-                        title='Select vehicle'
-                        data={this.state.vehiclelist}
-                        onSelect={data => {
-                            this.setState({ vehiclename: data });
-                        }}
-                        onRemoveItem={data => {
-                            this.setState({ vehiclename: data });
-                        }} 
-                        searchPlaceHolderText='Search Vehicle'
-                        cancelButtonText='Cancel'
-                        selectButtonText='Choose'
-                        listEmptyTitle='No vehicles to show'
-
-                    />
                     {this.state.showCountdown ? (
                         <View>
+                            <Text style={styles.headingtext}>Beginning Journey</Text>
                             <CountDown
                                 until={3}
                                 size={50}
                                 digitStyle={{backgroundColor: ''}}
                                 onFinish={() => this.startJourney()}
-                                digitTxtStyle={{color: '#191BAF'}}
+                                digitTxtStyle={{color: '#007FF3'}}
                                 timeToShow={['S']}
                                 timeLabels={{s: ' '}}
                             />
                         </View>
                         
                     ) : (
-                        null
-                    )}
-                        
-                    {this.state.running ? (
+                        this.state.running ? (
                         <View style={styles.summary}>
-                            <Text>SUMMARY</Text>
-                            <Text style={{ fontSize: 40 }}>{parseFloat(this.state.distanceTravelled).toFixed(2)} km</Text>
-                            <Text style={{ fontSize: 40 }}>{parseFloat(this.state.speed.toString()).toFixed(2)} km/hr</Text>
+                            { this.state.nightdrive ? 
+                                (<JourneyOption 
+                                    name='moon'
+                                    type='feather'
+                                    text=' Night drive'
+                                />)
+                                :
+                                (<JourneyOption 
+                                    icon='sun'
+                                    type='feather'
+                                    text=' Day drive'
+                                />)
+                            }
+                            <JourneyOption 
+                                icon='map-marker-distance'
+                                type='material-community'
+                                text={this.state.distanceTravelled.toFixed(2).toString() + " Km"}
+                            />
+                            <JourneyOption 
+                                icon='attach-money'
+                                type='material'
+                                text={this.state.journeyCost.toFixed(2).toString() + " euro"}
+                            />
+                            <JourneyOption 
+                                icon='attach-money'
+                                type='material'
+                                text={this.currentTime}
+                            />
                             <Stopwatch 
                                 start={this.state.stopwatchStart}
                                 reset={this.state.stopwatchReset}
                                 options={stopwatchOptions}
                                 getTime={(time) => this.getFormattedTime(time)} 
                             /> 
-                            { this.state.safeTime ? 
-                                (<Icon 
-                                    name='eye'
-                                    type='feather'
-                                    color="green"
-                                />)
-                                :
-                                (<Icon 
-                                    name='eye-off'
-                                    type='feather'
-                                    color="red"
-                                />)
-                            } 
                         </View>           
                     ) : (
-                        null
+                        <View>
+                            <Text style={styles.headingtext}>Track Journey</Text>
+                            <Select2
+                                isSelectSingle
+                                style={{ borderRadius: 5, width: '80%' }}
+                                colorTheme={'#007FF3'}
+                                popupTitle='Select vehicle'
+                                title='Select vehicle'
+                                data={this.state.vehiclelist}
+                                onSelect={key => {
+                                    this.setState({ vehiclekey: key.toString() });
+                                }}
+                                onRemoveItem={key => {
+                                    this.setState({ vehiclekey: key.toString() });
+                                }} 
+                                searchPlaceHolderText='Search Vehicle'
+                                cancelButtonText='Cancel'
+                                selectButtonText='Choose'
+                                listEmptyTitle='No vehicles to show'
+
+                            />
+                        </View>
+                    )
                     )}
                 </View>
 
@@ -521,7 +552,13 @@ class TrackJourney extends Component {
                                 text="Start Journey"
                                 icon="arrowright"
                                 type="antdesign"
-                                onPress={() => requestAnimationFrame(() => this.setState({showCountdown: true}))}
+                                onPress={() => {
+                                    if(this.state.vehiclekey == '') {
+                                        Toast.show("Please select a vehicle first")
+                                        return
+                                    }
+                                    requestAnimationFrame(() => this.setState({showCountdown: true}))
+                                }}
                             />)) : (
                             <ButtonComponent 
                                 text="End Journey"
@@ -553,10 +590,23 @@ const stopwatchOptions = {
 
 const styles = StyleSheet.create({
     main:{
-        flex: 2,
+        flex: 7,
         flexDirection: 'column',
         justifyContent: 'space-between'
     },
+    heading: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    headingtext: {
+        fontSize: 24,
+        paddingTop: 20,
+        color: '#007FF3',
+        justifyContent: 'center',
+        textAlign: 'center',
+        paddingBottom: 30
+    },  
     content:{
         flex: 5,
         alignItems: 'center',

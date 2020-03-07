@@ -41,16 +41,18 @@ class HomeScreen extends Component {
         };
     }
 
-    componentDidMount(){
+    async componentDidMount(){
         const { currentUser } = firebase.auth();
         
-        firebase.database().ref(`/users/${currentUser.uid}/journeys/`).on('value', snapshot => {
+        await firebase.database().ref(`/users/${currentUser.uid}/journeys/`).on('value', snapshot => {
             var journey_list = []
             var amount = 0
             snapshot.forEach((childSub) => {
-                journey_list.push(childSub.val())
                 amount = amount + childSub.val().cost
+                
+                journey_list.push(childSub.val())
             })
+
             this.setState({totalAmount: amount, list: journey_list.reverse()})
         })
     }
@@ -102,7 +104,8 @@ class HomeScreen extends Component {
                                     date={item.humanized_date} 
                                     distance={item.distance} 
                                     cost={item.cost}
-                                    safeTime={item.safeTime}
+                                    nightdrive={item.nightdrive}
+                                    vehiclename={item.vehiclename}
                                 />}
                             keyExtractor={(item, index) => index.toString()}
                         />
