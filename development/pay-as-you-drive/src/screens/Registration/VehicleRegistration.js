@@ -3,19 +3,11 @@ import {
   StyleSheet,
   Text,
   View,
-  TextInput,
-  Button,
-  TouchableHighlight,
-  Image,
-  Alert,
-  Switch,
-  AsyncStorage,
-  YellowBox
+  TouchableHighlight
 } from 'react-native';
 import firebase from 'firebase';
 import _ from 'lodash';
 import Toast from 'react-native-simple-toast';
-import DropdownDate from 'react-dropdown-date';
 
 import ButtonComponent from '../../components/ButtonComponent';
 import FormInput from '../../components/FormInput';
@@ -25,6 +17,7 @@ class VehicleRegistration extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      vehiclereg: '',
       name: '',
       year: '',
       type: '',
@@ -61,6 +54,10 @@ class VehicleRegistration extends Component {
       } else {
         Toast.show("All fields are required")
       }
+
+      // api.CheckCarRegistrationIreland(this.state.vehiclereg,"rhyderQuinlan", data => {
+      //   console.log(data.Description);
+      // });
   }
 
   render() {
@@ -71,6 +68,14 @@ class VehicleRegistration extends Component {
         </View>
         
         <View style={{ flex: 3, justifyContent: 'center' }}>
+            <FormInput
+                icon="car"
+                type="antdesign"
+                placeholder="Vehicle Registration Number"
+                keyboardType="default"
+                onChangeText={(vehiclereg) => this.setState({vehilcereg: vehiclereg})}
+                secureTextEntry={false}
+            />
             <FormInput
                 icon="car"
                 type="antdesign"

@@ -33,8 +33,6 @@ import _ from 'lodash';
 
 import { Client } from "@googlemaps/google-maps-services-js"; //speed limit task
 import { getSunrise, getSunset } from 'sunrise-sunset-js'; //sunrise-sunset task
-import { Icon } from 'react-native-elements';
-import DropdownInput from '../components/DropdownInput';
 
 import { ScrollView, FlatList } from 'react-native-gesture-handler';
 import JourneyOption from '../components/JourneyOption';
@@ -477,6 +475,23 @@ class TrackJourney extends Component {
                     ) : (
                         this.state.running ? (
                         <View style={styles.summary}>
+                            <View style={
+                                {
+                                    flexDirection: 'row',
+                                    justifyContent: 'space-between',
+                                    padding: 20,
+                                    borderColor: '#84828C',
+                                    borderBottomWidth: 1,
+                                    width: '100%'
+                                }
+                            }>
+                                <Stopwatch 
+                                    start={this.state.stopwatchStart}
+                                    reset={this.state.stopwatchReset}
+                                    options={stopwatchOptions}
+                                    getTime={(time) => this.getFormattedTime(time)} 
+                                /> 
+                            </View>
                             { this.state.nightdrive ? 
                                 (<JourneyOption 
                                     name='moon'
@@ -500,17 +515,6 @@ class TrackJourney extends Component {
                                 type='material'
                                 text={this.state.journeyCost.toFixed(2).toString() + " euro"}
                             />
-                            <JourneyOption 
-                                icon='attach-money'
-                                type='material'
-                                text={this.currentTime}
-                            />
-                            <Stopwatch 
-                                start={this.state.stopwatchStart}
-                                reset={this.state.stopwatchReset}
-                                options={stopwatchOptions}
-                                getTime={(time) => this.getFormattedTime(time)} 
-                            /> 
                         </View>           
                     ) : (
                         <View>
@@ -576,14 +580,13 @@ class TrackJourney extends Component {
 
 const stopwatchOptions = {
     container: {
-        alignSelf: 'center',    
-        padding: 5,
+        alignSelf: 'center',
         borderRadius: 5,
-        width: 220,
+        width: '100%'
     },
     text: {
-        fontSize: 40,
-        color: '#2B2D42',
+        fontSize: 28,
+        color: '#84828C',
         alignSelf: 'center'
     }
 };

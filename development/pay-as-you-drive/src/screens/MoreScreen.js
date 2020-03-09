@@ -43,17 +43,30 @@ class MoreScreen extends Component {
                 </View>
                 <View style={styles.buttonContainer} >
                     <ButtonComponent 
+                        text="Vehicles"
+                        onPress={() => this.props.navigation.navigate('ViewVehicles')}
+                        icon="car"
+                        type="antdesign"
+                    />
+
+                    <ButtonComponent 
+                        text="Profile Details"
+                        onPress={() => alert("Make Claim Pressed")}
+                        icon="user"
+                        type="antdesign"
+                    />
+                    <ButtonComponent 
                         text="Make Claim"
                         onPress={() => alert("Make Claim Pressed")}
-                        icon="attach-money"
-                        type="material"
+                        icon="copy1"
+                        type="antdesign"
                     />
 
                     {firebase.auth().currentUser.email == "admin@admin.com" ? 
                         <ButtonComponent 
                             text='Admin Settings'
-                            icon='settings'
-                            type='feather'
+                            icon='menu-fold'
+                            type='antdesign'
                             onPress={() => this.props.navigation.navigate('AdminScreen')}
                         /> : null}
 

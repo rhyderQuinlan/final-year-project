@@ -17,6 +17,8 @@ import AdminScreen from './src/screens/AdminScreen';
 import RNLocationScreen from './src/screens/RNLocationScreen';
 import UserRegistration from './src/screens/Registration/UserRegistration';
 import VehicleRegistration from './src/screens/Registration/VehicleRegistration';
+import ViewVehicles from './src/screens/ViewVehicles';
+import AddVehicle from './src/screens/AddVehicle';
 
 console.disableYellowBox = true;
 
@@ -115,6 +117,24 @@ const MainNavigator = createStackNavigator(
         headerShown: false
       }
     },
+    ViewVehicles: {
+      screen: ViewVehicles,
+      navigationOptions: {
+        title: 'View Vehicles',
+        headerTitleStyle: {
+          alignSelf: 'center'
+        }
+      }
+    },
+    AddVehicle: {
+      screen: AddVehicle,
+      navigationOptions: {
+        title: 'Add New Vehicle',
+        headerTitleStyle: {
+          alignSelf: 'center'
+        }
+      }
+    },
     BottomTab: {
       screen: BottomTab,
       navigationOptions: {
@@ -123,7 +143,7 @@ const MainNavigator = createStackNavigator(
     }
   },
   {
-    initialRouteName: 'LoginScreen'
+    initialRouteName: 'LoginScreen',
   }
 )
 
