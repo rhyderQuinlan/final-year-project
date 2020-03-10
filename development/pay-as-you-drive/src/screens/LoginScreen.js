@@ -123,39 +123,41 @@ class LoginScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={{ flex: 1, justifyContent: 'flex-end'}}>
+        <View style={styles.imagecontainer}>
           <Image 
             source={require('../../assets/logo-yellow-blue.png')}
-            style={styles.logo}
+            style={styles.image}
           />
         </View>
         
-        <View style={{ flex: 2, justifyContent: 'center' }}>
-          <FormInput
-              icon="email-outline"
-              type="material-community"
-              placeholder="Email"
-              keyboardType='email-address'
-              onChangeText={(email) => this.setState({email})}
-              ref={(input) => { this.emailInput = input }}
-              secureTextEntry={false}
-            />
+        <View style={styles.inputcontainer}>
+          <View>
+            <FormInput
+                icon="email-outline"
+                type="material-community"
+                placeholder="Email"
+                keyboardType='email-address'
+                onChangeText={(email) => this.setState({email})}
+                ref={(input) => { this.emailInput = input }}
+                secureTextEntry={false}
+              />
 
-          <FormInput
-              icon="account-key-outline"
-              type="material-community"
-              placeholder="Password"
-              keyboardType="default"
-              onChangeText={(password) => this.setState({password})}
-              ref={(input) => { this.passwordInput = input }}
-              secureTextEntry={true}
-            />
-
-          <View style={{width: 250, alignSelf: 'center'}}>
-            <Text style={{textAlign: 'center', color: 'red'}}>{this.state.error}</Text>
+            <FormInput
+                icon="account-key-outline"
+                type="material-community"
+                placeholder="Password"
+                keyboardType="default"
+                onChangeText={(password) => this.setState({password})}
+                ref={(input) => { this.passwordInput = input }}
+                secureTextEntry={true}
+              />
           </View>
 
-          <View style={[styles.inputContainer, styles.rememberMe]}>
+          <View style={styles.errorcontainer}>
+            <Text style={styles.error}>{this.state.error}</Text>
+          </View>
+
+          <View style={styles.rememberMecontainer}>
               <View>
                 <Text>Remember Me</Text>
               </View>
@@ -170,20 +172,22 @@ class LoginScreen extends Component {
               </View>
           </View>
 
-          <ButtonComponent 
-            text="Login"
-            onPress={() => this.signinUser()}
-            icon="login"
-            type="antdesign"
-          />
+          <View style={styles.linkcontainer}>
+            <ButtonComponent 
+              text="Login"
+              onPress={() => this.signinUser()}
+              icon="login"
+              type="antdesign"
+            />
 
-          <TouchableHighlight style={styles.buttonContainer} onPress={() => this.onClickListener('restore_password')}>
-              <Text>Forgot your password?</Text>
-          </TouchableHighlight>
+            <TouchableHighlight style={styles.link} onPress={() => this.onClickListener('restore_password')}>
+                <Text>Forgot your password?</Text>
+            </TouchableHighlight>
 
-          <TouchableHighlight style={styles.buttonContainer} onPress={() => this.props.navigation.navigate('UserRegistration')}>
-              <Text>Register</Text>
-          </TouchableHighlight>
+            <TouchableHighlight style={styles.link} onPress={() => this.props.navigation.navigate('UserRegistration')}>
+                <Text>Register</Text>
+            </TouchableHighlight>
+          </View>
         </View>
       </View>
     );
@@ -195,32 +199,46 @@ const styles = StyleSheet.create({
     flex: 4,
     alignItems: 'center',
   },
-  rememberMe: {
+  imagecontainer: {
+    flex: 1, 
+    justifyContent: 'flex-end'
+  },
+  image:{
+    width: 100,
+    height: 100,
+  },
+  inputcontainer: {
+    flex: 3, 
+    justifyContent: 'center',
+    width: '80%'
+  },
+  errorcontainer: {
+
+  },
+  error: {
+    textAlign: 'center', 
+    color: 'red',
+    padding: 10
+  },
+  rememberMecontainer: {
     backgroundColor: 'transparent',
     flexDirection: 'row',
     alignSelf: 'center',
-    justifyContent: 'space-around',
+    justifyContent:  'space-between',
     borderBottomColor: 'transparent',
-    width:'40%',
+    paddingBottom: 20
   },
-  iconTextContainer:{
-    marginLeft: 10,
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'flex-start'
+  linkcontainer: {
+
   },
-  buttonContainer: {
+  link: {
     height:45,
     flexDirection: 'row',
     justifyContent: 'center',
     alignSelf: 'center',
     marginBottom:10,
-    width:250,
     borderRadius:5,
-  },
-  logo:{
-    width: 100,
-    height: 100,
+    paddingTop: 10
   }
 });
 

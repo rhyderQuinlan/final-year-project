@@ -51,7 +51,7 @@ class MoreScreen extends Component {
 
                     <ButtonComponent 
                         text="Profile Details"
-                        onPress={() => alert("Make Claim Pressed")}
+                        onPress={() => this.props.navigation.navigate('EditUserDetails')}
                         icon="user"
                         type="antdesign"
                     />

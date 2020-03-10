@@ -19,6 +19,7 @@ import UserRegistration from './src/screens/Registration/UserRegistration';
 import VehicleRegistration from './src/screens/Registration/VehicleRegistration';
 import ViewVehicles from './src/screens/Vehicles/ViewVehicles';
 import AddVehicle from './src/screens/Vehicles/AddVehicle';
+import EditUserDetails from './src/screens/User/EditUserDetails';
 
 console.disableYellowBox = true;
 
@@ -130,6 +131,15 @@ const MainNavigator = createStackNavigator(
       screen: AddVehicle,
       navigationOptions: {
         title: 'Add New Vehicle',
+        headerTitleStyle: {
+          alignSelf: 'center'
+        }
+      }
+    },
+    EditUserDetails: {
+      screen: EditUserDetails,
+      navigationOptions: {
+        title: 'View & Edit Details',
         headerTitleStyle: {
           alignSelf: 'center'
         }
