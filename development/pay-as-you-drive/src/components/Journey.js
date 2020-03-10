@@ -19,7 +19,7 @@ const Journey = (props) => {
                     </View>                
                 </View>
                 <View style={styles.rightContainer}>
-                    <Text style={styles.cost}>€{cost}</Text>
+                    <Text style={styles.cost}>€{cost.toFixed(2)}</Text>
                 </View>
             </View>
             <View style={styles.lowercontainer}>

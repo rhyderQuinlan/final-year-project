@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 2,
         borderBottomColor: '#FED766',
         fontSize: 26,
-        width: '30%',
+        width: '70%',
         textAlign: 'center'
     },
     measurement: {

@@ -10,9 +10,9 @@ import firebase from 'firebase';
 import { Icon } from 'react-native-elements';
 import Toast from 'react-native-simple-toast';
 
-import ButtonComponent from '../components/ButtonComponent';
-import FormInput from '../components/FormInput';
-import DropdownInput from '../components/DropdownInput';
+import ButtonComponent from '../../components/ButtonComponent';
+import FormInput from '../../components/FormInput';
+import DropdownInput from '../../components/DropdownInput';
 
 class AddVehicle extends Component {
     constructor(props) {
@@ -60,12 +60,9 @@ class AddVehicle extends Component {
 
     render(){
         return(
-            <View style={styles.container}>
-                <View style={styles.headingtext}>
-                    <Text>Add New Vehicle</Text>
-                </View>
-                
-                <View style={{ flex: 3, justifyContent: 'center' }}>
+            <View style={styles.container}>                
+                <View style={styles.content}>
+                    <Text style={styles.headingtext}>Add New Vehicle</Text>
                     <FormInput
                         icon="car"
                         type="antdesign"
@@ -110,7 +107,7 @@ class AddVehicle extends Component {
                     <Text style={{ justifyContent: 'space-around', color: 'red' }}>{this.state.error}</Text>
                 </View>
 
-                <View style={{flex: 1}}>
+                <View style={{flex: 2}}>
                     <ButtonComponent 
                     text="Submit"
                     onPress={() => this.addVehicle()}
@@ -127,8 +124,8 @@ class AddVehicle extends Component {
                             type="antdesign"
                             style={{marginRight: 10}}
                             color="#007FF3"
-                    />
-            </TouchableOpacity>
+                        />
+                    </TouchableOpacity>
                 </View>
         </View>
         )
@@ -142,11 +139,12 @@ const styles = StyleSheet.create({
         color: '#007FF3',
         justifyContent: 'center',
         textAlign: 'center',
-        paddingBottom: 30,
-        flex: 1, 
+        paddingBottom: 30
     },
     content: {
-        flex: 5
+        flex: 4,
+        justifyContent: 'center',
+        alignSelf: 'center'
     },
     container: {
         flexDirection: 'column',

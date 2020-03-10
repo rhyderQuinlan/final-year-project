@@ -336,7 +336,7 @@ class TrackJourney extends Component {
 
         const total = distance_addition + nightdrive_addition + vehicletype_addition
         this.setState({journeyCost: total})
-        return total
+        return total.toFixed(2)
         //TODO refine algorithm
     }
 

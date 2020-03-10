@@ -17,8 +17,8 @@ import AdminScreen from './src/screens/AdminScreen';
 import RNLocationScreen from './src/screens/RNLocationScreen';
 import UserRegistration from './src/screens/Registration/UserRegistration';
 import VehicleRegistration from './src/screens/Registration/VehicleRegistration';
-import ViewVehicles from './src/screens/ViewVehicles';
-import AddVehicle from './src/screens/AddVehicle';
+import ViewVehicles from './src/screens/Vehicles/ViewVehicles';
+import AddVehicle from './src/screens/Vehicles/AddVehicle';
 
 console.disableYellowBox = true;
 
