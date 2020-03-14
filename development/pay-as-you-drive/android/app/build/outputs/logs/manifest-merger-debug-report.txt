@@ -4,6 +4,7 @@ ADDED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-
 INJECTED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:1:1-55:12
 INJECTED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:1:1-55:12
 INJECTED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml:1:1-55:12
+MERGED from [:react-native-sensors] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/react-native-sensors/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
 MERGED from [:react-native-fused-location] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/react-native-fused-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
 MERGED from [:react-native-location] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/react-native-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
 MERGED from [:react-native-screens] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/react-native-screens/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
@@ -280,6 +281,8 @@ uses-sdk
 INJECTED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml
 INJECTED from /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/src/main/AndroidManifest.xml
+MERGED from [:react-native-sensors] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/react-native-sensors/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:react-native-sensors] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/react-native-sensors/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
 MERGED from [:react-native-fused-location] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/react-native-fused-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
 MERGED from [:react-native-fused-location] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/react-native-fused-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
 MERGED from [:react-native-location] /home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/node_modules/react-native-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-7:41

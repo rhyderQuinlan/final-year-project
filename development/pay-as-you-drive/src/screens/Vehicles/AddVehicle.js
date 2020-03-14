@@ -52,7 +52,14 @@ class AddVehicle extends Component {
         if(this.valid) {
           firebase.database().ref(`users/${currentUser.uid}/vehicles/`)
               .push(this.vehicle)
-          this.props.navigation.navigate('LoginScreen')
+              .then(() => {
+                alert("Vehicle created successfully")
+                this.props.navigation.goBack()
+              })
+              .catch(error => {
+                  Toast.show("Error adding vehicle:" + error)
+              })
+            
         } else {
           Toast.show("All fields are required")
         }

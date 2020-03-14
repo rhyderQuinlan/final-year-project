@@ -1,4 +1,3 @@
-//TODO logout button
 //TODO make claim
 
 import React, { Component } from 'react';
@@ -61,14 +60,6 @@ class MoreScreen extends Component {
                         icon="copy1"
                         type="antdesign"
                     />
-
-                    {firebase.auth().currentUser.email == "admin@admin.com" ? 
-                        <ButtonComponent 
-                            text='Admin Settings'
-                            icon='menu-fold'
-                            type='antdesign'
-                            onPress={() => this.props.navigation.navigate('AdminScreen')}
-                        /> : null}
 
                     <ButtonComponent 
                         text='Logout'

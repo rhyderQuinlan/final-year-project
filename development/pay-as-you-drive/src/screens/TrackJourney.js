@@ -1,23 +1,21 @@
-//TODO car details
-//verification api
+//TODO car age algorithm
+//TODO aggressiveness
 
-//show no charge when stationary
+//thoughts:
+//verification api
 //flat rate
-//monthly reset
 //acting as verify in system    
 
 
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import {
     View,
     Text,
     StyleSheet,
-    TouchableOpacity,
     Dimensions,
     PermissionsAndroid,
     Platform,
-    YellowBox,
-    Picker
+    TouchableOpacity
 } from 'react-native';
 
 import Toast from 'react-native-simple-toast';
@@ -26,6 +24,11 @@ import { CountDown } from 'react-native-countdown-component';
 import { Stopwatch } from 'react-native-stopwatch-timer';
 import humanize from 'humanize-plus';
 import Geocoder from 'react-native-geocoding';
+import { 
+    Accelerometer,
+    Gyroscope,
+    DeviceMotion
+ } from 'expo-sensors';
 import Geolocation from 'react-native-geolocation-service';
 import ButtonComponent from '../components/ButtonComponent';
 import Select2 from 'react-native-select-two';
@@ -85,12 +88,22 @@ class TrackJourney extends Component {
             nightdrive: false,
             address: null,
             currentTime: 0,
+            billing_month: '',
 
             vehiclelist: [],
             vehiclename: '',
             vehicletype: '',
             vehicleyear: 0,
-            vehiclekey: ''
+            vehiclekey: '',
+
+            accelerometerData: {},
+            gyroscopeData: {},
+            devicemotionData: {},
+            acceleration: 0,
+            gyroscope_acceleration: 0,
+            x: 0,
+            y: 0,
+            z: 0
         };
     }  
     
@@ -120,6 +133,27 @@ class TrackJourney extends Component {
             this.setState({vehiclelist: vehicle_list})
         })
 
+        if(DeviceMotion.isAvailableAsync()){
+            Toast.show("DeviceMotion is available")
+        } else {
+            Toast.show("DeviceMotion is unavailable")
+        }
+
+        if(Accelerometer.isAvailableAsync()){
+            Toast.show("Accelerometer is available")
+        } else {
+            Toast.show("Accelerometer is unavailable")
+        }
+
+        if(Gyroscope.isAvailableAsync()){
+            Toast.show("Gyroscope is available")
+        } else {
+            Toast.show("Gyroscope is unavailable")
+        }
+    }
+
+    showData(){
+        console.log(this.state.gyroscopeData)
     }
     
     hasLocationPermission = async () => {
@@ -141,9 +175,9 @@ class TrackJourney extends Component {
         if (status === PermissionsAndroid.RESULTS.GRANTED) return true;
     
         if (status === PermissionsAndroid.RESULTS.DENIED) {
-        Toast.show('Location permission denied by user.', Toast.LONG);
+            Toast.show('Location permission denied by user.', Toast.LONG);
         } else if (status === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN) {
-        Toast.show('Location permission revoked by user.', Toast.LONG);
+            Toast.show('Location permission revoked by user.', Toast.LONG);
         }
     
         return false;
@@ -227,7 +261,7 @@ class TrackJourney extends Component {
               this.setState({ location: error });
               console.log(error);
             },
-            { enableHighAccuracy: true, distanceFilter: 5.0, interval: 5000, fastestInterval: 2000 }
+            { enableHighAccuracy: true, distanceFilter: 5.0, interval: 1000, fastestInterval: 2000 }
           );
         });
     }
@@ -253,6 +287,39 @@ class TrackJourney extends Component {
         })
 
         this.getLocation()
+
+        this._DeviceMotion_subscription = DeviceMotion.addListener(devicemotionData => {
+            x = devicemotionData.acceleration.x
+            y = devicemotionData.acceleration.y
+            z = devicemotionData.acceleration.z
+            
+            devicemotion_acceleration = Math.sqrt((x * x) + (y * y))
+            
+            this.setState({x,y,z, devicemotion_acceleration})
+          })
+
+        this._Accelerometer_subscription = Accelerometer.addListener(accelerometerData => {
+            x = accelerometerData.x
+            y = accelerometerData.y
+            z = accelerometerData.z
+
+            acceleration = Math.sqrt((x * x) + (y * y) + (z * z))
+            
+            this.setState({accelerometerData, acceleration})
+          })
+        
+        this._Gyroscope_subscription = Gyroscope.addListener(gyroscopeData => {
+            x = gyroscopeData.x
+            y = gyroscopeData.y
+            z = gyroscopeData.z
+
+            gyroscope_acceleration = Math.sqrt((x * x) + (y * y) + (z * z))
+            this.setState({gyroscopeData, gyroscope_acceleration})
+          })
+
+          DeviceMotion.setUpdateInterval(200)
+          Accelerometer.setUpdateInterval(200)
+          Gyroscope.setUpdateInterval(200)
 
         //check driving time is unsafe
         const currentTime = new Date().getTime()
@@ -286,9 +353,16 @@ class TrackJourney extends Component {
         const year = new Date().getFullYear()
 
         const humanized_string = this.humanizeDate(hours, date, month);
+
+        const billing_month = this.state.billing_month
+
+        //end accelerometer subscription
+        this._Accelerometer_subscription.remove()
+
+        this._Gyroscope_subscription.remove()
         
         const date_string = `${date}/${month}/${year}`
-        this.journeyCreate(address, distance, duration, cost_total, date_string, humanized_string, nightdrive, vehiclename, vehiclekey);
+        this.journeyCreate(address, distance, duration, cost_total, date_string, humanized_string, nightdrive, vehiclename, vehiclekey, billing_month);
         
         this.setState({
             distanceTravelled: 0,
@@ -309,12 +383,13 @@ class TrackJourney extends Component {
     calcCost(distance){
         //driving after sunset or before sunrise multiplier
         var nightdrive_addition = 0
-        if (!this.state.nightdrive) {
+        if (this.state.nightdrive) {
             nightdrive_addition = distance * db_input.nightdrive_multiplier/100
         }
 
         switch (this.state.vehicletype) {
             case 'SUV' || 'Pickup' || 'Minivan':
+                console.log("HEAVYCLASS")
                 var vehicletype_addition = distance * (db_input.heavyclass / 100)
                 break;
             case 'Coupe' || 'Roadster' || 'Sedan':
@@ -327,8 +402,6 @@ class TrackJourney extends Component {
                 break;
         }
 
-        var vehicletype_addition = 0
-
         const distance_addition = distance * db_input.distance / 100
 
         console.log("------------------------- Algorithm ---------------------------\nDistance: " + distance + " nightdrive_multiplier: " + db_input.nightdrive_multiplier + " vehicletype_addition: " + vehicletype_addition + "\n")
@@ -337,7 +410,6 @@ class TrackJourney extends Component {
         const total = distance_addition + nightdrive_addition + vehicletype_addition
         this.setState({journeyCost: total})
         return total.toFixed(2)
-        //TODO refine algorithm
     }
 
     calcSpeed(prevTimestamp, newTimestamp, distance) {
@@ -356,7 +428,7 @@ class TrackJourney extends Component {
         return distance
     }
 
-    journeyCreate(address, distance, duration, cost_total, date, humanized_date, nightdrive, vehiclename, vehiclekey){
+    journeyCreate(address, distance, duration, cost_total, date, humanized_date, nightdrive, vehiclename, vehiclekey, billing_month){
         const data = {
             address: address,
             distance: distance,
@@ -366,7 +438,8 @@ class TrackJourney extends Component {
             humanized_date: humanized_date,
             nightdrive: nightdrive,
             vehiclename: vehiclename,
-            vehiclekey: vehiclekey
+            vehiclekey: vehiclekey,
+            billing_month: billing_month
         }
         const { currentUser } = firebase.auth();
         console.log(data)
@@ -437,6 +510,7 @@ class TrackJourney extends Component {
             default:
                 break;
         }
+        this.setState({billing_month: month})
         return `${date} ${month} ${hours}`
     }
 
@@ -451,7 +525,16 @@ class TrackJourney extends Component {
         })
     }
 
+    round(n) {
+        if (!n) {
+          return 0;
+        }
+      
+        return Math.floor(n * 100) / 100;
+      }
+
     render() {
+        const { gyroscopeData, accelerometerData, devicemotion_acceleration, acceleration, gyroscope_acceleration, speed } = this.state
         return(
             <View style={styles.main}>
                 <View style={styles.content}>
@@ -494,7 +577,7 @@ class TrackJourney extends Component {
                             </View>
                             { this.state.nightdrive ? 
                                 (<JourneyOption 
-                                    name='moon'
+                                    icon='moon'
                                     type='feather'
                                     text=' Night drive'
                                 />)
@@ -515,6 +598,33 @@ class TrackJourney extends Component {
                                 type='material'
                                 text={this.state.journeyCost.toFixed(2).toString() + " euro"}
                             />
+                            <View>
+                                <Text>SPEED</Text>
+                                <Text>{this.round(speed)}</Text>
+
+                                <Text>GYROSCOPE DATA</Text>
+                                <Text style={styles.text}>
+                                    x: {this.round(gyroscopeData.x)} y: {this.round(gyroscopeData.y)} z: {this.round(gyroscopeData.z)}
+                                </Text>
+                                <Text>ACCELEROMETER DATA</Text>
+                                <Text style={styles.text}>
+                                    x: {this.round(accelerometerData.x)} y: {this.round(accelerometerData.y)} z: {this.round(accelerometerData.z)}
+                                </Text>
+
+                                <Text>DEVICEMOTION DATA</Text>
+                                <Text style={styles.text}>
+                                    x: {this.round(this.state.x)} y: {this.round(this.state.y)} z: {this.round(this.state.z)}
+                                </Text>
+
+                                <Text>ACCELEROMETER ACCELERATION FORMULA</Text>
+                                <Text>{this.round(acceleration)}</Text>
+
+                                <Text>GYROSCOPE ACCELERATION FORMULA</Text>
+                                <Text>{this.round(gyroscope_acceleration)}</Text>
+
+                                <Text>DEVICEMOTION ACCELERATION FORMULA</Text>
+                                <Text>{this.round(devicemotion_acceleration)}</Text>
+                            </View>
                         </View>           
                     ) : (
                         <View>
@@ -621,7 +731,37 @@ const styles = StyleSheet.create({
     summary:{
         alignItems: 'center',
         justifyContent: 'center',
-    }
+    },
+
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#F5FCFF',
+      },
+      headline: {
+        fontSize: 30,
+        textAlign: 'center',
+        margin: 10,
+      },
+      valueContainer: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+      },
+      valueValue: {
+        width: 200,
+        fontSize: 20
+      },
+      valueName: {
+        width: 50,
+        fontSize: 20,
+        fontWeight: 'bold'
+      },
+      instructions: {
+        textAlign: 'center',
+        color: '#333333',
+        marginBottom: 5,
+      },
 })
 
 export default TrackJourney;

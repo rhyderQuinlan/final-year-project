@@ -45,4 +45,6 @@ target 'pay_as_you_drive' do
   use_unimodules!
   pod 'react-native-location', :path => '../node_modules/react-native-location'
 
+  pod 'RNSensors', :path => '../node_modules/react-native-sensors'
+
 end

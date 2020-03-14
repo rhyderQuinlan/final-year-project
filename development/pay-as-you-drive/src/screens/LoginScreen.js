@@ -15,6 +15,7 @@ import {
 import { Icon } from 'react-native-elements';
 import firebase from 'firebase';
 import Toast from 'react-native-simple-toast';
+import Dialog from "react-native-dialog";
 
 import ButtonComponent from '../components/ButtonComponent';
 
@@ -28,7 +29,8 @@ class LoginScreen extends Component {
       email: '',
       password: '',
       rememberMe: false,
-      error: ''
+      error: '',
+      resetPasswordDialog: false
     }
   }
 
@@ -87,6 +89,11 @@ class LoginScreen extends Component {
     }
   };
 
+  resetPassword(){
+    firebase.auth().sendPasswordResetEmail(this.passwordChangeEmail)
+      .then(() => alert("Password reset email sent"))
+      .catch((error) => this.setState({error:error.message}))
+  }
     
   forgetUser = async () => {
       try {
@@ -105,7 +112,12 @@ class LoginScreen extends Component {
     firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then(() => {
         // this.passwordInput.clear()
         // this.emailInput.clear() TODO: commented until fixed
-        this.props.navigation.navigate('BottomTab')
+        if(this.state.email == 'admin@payasyoudrive.com'){
+          this.props.navigation.navigate('AdminOptions')
+        } else {
+          this.props.navigation.navigate('BottomTab')
+        }
+        
     }).catch((error) => {
       this.setState({error:error.message})
     });
@@ -172,6 +184,25 @@ class LoginScreen extends Component {
               </View>
           </View>
 
+          <View>
+              <Dialog.Container visible={this.state.resetPasswordDialog}>
+                  <Dialog.Title>Reset password</Dialog.Title>
+                  <Dialog.Description>
+                      Enter account email address. Then check your emails for reset link.
+                  </Dialog.Description>
+                  <Dialog.Input 
+                      onChangeText={(passwordChangeEmail) => this.passwordChangeEmail = passwordChangeEmail}
+                      label="Email Address"
+                      placeholder="Enter email"
+                      />
+                  <Dialog.Button label="Cancel" onPress={() => this.setState({ resetPasswordDialog: false})}/>
+                  <Dialog.Button label="Confirm" onPress={() => {
+                      this.setState({resetPasswordDialog: false})
+                      this.resetPassword()
+                      }}/>
+              </Dialog.Container>
+          </View>
+
           <View style={styles.linkcontainer}>
             <ButtonComponent 
               text="Login"
@@ -180,7 +211,7 @@ class LoginScreen extends Component {
               type="antdesign"
             />
 
-            <TouchableHighlight style={styles.link} onPress={() => this.onClickListener('restore_password')}>
+            <TouchableHighlight style={styles.link} onPress={() => this.setState({resetPasswordDialog: true})}>
                 <Text>Forgot your password?</Text>
             </TouchableHighlight>
 

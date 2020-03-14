@@ -1,5 +1,4 @@
 //TODO analytics lines chart
-//TODO show list of past journeys
 
 import React, { Component } from 'react';
 import {
@@ -7,10 +6,6 @@ import {
     View,
     Text,
     Dimensions,
-    SectionList,
-    ToastAndroid,
-    YellowBox,
-    SafeAreaView
 } from 'react-native';
 import LineChart from "react-native-responsive-linechart";
 import firebase from 'firebase';
@@ -47,9 +42,11 @@ class HomeScreen extends Component {
         await firebase.database().ref(`/users/${currentUser.uid}/journeys/`).on('value', snapshot => {
             var journey_list = []
             var amount = 0
+            var currentMonth = this.humanizedMonth(new Date().getMonth())
             snapshot.forEach((childSub) => {
-                amount = amount + childSub.val().cost
-                
+                if(currentMonth == childSub.val().billing_month){
+                    amount = amount + childSub.val().cost
+                }
                 journey_list.push(childSub.val())
             })
 
@@ -72,7 +69,49 @@ class HomeScreen extends Component {
         return <Journey distance={distance} cost={cost} />
     }
 
-    
+    humanizedMonth(month){
+        switch (month) {
+            case 0:
+                month = "Jan"
+                break;
+            case 1:
+                month = "Feb"
+                break;
+            case 2:
+                month = "Mar"
+                break;
+            case 3:
+                month = "Apr"
+                break;
+            case 4:
+                month = "May"
+                break;
+            case 5:
+                month = "Jun"
+                break;
+            case 6:
+                month = "Jul"
+                break;
+            case 7:
+                month = "Aug"
+                break;
+            case 8:
+                month = "Sep"
+                break;
+            case 9:
+                month = "Oct"
+                break;
+            case 10:
+                month = "Nov"
+                break;
+            case 11:
+                month = "Dec"
+                break;        
+            default:
+                break;
+        }
+        return month
+    }
 
     render() { 
         return(

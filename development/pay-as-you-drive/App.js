@@ -13,7 +13,8 @@ import HomeScreen from './src/screens/HomeScreen';
 import TrackJourney from './src/screens/TrackJourney';
 import MoreScreen from './src/screens/MoreScreen';
 import LoginScreen from './src/screens/LoginScreen';
-import AdminScreen from './src/screens/AdminScreen';
+import AdminOptions from './src/screens/Admin/AdminOptions';
+import AlgorithmScreen from './src/screens/Admin/AlgorithmScreen';
 import RNLocationScreen from './src/screens/RNLocationScreen';
 import UserRegistration from './src/screens/Registration/UserRegistration';
 import VehicleRegistration from './src/screens/Registration/VehicleRegistration';
@@ -92,10 +93,18 @@ const MainNavigator = createStackNavigator(
         headerShown: false
       }
     },
-    AdminScreen:{
-      screen: AdminScreen,
+    AdminOptions:{
+      screen: AdminOptions,
       navigationOptions: {
-        title: 'Admin Settings',
+        title: 'Admin Options',
+        headerShown: false
+      }
+    },
+    AlgorithmScreen:{
+      screen: AlgorithmScreen,
+      navigationOptions: {
+        title: 'Algorithm Screen',
+        headerShown: false
       }
     },
     RNLocationScreen:{

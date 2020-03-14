@@ -50,9 +50,9 @@ class ViewVehicles extends Component {
         for (let index = 0; index < vehiclelist.length; index++) {
             if(vehiclelist[index].id == key){
                 this.vehiclename = vehiclelist[index].name
-                this.vehicletype = vehiclelist[index].type,
+                this.vehicletype = vehiclelist[index].type
                 this.vehicleyear = vehiclelist[index].year.toString(),
-                this.vehiclekey = vehiclelist[index].id,
+                this.vehiclekey = vehiclelist[index].id
                 this.setState({
                     vehiclename: vehiclelist[index].name,
                     vehicletype: vehiclelist[index].type,
@@ -81,16 +81,19 @@ class ViewVehicles extends Component {
             type: vehicletype,
         }
         
-          var updates = {};
-          updates[`/${currentUser.uid}/vehicles/${vehiclekey}/`] = Data;
-        
-          return firebase.database().ref().update(updates)
-            .then(result => {
-                alert('Changes submitted succesfully...')
-            })
-            .catch(error => {
-                console.log(error.message) 
-            })
+        return firebase.database().ref(`/users/${currentUser.uid}/vehicles/${vehiclekey}/`).set(Data)
+        .then(result => {
+            alert('Changes submitted succesfully...')
+        })
+        .catch(error => {
+            console.log(error.message) 
+        })
+    }
+
+    deleteVehicle(){
+        firebase.database().ref(`/users/${firebase.auth().currentUser.uid}/vehicles/${this.state.vehiclekey}/`).remove()
+            .then(this.setState({selected: false}))
+            .catch(error => alert("Failed to delete vehicle: \n" + error))
     }
 
     render(){
@@ -167,11 +170,33 @@ class ViewVehicles extends Component {
                                 containerStyle={styles.dropdown}
                                 onChangeText={(vehicletype) => this.setState({vehicletype})}
                             />
+                            <TouchableOpacity
+                                onPress={() => {
+                                    Alert.alert(
+                                        'Delete Vehicle',
+                                        'Are you sure you would like to delete vehicle?',
+                                        [
+                                        {
+                                            text: 'Cancel',
+                                            style: 'cancel',
+                                        },
+                                        {
+                                            text: 'Delete', 
+                                            onPress: () => this.deleteVehicle(),
+                                        },
+                                        ],
+                                    );
+                                }}
+                                style={{alignSelf: 'flex-end', padding: 20, marginRight: 15}}
+                            >
+                                <Text>Delete Vehicle</Text>
+                            </TouchableOpacity>
                         </View>
                     ) : (
                         null
                     )}
                 </View>
+
                 <View style={styles.button}>
                     <ButtonComponent 
                         text="Save Changes"

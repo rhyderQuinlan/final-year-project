@@ -3,6 +3,7 @@ package com.pay_as_you_drive;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.sensors.RNSensorsPackage;
 import com.mustansirzia.fused.FusedLocationPackage;
 import com.github.reactnativecommunity.location.RNLocationPackage;
 import com.facebook.react.ReactNativeHost;
@@ -42,6 +43,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNSensorsPackage(),
             new FusedLocationPackage(),
             new RNLocationPackage(),
           new ReanimatedPackage(),
