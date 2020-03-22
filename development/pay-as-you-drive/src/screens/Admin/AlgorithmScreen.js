@@ -83,7 +83,7 @@ class AdminScreen extends Component {
 
     render(){
         return(
-            <View>
+            <View style={{color: '#003f5c'}}>
                 <View>
                     <Text style={styles.heading}>Adjust Insurance Algorithm</Text> 
                 </View>
@@ -139,7 +139,7 @@ class AdminScreen extends Component {
                         name="close"
                         type="antdesign"
                         style={{marginRight: 10}}
-                        color="#007FF3"
+                        color="#fb5b5a"
                     />
                 </TouchableOpacity>            
             </View>
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         padding: 20,
         fontSize: 28,
-        color: '#007FF3'
+        color: '#fb5b5a'
     },
     cancel:{
         alignSelf: 'center',
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
         width: 250,
         backgroundColor: 'white',
         borderRadius: 400,
-        borderColor: '#007FF3',
+        borderColor: '#fb5b5a',
         borderWidth: 1,
         padding: 15,
         flexDirection: 'row',
@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
     canceltext: {
         fontSize: 20,
         marginLeft: 20,
-        color: '#007FF3',
+        color: '#fb5b5a',
         fontWeight: 'normal'
     },
 })

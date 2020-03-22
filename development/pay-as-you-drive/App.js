@@ -21,6 +21,8 @@ import VehicleRegistration from './src/screens/Registration/VehicleRegistration'
 import ViewVehicles from './src/screens/Vehicles/ViewVehicles';
 import AddVehicle from './src/screens/Vehicles/AddVehicle';
 import EditUserDetails from './src/screens/User/EditUserDetails';
+import SmartContractControl from './src/screens/Admin/SmartContractControl';
+import WelcomeScreen from './src/screens/WelcomeScreen';
 
 console.disableYellowBox = true;
 
@@ -75,10 +77,10 @@ const BottomTab = createMaterialBottomTabNavigator(
   },
   {
     initialRouteName: 'Home',
-    activeColor: '#FFD559',
-    inactiveColor: '#EFF1F3',
+    activeColor: '#fb5b5a',
+    inactiveColor: 'white',
     barStyle: { 
-      backgroundColor: '#007FF3',
+      backgroundColor: '#003f5c',
       elevation: 10
      },
   }
@@ -86,6 +88,13 @@ const BottomTab = createMaterialBottomTabNavigator(
 
 const MainNavigator = createStackNavigator(
   {
+    WelcomeScreen: {
+      screen: WelcomeScreen,
+      navigationOptions: {
+        title: 'Welcome Screen',
+        headerShown: false
+      }
+    },
     LoginScreen: {
       screen: LoginScreen,
       navigationOptions: {
@@ -105,6 +114,12 @@ const MainNavigator = createStackNavigator(
       navigationOptions: {
         title: 'Algorithm Screen',
         headerShown: false
+      }
+    },
+    SmartContractControl: {
+      screen: SmartContractControl,
+      navigationOptions: {
+        title: 'Smart Contract Control',
       }
     },
     RNLocationScreen:{
@@ -162,7 +177,7 @@ const MainNavigator = createStackNavigator(
     }
   },
   {
-    initialRouteName: 'LoginScreen',
+    initialRouteName: 'WelcomeScreen',
   }
 )
 
@@ -172,7 +187,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingTop: 50,
-    backgroundColor: '#007FF3',
+    backgroundColor: '#003f5c',
   },
 });
 

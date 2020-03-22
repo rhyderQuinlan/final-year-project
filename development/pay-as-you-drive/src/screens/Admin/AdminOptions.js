@@ -136,6 +136,13 @@ class AdminOptions extends Component {
                         type='antdesign'
                         onPress={() => this.generateBills()}
                     />
+
+                    <ButtonComponent 
+                        text='Smart Contract Control'
+                        icon='shoppingcart'
+                        type='antdesign'
+                        onPress={() => this.props.navigation.navigate('SmartContractControl')}
+                    />
                    
                     <ButtonComponent 
                         text='Logout'

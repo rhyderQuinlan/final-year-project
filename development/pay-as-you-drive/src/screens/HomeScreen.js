@@ -33,25 +33,47 @@ class HomeScreen extends Component {
             totalAmount: 0,
             showJourneys: true,
             list: [],
+            user_info: {},
+            loading: true,
         };
     }
 
     async componentDidMount(){
-        const { currentUser } = firebase.auth();
+        const { currentUser } = firebase.auth()
+        try {
+            const ref = firebase.database().ref(`/users/${currentUser.uid}`)
+            const user_info = await ref.once('value')
+                .then(snapshot => {
+                    return snapshot.val()}
+                ) .catch( error => Toast.show(error))
+            
+            this.setState({user_info: user_info})
+        } catch (error) {
+            console.warn("Error fetching data ---------------------------- ", error)
+        }
         
-        await firebase.database().ref(`/users/${currentUser.uid}/journeys/`).on('value', snapshot => {
-            var journey_list = []
+        try {
             var amount = 0
-            var currentMonth = this.humanizedMonth(new Date().getMonth())
-            snapshot.forEach((childSub) => {
-                if(currentMonth == childSub.val().billing_month){
-                    amount = amount + childSub.val().cost
-                }
-                journey_list.push(childSub.val())
-            })
+            const db_list = await firebase.database().ref(`/users/${currentUser.uid}/journeys/`).once('value')
+                .then(snapshot => {
+                    var journey_list = []
+                    var currentMonth = this.humanizedMonth(new Date().getMonth())
+                    snapshot.forEach((childSub) => {
+                        if(currentMonth == childSub.val().billing_month){
+                            amount = amount + childSub.val().cost
+                        }
+                        journey_list.push(childSub.val())
+                    })
+        
+                    return journey_list
+                }).catch(error => {
+                    Toast.show(error)
+                })
 
-            this.setState({totalAmount: amount, list: journey_list.reverse()})
-        })
+                this.setState({totalAmount: amount, list: db_list.reverse(), loading: false})
+        } catch (error) {
+            console.warn("Error fetching data ---------------------------- ", error)
+        }
     }
 
     // buildAnalytics(){
@@ -113,17 +135,22 @@ class HomeScreen extends Component {
         return month
     }
 
+    
     render() { 
+        const {loading, list} = this.state
+
+        console.log(list.length)
         return(
             <View style={styles.main}>
-                <View style={styles.contentContainer}>
+                <View style={styles.headerContainer}>
+                    <Text style={styles.welcome}>Welcome {this.state.user_info.firstname}</Text>
                     <View style={styles.amount}>
                         <View>
                             <Text style={styles.amountHeader}>€{this.state.totalAmount.toFixed(2)}</Text>
                         </View>
                             
                         <View>
-                            <Text>  Monthly bill</Text>
+                            <Text style={styles.subheading}>  Monthly bill</Text>
                         </View>
                     </View>
                     <View style={styles.analytics}>
@@ -132,23 +159,34 @@ class HomeScreen extends Component {
                 </View>
                 <View style={styles.journeysContainer}>
                     <Text style={styles.journeysHeader}>Past Journeys</Text>
-                    <Text style={{alignSelf: 'flex-end', paddingRight: 10}}>{this.state.list.length} {humanize.pluralize(this.state.list.length, "past journey")}</Text>
-                    <ScrollView>
-                        <FlatList
-                            data={this.state.list}
-                            renderItem={({item, index}) => 
-                                <Journey 
-                                    style={styles.item}
-                                    address={item.address}
-                                    date={item.humanized_date} 
-                                    distance={item.distance} 
-                                    cost={item.cost}
-                                    nightdrive={item.nightdrive}
-                                    vehiclename={item.vehiclename}
-                                />}
-                            keyExtractor={(item, index) => index.toString()}
-                        />
-                    </ScrollView>
+                    {
+                        !loading ? (
+                            <View>
+                                <Text style={{alignSelf: 'flex-end', paddingRight: 10}}>{this.state.list.length} {humanize.pluralize(this.state.list.length, "past journey")}</Text>
+                                <ScrollView>
+                                    <FlatList
+                                        data={this.state.list}
+                                        renderItem={({item, index}) => 
+                                            <Journey 
+                                                style={styles.item}
+                                                address={item.address}
+                                                date={item.humanized_date} 
+                                                distance={item.distance} 
+                                                cost={item.cost}
+                                                nightdrive={item.nightdrive}
+                                                vehiclename={item.vehiclename}
+                                            />}
+                                        keyExtractor={(item, index) => index.toString()}
+                                    />
+                                </ScrollView>
+                            </View>
+                        ) : (
+                            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                                <Text style={{ fontSize: 20, color: '#fb5b5a' }}>Loading Data ...</Text>
+                            </View>
+                        )
+                    }
+                    
                 </View>           
             </View>
             
@@ -161,10 +199,21 @@ const styles = StyleSheet.create({
         flex: 5,
         flexDirection: 'column'
     },
-    contentContainer:{
-        flex: 2,
-        flexDirection: 'column'
+    headerContainer:{
+        flex: 3,
+        backgroundColor: '#003f5c',
+        paddingTop: '10%',
+        alignItems: 'center'
     },
+    subheading: {
+        color: '#fb5b5a',
+        fontSize: 20
+    },
+    welcome:{
+        fontWeight:"bold",
+        fontSize:42,
+        color:"#fb5b5a",
+      },
     amount:{
         flex: 2,
         flexDirection: 'row',
@@ -172,24 +221,23 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
     },
     analytics:{
-        // borderColor: 'black',
-        // borderWidth: 1,
         flex: 2,
     },
     amountHeader:{
         paddingTop: 20,
         textAlign: 'center',
         fontSize: 35,
-        textAlignVertical: 'bottom'
+        textAlignVertical: 'bottom',
+        color: 'white'
     },
     journeysContainer:{
-        flex: 3
+        flex: 5
     },
     journeysHeader: {
         textAlign: 'center',
         fontSize: 24,
         paddingTop: 15,
-        color: '#007FF3'
+        color: '#fb5b5a'
     }
 });
 

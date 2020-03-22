@@ -3,15 +3,15 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableHighlight
+  TouchableOpacity,
+  TextInput
 } from 'react-native';
 import firebase from 'firebase';
 import _ from 'lodash';
 import Toast from 'react-native-simple-toast';
 
-import ButtonComponent from '../../components/ButtonComponent';
-import FormInput from '../../components/FormInput';
-import DropdownInput from '../../components/DropdownInput';
+import { Icon } from 'react-native-elements';
+import { Dropdown } from 'react-native-material-dropdown';
 
 class VehicleRegistration extends Component {
   constructor(props) {
@@ -37,22 +37,25 @@ class VehicleRegistration extends Component {
       this.vehicle = {
         name: this.state.name,
         year: this.state.year,
-        type: this.state.type
+        type: this.state.type,
+        registration: this.state.vehiclereg
       }
 
       if(this.vehicle.name != '' 
         && this.vehicle.year != '' 
-        && this.vehicle.type != ''){
+        && this.vehicle.type != ''
+        && this.vehicle.registration != ''){
 
           this.valid = true
 
+      } else {
+        Toast.show("All fields are required")
       }
+
       if(this.valid) {
         firebase.database().ref(`users/${currentUser.uid}/vehicles/`)
             .push(this.vehicle)
-        this.props.navigation.navigate('LoginScreen')
-      } else {
-        Toast.show("All fields are required")
+        this.props.navigation.navigate('BottomTab')
       }
 
       // api.CheckCarRegistrationIreland(this.state.vehiclereg,"rhyderQuinlan", data => {
@@ -63,40 +66,64 @@ class VehicleRegistration extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={{ flex: 1, justifyContent: 'space-around'}}>
-          <Text>Licence and Vehicle Registration</Text>
-        </View>
-        
-        <View style={{ flex: 3, justifyContent: 'center' }}>
-            <FormInput
-                icon="car"
-                type="antdesign"
-                placeholder="Vehicle Registration Number"
-                keyboardType="default"
-                onChangeText={(vehiclereg) => this.setState({vehilcereg: vehiclereg})}
-                secureTextEntry={false}
-            />
-            <FormInput
-                icon="car"
-                type="antdesign"
-                placeholder="Vehicle Nickname"
-                keyboardType="default"
-                onChangeText={(vehiclename) => this.setState({name: vehiclename})}
-                // ref={(input) => { this.firstnameInput = input }}
-                secureTextEntry={false}
-            />
+        <Text style={styles.logo}>Add your first vehicle</Text>
 
-            <DropdownInput 
-                icon="calendar"
-                type="antdesign"
+          <View style={styles.inputView}>
+            <Icon 
+              name='car'
+              type='antdesign'
+              color='#fb5b5a'
+              iconStyle={{ justifyContent: 'center', padding: 10 }}
+              size={26}
+            />
+            <TextInput  
+                style={styles.inputText}
+                placeholder="Vehicle Registration Number" 
+                placeholderTextColor="#003f5c"
+                onChangeText={vehiclereg => this.setState({vehiclereg})}/>
+          </View>
+
+          <View style={styles.inputView}>
+            <Icon 
+                name='car'
+                type='antdesign'
+                color='#fb5b5a'
+                iconStyle={{ justifyContent: 'center', padding: 10 }}
+                size={26}
+              />
+            <TextInput  
+                style={styles.inputText}
+                placeholder="Vehicle Nickname" 
+                placeholderTextColor="#003f5c"
+                onChangeText={name => this.setState({name})}/>
+          </View>
+
+          <View style={styles.inputView}>
+            <Icon 
+              name='calendar'
+              type='feather'
+              color='#fb5b5a'
+              iconStyle={{ justifyContent: 'center', padding: 10 }}
+              size={26}
+            />
+            <Dropdown 
                 label="Year"
                 data={this.years}
-                onChangeText={(value) => this.setState({ year: value })}
+                containerStyle={styles.dropdown}
+                onChangeText={(value) => this.setState({ year: value})}
+                baseColor='#003f5c'
             />
+        </View>
 
-            <DropdownInput 
-                icon="list"
-                type="entypo"
+        <View style={styles.inputView}>
+            <Icon 
+              name='list'
+              type='entypo'
+              color='#fb5b5a'
+              iconStyle={{ justifyContent: 'center', padding: 10 }}
+              size={26}
+            />
+            <Dropdown 
                 label="Model Type"
                 data={[{
                   value: 'Hatchback'
@@ -113,24 +140,19 @@ class VehicleRegistration extends Component {
                 },{
                   value: 'Minivan'
                 }]}
-                onChangeText={(value) => this.setState({ type: value })}
+                containerStyle={styles.dropdown}
+                onChangeText={(value) => this.setState({ type: value})}
+                baseColor='#003f5c'
             />
         </View>
+
         <View>
           <Text style={{ justifyContent: 'space-around', color: 'red' }}>{this.state.error}</Text>
         </View>
 
-        <View style={{flex: 1}}>
-          <ButtonComponent 
-            text="Done"
-            onPress={() => this.addVehicle()}
-            icon="check"
-            type="antdesign"
-          />
-          <TouchableHighlight style={styles.buttonContainer} onPress={() => this.props.navigation.navigate('LoginScreen')}>
-              <Text>Already have an account? Sign in.</Text>
-          </TouchableHighlight>
-        </View>
+        <TouchableOpacity style={styles.loginBtn} onPress={() => this.addVehicle()}>
+          <Text style={styles.loginText}>Done</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -138,44 +160,55 @@ class VehicleRegistration extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 4,
+    flex: 1,
+    backgroundColor: '#003f5c',
     alignItems: 'center',
-  },
-  inputContainer: {
-    borderBottomColor: '#FFD559',
-    backgroundColor: '#FFFFFF',
-    borderBottomWidth: 2,
-    width:'80%',
-    height:55,
-    marginBottom:20,
-    flexDirection: 'row',
-    alignItems:'center'
-  },
-  rememberMe: {
-    backgroundColor: 'transparent',
-    flexDirection: 'row',
-    alignSelf: 'center',
-    justifyContent: 'space-around',
-    borderBottomColor: 'transparent',
-    width:'40%',
-  },
-  inputs:{
-    height:25,
-    marginLeft: 10,
-    width: '80%'
-  },
-  buttonContainer: {
-    height:45,
-    flexDirection: 'row',
     justifyContent: 'center',
-    alignSelf: 'center',
-    marginBottom:10,
-    width:250,
-    borderRadius:5,
+  },
+  inputView:{
+    width:"80%",
+    backgroundColor:"#465881",
+    borderRadius:25,
+    height:50,
+    marginBottom:20,
+    justifyContent:"center",
+    flexDirection: 'row',
+    justifyContent: 'flex-start'
   },
   logo:{
-    width: 100,
-    height: 100,
+    fontWeight:"bold",
+    fontSize:50,
+    color:"#fb5b5a",
+    marginBottom:40
+  },
+  inputText:{
+    color:"white",
+    width: '80%'
+  },
+  dropdown:{
+    height: 40,
+    width: '80%',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    paddingBottom: 10,
+  },
+  back:{
+    color:"white",
+    fontSize:15
+  },
+  loginBtn:{
+    width:"80%",
+    backgroundColor:"#fb5b5a",
+    borderRadius:25,
+    height:50,
+    alignItems:"center",
+    justifyContent:"center",
+    marginTop:40,
+    marginBottom:10
+  },
+  loginText: {
+    color: 'white',
+    fontSize: 20
   }
 });
 

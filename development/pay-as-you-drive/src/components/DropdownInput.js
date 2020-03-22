@@ -14,7 +14,7 @@ const DropdownInput = (props) => {
                 name={icon}
                 type={type}
                 style={styles.icon}
-                color="#007FF3"
+                color="#fb5b5a"
             />
             <Dropdown 
                 label={label}
@@ -28,14 +28,15 @@ const DropdownInput = (props) => {
 
 const styles = StyleSheet.create({
     inputContainer: {
-        borderBottomColor: '#FFD559',
+        borderBottomColor: 'transparent',
         backgroundColor: '#FFFFFF',
         borderBottomWidth: 2,
         height:55,
         marginBottom:20,
         flexDirection: 'row',
         alignItems:'center',
-        paddingLeft: 10
+        paddingLeft: 10,
+        borderRadius: 25
     },
     icon:{
         width:100,

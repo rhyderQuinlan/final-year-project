@@ -75,19 +75,27 @@ class ViewVehicles extends Component {
             vehiclekey
         } = this.state
 
-        var Data = {
-            name: vehiclename,
-            year: vehicleyear,
-            type: vehicletype,
+        if(vehiclename != ''
+        && vehicletype != ''
+        && vehicleyear != ''
+        && vehiclekey != ''
+        ){
+            var Data = {
+                name: vehiclename,
+                year: vehicleyear,
+                type: vehicletype,
+            }
+            
+            return firebase.database().ref(`/users/${currentUser.uid}/vehicles/${vehiclekey}/`).set(Data)
+            .then(result => {
+                alert('Changes submitted succesfully...')
+            })
+            .catch(error => {
+                console.log(error.message) 
+            })
+        } else {
+            Toast.show('All fields are required')
         }
-        
-        return firebase.database().ref(`/users/${currentUser.uid}/vehicles/${vehiclekey}/`).set(Data)
-        .then(result => {
-            alert('Changes submitted succesfully...')
-        })
-        .catch(error => {
-            console.log(error.message) 
-        })
     }
 
     deleteVehicle(){
@@ -100,11 +108,11 @@ class ViewVehicles extends Component {
         return(
             <View style={styles.container}>
                 <View style={styles.content}>
-                    <Text style={styles.headingtext}>View Vehicles</Text>
+                    <Text style={styles.logo}>View Vehicles</Text>
                     <Select2
                         isSelectSingle
                         style={{ borderRadius: 5, width: '80%', alignSelf: 'center' }}
-                        colorTheme={'#007FF3'}
+                        colorTheme={'#fb5b5a'}
                         popupTitle='Select vehicle to edit'
                         title='Select vehicle to edit'
                         data={this.state.vehiclelist}
@@ -121,13 +129,13 @@ class ViewVehicles extends Component {
 
                     />
                     {this.state.selected ? (
-                        <View>
+                        <View style={{backgroundColor: 'white', borderRadius: 25, margin: 40}}>
                             <View style={{ flexDirection: 'row', alignContent: 'space-around', padding: 30}}>
                                 <View style={{flex: 3}}>
                                     <TextInput
                                         style={styles.nameheader}
                                         placeholder={this.vehiclename}
-                                        placeholderTextColor='#007FF3'
+                                        placeholderTextColor='#fb5b5a'
                                         underlineColorAndroid='transparent'
                                         onChangeText={(vehiclename) => this.setState({vehiclename})}
                                     />
@@ -137,7 +145,7 @@ class ViewVehicles extends Component {
                                     <Icon 
                                         name="edit"
                                         type="antdesign"
-                                        color="#007FF3"
+                                        color="#fb5b5a"
                                         
                                     />
                                 </View>
@@ -219,7 +227,7 @@ class ViewVehicles extends Component {
                             name="close"
                             type="antdesign"
                             style={{marginRight: 10}}
-                            color="#007FF3"
+                            color="#fb5b5a"
                         />
                     </TouchableOpacity>
                 </View>
@@ -229,15 +237,14 @@ class ViewVehicles extends Component {
 }
 
 const styles = StyleSheet.create({
-    headingtext: {
-        fontSize: 24,
-        paddingTop: 20,
-        color: '#007FF3',
-        justifyContent: 'center',
+    logo:{
+        fontWeight:"bold",
+        fontSize:50,
+        color:"#fb5b5a",
+        marginBottom:40,
         textAlign: 'center',
-        paddingBottom: 30,
-        
-    },
+        paddingTop: 30
+      },
     content: {
         flex: 4
     }, 
@@ -246,7 +253,8 @@ const styles = StyleSheet.create({
     },
     container: {
         flexDirection: 'column',
-        flex: 6
+        flex: 6,
+        backgroundColor: '#003f5c',
     },
     dropdown:{
         height: 50,
@@ -259,7 +267,7 @@ const styles = StyleSheet.create({
       },
     nameheader: {
         fontSize: 24,
-        color: '#007FF3',
+        color: '#fb5b5a',
         justifyContent: 'center',
         textAlign: 'center'
     },
@@ -269,7 +277,7 @@ const styles = StyleSheet.create({
         width: 250,
         backgroundColor: 'white',
         borderRadius: 400,
-        borderColor: '#007FF3',
+        borderColor: '#fb5b5a',
         borderWidth: 1,
         padding: 15,
         flexDirection: 'row',
@@ -279,7 +287,7 @@ const styles = StyleSheet.create({
     canceltext: {
         fontSize: 20,
         marginLeft: 20,
-        color: '#007FF3',
+        color: '#fb5b5a',
         fontWeight: 'normal'
     },
 })

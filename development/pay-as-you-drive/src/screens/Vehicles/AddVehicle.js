@@ -69,7 +69,7 @@ class AddVehicle extends Component {
         return(
             <View style={styles.container}>                
                 <View style={styles.content}>
-                    <Text style={styles.headingtext}>Add New Vehicle</Text>
+                    <Text style={styles.logo}>Add New Vehicle</Text>
                     <FormInput
                         icon="car"
                         type="antdesign"
@@ -130,7 +130,7 @@ class AddVehicle extends Component {
                             name="close"
                             type="antdesign"
                             style={{marginRight: 10}}
-                            color="#007FF3"
+                            color="#fb5b5a"
                         />
                     </TouchableOpacity>
                 </View>
@@ -140,14 +140,13 @@ class AddVehicle extends Component {
 }
 
 const styles = StyleSheet.create({
-    headingtext: {
-        fontSize: 24,
-        paddingTop: 20,
-        color: '#007FF3',
-        justifyContent: 'center',
-        textAlign: 'center',
-        paddingBottom: 30
-    },
+    logo:{
+        fontWeight:"bold",
+        fontSize:50,
+        color:"#fb5b5a",
+        marginBottom:40,
+        textAlign: 'center'
+      },
     content: {
         flex: 4,
         justifyContent: 'center',
@@ -155,7 +154,8 @@ const styles = StyleSheet.create({
     },
     container: {
         flexDirection: 'column',
-        flex: 6
+        flex: 6,
+        backgroundColor: '#003f5c'
     },
     button:{
         alignSelf: 'center',
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
         width: 250,
         backgroundColor: 'white',
         borderRadius: 400,
-        borderColor: '#007FF3',
+        borderColor: '#fb5b5a',
         borderWidth: 1,
         padding: 15,
         flexDirection: 'row',
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 20,
         marginLeft: 20,
-        color: '#007FF3',
+        color: '#fb5b5a',
         fontWeight: 'normal'
     },
 })

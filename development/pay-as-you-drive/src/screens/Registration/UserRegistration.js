@@ -5,7 +5,7 @@ import {
   View,
   TextInput,
   Button,
-  TouchableHighlight,
+  TouchableOpacity,
   Image,
   Alert,
   Switch,
@@ -15,6 +15,8 @@ import {
 import firebase from 'firebase';
 import _ from 'lodash';
 import Toast from 'react-native-simple-toast';
+import { Icon } from 'react-native-elements';
+import { Dropdown } from 'react-native-material-dropdown';
 
 import ButtonComponent from '../../components/ButtonComponent';
 import FormInput from '../../components/FormInput';
@@ -79,80 +81,108 @@ class UserRegistration extends Component {
       await firebase.database().ref(`users/${currentUser.uid}/`).set(data)
     }
 
-    { this.valid ? this.props.navigation.navigate('VehicleRegistration') : Toast.show("Created user unsuccessfully")}
+    { this.valid ? this.props.navigation.navigate('VehicleRegistration') : null}
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <View style={{ flex: 1, justifyContent: 'space-around'}}>
-          <Text>Lets get started,</Text>
-        </View>
-        
-        <View style={{ flex: 3, justifyContent: 'center' }}>
-          <FormInput
-                icon="user"
-                type="antdesign"
-                placeholder="First Name"
-                keyboardType="default"
-                onChangeText={(firstname) => this.setState({firstname})}
-                // ref={(input) => { this.firstnameInput = input }}
-                secureTextEntry={false}
-            />
-          <FormInput
-              icon="user"
-              type="antdesign"
-              placeholder="Last Name"
-              keyboardType="default"
-              onChangeText={(lastname) => this.setState({lastname})}
-              // ref={(input) => { this.lastnameInput = input }}
-              secureTextEntry={false}
+        <Text style={styles.logo}>Lets get started</Text>
+
+        <View style={styles.inputView}>
+          <Icon 
+            name='user'
+            type='antdesign'
+            color='#fb5b5a'
+            iconStyle={{ justifyContent: 'center', padding: 10 }}
+            size={26}
           />
-          <FormInput
-                icon="email-outline"
-                type="material-community"
-                placeholder="Email Address"
-                keyboardType="email-address"
-                onChangeText={(email) => this.setState({email})}
-                // ref={input => { this.emailInput = input }}
-                secureTextEntry={false}
+          <TextInput  
+              style={styles.inputText}
+              placeholder="Firstname..." 
+              placeholderTextColor="#003f5c"
+              onChangeText={firstname => this.setState({firstname})}/>
+        </View>
+
+        <View style={styles.inputView}>
+          <Icon 
+              name='user'
+              type='antdesign'
+              color='#fb5b5a'
+              iconStyle={{ justifyContent: 'center', padding: 10 }}
+              size={26}
             />
-          <FormInput
-                icon="key"
-                type="antdesign"
-                placeholder="Password"
-                keyboardType="default"
-                onChangeText={(password) => this.setState({password})}
-                // ref={input => { this.passwordInput = input }}
-                secureTextEntry={true}
+          <TextInput  
+              style={styles.inputText}
+              placeholder="Lastname..." 
+              placeholderTextColor="#003f5c"
+              onChangeText={lastname => this.setState({lastname})}/>
+        </View>
+
+        <View style={styles.inputView}>
+          <Icon 
+              name='email-outline'
+              type='material-community'
+              color='#fb5b5a'
+              iconStyle={{ justifyContent: 'center', padding: 10 }}
+              size={26}
             />
-          <DropdownInput 
-                icon="drivers-license-o"
-                type="font-awesome"
+          <TextInput  
+              style={styles.inputText}
+              placeholder="Email Address..." 
+              placeholderTextColor="#003f5c"
+              onChangeText={(email) => this.setState({email})}/>
+        </View>
+
+        <View style={styles.inputView}>
+          <Icon 
+              name='key'
+              type='antdesign'
+              color='#fb5b5a'
+              iconStyle={{ justifyContent: 'center', padding: 10 }}
+              size={26}
+            />
+          <TextInput  
+              style={styles.inputText}
+              placeholder="Password..." 
+              placeholderTextColor="#003f5c"
+              onChangeText={(password) => this.setState({password})}
+              secureTextEntry={true}
+              />
+        </View>
+
+        <View style={styles.inputView}>
+            <Icon 
+              name='drivers-license-o'
+              type='font-awesome'
+              color='#fb5b5a'
+              iconStyle={{ justifyContent: 'center', padding: 10 }}
+              size={26}
+            />
+            <Dropdown 
                 label="Licence"
                 data={[{
                     value: 'Full Licence'
                 }, {
                     value: 'Provisional Licence'
                 }]}
+                containerStyle={styles.dropdown}
                 onChangeText={(value) => this.setState({ licence: value})}
+                baseColor='#003f5c'
             />
         </View>
+
         <View>
           <Text style={{ justifyContent: 'space-around', color: 'red' }}>{this.state.error}</Text>
         </View>
 
-        <View style={{flex: 1}}>
-          <ButtonComponent 
-            text="Next"
-            onPress={() => this.createUser()}
-            icon="arrowright"
-            type="antdesign"
-          />
-          <TouchableHighlight style={styles.buttonContainer} onPress={() => this.props.navigation.navigate('LoginScreen')}>
-              <Text>Already have an account? Sign in.</Text>
-          </TouchableHighlight>
-        </View>
+        <TouchableOpacity style={styles.loginBtn} onPress={() => this.createUser()}>
+          <Text style={styles.loginText}>Begin</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.buttonContainer} onPress={() => this.props.navigation.navigate('LoginScreen')}>
+            <Text style={styles.back}>Already have an account? Sign in.</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -160,44 +190,55 @@ class UserRegistration extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 4,
+    flex: 1,
+    backgroundColor: '#003f5c',
     alignItems: 'center',
-  },
-  inputContainer: {
-    borderBottomColor: '#FFD559',
-    backgroundColor: '#FFFFFF',
-    borderBottomWidth: 2,
-    width:'80%',
-    height:55,
-    marginBottom:20,
-    flexDirection: 'row',
-    alignItems:'center'
-  },
-  rememberMe: {
-    backgroundColor: 'transparent',
-    flexDirection: 'row',
-    alignSelf: 'center',
-    justifyContent: 'space-around',
-    borderBottomColor: 'transparent',
-    width:'40%',
-  },
-  inputs:{
-    height:25,
-    marginLeft: 10,
-    width: '80%'
-  },
-  buttonContainer: {
-    height:45,
-    flexDirection: 'row',
     justifyContent: 'center',
-    alignSelf: 'center',
-    marginBottom:10,
-    width:250,
-    borderRadius:5,
+  },
+  inputView:{
+    width:"80%",
+    backgroundColor:"#465881",
+    borderRadius:25,
+    height:50,
+    marginBottom:20,
+    justifyContent:"center",
+    flexDirection: 'row',
+    justifyContent: 'flex-start'
   },
   logo:{
-    width: 100,
-    height: 100,
+    fontWeight:"bold",
+    fontSize:50,
+    color:"#fb5b5a",
+    marginBottom:40
+  },
+  inputText:{
+    color:"white",
+    width: '80%'
+  },
+  dropdown:{
+    height: 40,
+    width: '80%',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    paddingBottom: 10,
+  },
+  back:{
+    color:"white",
+    fontSize:15
+  },
+  loginBtn:{
+    width:"80%",
+    backgroundColor:"#fb5b5a",
+    borderRadius:25,
+    height:50,
+    alignItems:"center",
+    justifyContent:"center",
+    marginTop:40,
+    marginBottom:10
+  },
+  loginText: {
+    color: 'white',
+    fontSize: 20
   }
 });
 

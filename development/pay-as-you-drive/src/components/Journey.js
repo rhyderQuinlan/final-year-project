@@ -87,7 +87,7 @@ const styles=StyleSheet.create({
     },
     cost:{
         fontSize: 20,
-        color: '#007FF3'
+        color: '#fb5b5a'
     },
     date: {
         fontSize: 16,

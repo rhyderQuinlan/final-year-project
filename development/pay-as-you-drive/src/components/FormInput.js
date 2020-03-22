@@ -16,7 +16,7 @@ const FormInput = (props) => {
                         name={icon}
                         type={type}
                         style={styles.inputIcon}
-                        color="#007FF3"
+                        color="#fb5b5a"
                     />
                     <TextInput 
                         ref={ref}
@@ -34,13 +34,14 @@ const FormInput = (props) => {
 
 const styles = StyleSheet.create({
     inputContainer: {
-        borderBottomColor: '#FFD559',
+        borderBottomColor: 'transparent',
         backgroundColor: '#FFFFFF',
         borderBottomWidth: 2,
         height:55,
         marginBottom:20,
         flexDirection: 'row',
-        alignItems:'center'
+        alignItems:'center',
+        borderRadius: 25
     },
     iconTextContainer:{
         marginLeft: 10,

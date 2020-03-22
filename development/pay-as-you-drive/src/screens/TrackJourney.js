@@ -132,28 +132,6 @@ class TrackJourney extends Component {
             })
             this.setState({vehiclelist: vehicle_list})
         })
-
-        if(DeviceMotion.isAvailableAsync()){
-            Toast.show("DeviceMotion is available")
-        } else {
-            Toast.show("DeviceMotion is unavailable")
-        }
-
-        if(Accelerometer.isAvailableAsync()){
-            Toast.show("Accelerometer is available")
-        } else {
-            Toast.show("Accelerometer is unavailable")
-        }
-
-        if(Gyroscope.isAvailableAsync()){
-            Toast.show("Gyroscope is available")
-        } else {
-            Toast.show("Gyroscope is unavailable")
-        }
-    }
-
-    showData(){
-        console.log(this.state.gyroscopeData)
     }
     
     hasLocationPermission = async () => {
@@ -288,39 +266,6 @@ class TrackJourney extends Component {
 
         this.getLocation()
 
-        this._DeviceMotion_subscription = DeviceMotion.addListener(devicemotionData => {
-            x = devicemotionData.acceleration.x
-            y = devicemotionData.acceleration.y
-            z = devicemotionData.acceleration.z
-            
-            devicemotion_acceleration = Math.sqrt((x * x) + (y * y))
-            
-            this.setState({x,y,z, devicemotion_acceleration})
-          })
-
-        this._Accelerometer_subscription = Accelerometer.addListener(accelerometerData => {
-            x = accelerometerData.x
-            y = accelerometerData.y
-            z = accelerometerData.z
-
-            acceleration = Math.sqrt((x * x) + (y * y) + (z * z))
-            
-            this.setState({accelerometerData, acceleration})
-          })
-        
-        this._Gyroscope_subscription = Gyroscope.addListener(gyroscopeData => {
-            x = gyroscopeData.x
-            y = gyroscopeData.y
-            z = gyroscopeData.z
-
-            gyroscope_acceleration = Math.sqrt((x * x) + (y * y) + (z * z))
-            this.setState({gyroscopeData, gyroscope_acceleration})
-          })
-
-          DeviceMotion.setUpdateInterval(200)
-          Accelerometer.setUpdateInterval(200)
-          Gyroscope.setUpdateInterval(200)
-
         //check driving time is unsafe
         const currentTime = new Date().getTime()
         if (currentTime > getSunset(prevCoords.latitude, prevCoords.longitude) || currentTime < getSunrise(prevCoords.latitude, prevCoords.longitude)) {
@@ -355,11 +300,6 @@ class TrackJourney extends Component {
         const humanized_string = this.humanizeDate(hours, date, month);
 
         const billing_month = this.state.billing_month
-
-        //end accelerometer subscription
-        this._Accelerometer_subscription.remove()
-
-        this._Gyroscope_subscription.remove()
         
         const date_string = `${date}/${month}/${year}`
         this.journeyCreate(address, distance, duration, cost_total, date_string, humanized_string, nightdrive, vehiclename, vehiclekey, billing_month);
@@ -381,6 +321,9 @@ class TrackJourney extends Component {
     }
 
     calcCost(distance){
+        console.log(db_input)
+
+        console.log(this.state.vehicletype)
         //driving after sunset or before sunrise multiplier
         var nightdrive_addition = 0
         if (this.state.nightdrive) {
@@ -388,17 +331,25 @@ class TrackJourney extends Component {
         }
 
         switch (this.state.vehicletype) {
-            case 'SUV' || 'Pickup' || 'Minivan':
-                console.log("HEAVYCLASS")
+            case 'SUV':
+            case 'Pickup':
+            case 'Minivan':
+                console.log('CARTYPE: Heavy class')
                 var vehicletype_addition = distance * (db_input.heavyclass / 100)
                 break;
-            case 'Coupe' || 'Roadster' || 'Sedan':
+            case 'Coupe':
+            case 'Roadster':
+            case 'Sedan':
+                console.log('CARTYPE: Middle class')
                 var vehicletype_addition = distance * (db_input.middleclass / 100)
                 break;
             case 'Hatchback':
+                console.log('CARTYPE: Light class')
                 var vehicletype_addition = distance * (db_input.lightclass / 100)
                 break;
             default:
+                console.warn('ERROR: Vehicle type error in calculation')
+                var vehicletype_addition = 0
                 break;
         }
 
@@ -536,9 +487,10 @@ class TrackJourney extends Component {
     render() {
         const { gyroscopeData, accelerometerData, devicemotion_acceleration, acceleration, gyroscope_acceleration, speed } = this.state
         return(
-            <View style={styles.main}>
-                <View style={styles.content}>
-                    <Text 
+            <View style={styles.container}>
+                    
+                <View style={styles.contentContainer}>
+                <Text 
                         ref={(info) => this.errorMessage = info}
                     />
                     {this.state.showCountdown ? (
@@ -563,7 +515,7 @@ class TrackJourney extends Component {
                                     flexDirection: 'row',
                                     justifyContent: 'space-between',
                                     padding: 20,
-                                    borderColor: '#84828C',
+                                    borderColor: 'white',
                                     borderBottomWidth: 1,
                                     width: '100%'
                                 }
@@ -598,41 +550,15 @@ class TrackJourney extends Component {
                                 type='material'
                                 text={this.state.journeyCost.toFixed(2).toString() + " euro"}
                             />
-                            <View>
-                                <Text>SPEED</Text>
-                                <Text>{this.round(speed)}</Text>
-
-                                <Text>GYROSCOPE DATA</Text>
-                                <Text style={styles.text}>
-                                    x: {this.round(gyroscopeData.x)} y: {this.round(gyroscopeData.y)} z: {this.round(gyroscopeData.z)}
-                                </Text>
-                                <Text>ACCELEROMETER DATA</Text>
-                                <Text style={styles.text}>
-                                    x: {this.round(accelerometerData.x)} y: {this.round(accelerometerData.y)} z: {this.round(accelerometerData.z)}
-                                </Text>
-
-                                <Text>DEVICEMOTION DATA</Text>
-                                <Text style={styles.text}>
-                                    x: {this.round(this.state.x)} y: {this.round(this.state.y)} z: {this.round(this.state.z)}
-                                </Text>
-
-                                <Text>ACCELEROMETER ACCELERATION FORMULA</Text>
-                                <Text>{this.round(acceleration)}</Text>
-
-                                <Text>GYROSCOPE ACCELERATION FORMULA</Text>
-                                <Text>{this.round(gyroscope_acceleration)}</Text>
-
-                                <Text>DEVICEMOTION ACCELERATION FORMULA</Text>
-                                <Text>{this.round(devicemotion_acceleration)}</Text>
-                            </View>
+                            
                         </View>           
                     ) : (
                         <View>
-                            <Text style={styles.headingtext}>Track Journey</Text>
+                            <Text style={styles.logo}>Track Journey</Text>
                             <Select2
                                 isSelectSingle
                                 style={{ borderRadius: 5, width: '80%' }}
-                                colorTheme={'#007FF3'}
+                                colorTheme={'#fb5b5a'}
                                 popupTitle='Select vehicle'
                                 title='Select vehicle'
                                 data={this.state.vehiclelist}
@@ -652,38 +578,30 @@ class TrackJourney extends Component {
                     )
                     )}
                 </View>
-
-                <View style={styles.button}>
-                    {
+                
+                <View style={styles.buttonContainer}>
+                {
                         !this.state.running ? (this.state.showCountdown ? (
-                            <ButtonComponent 
-                                text="Cancel"
-                                icon="cancel"
-                                type="material-community"
-                                onPress={() => this.cancelPressed()}
-                            />
-                        ) : (<ButtonComponent 
-                                text="Start Journey"
-                                icon="arrowright"
-                                type="antdesign"
-                                onPress={() => {
+                            <TouchableOpacity style={styles.button} onPress={() => this.cancelPressed()}>
+                                <Text style={styles.buttonText}>Cancel</Text>
+                            </TouchableOpacity>
+                        ) : (
+                            <TouchableOpacity style={styles.button} onPress={() => {
                                     if(this.state.vehiclekey == '') {
                                         Toast.show("Please select a vehicle first")
                                         return
                                     }
                                     requestAnimationFrame(() => this.setState({showCountdown: true}))
-                                }}
-                            />)) : (
-                            <ButtonComponent 
-                                text="End Journey"
-                                icon="stop"
-                                type="foundation"
-                                onPress={() => requestAnimationFrame(() => this.endJourney())}
-                            />
+                                }}>
+                                <Text style={styles.buttonText}>Start Journey</Text>
+                            </TouchableOpacity>
+                            )) : (
+                                <TouchableOpacity style={styles.button} onPress={() => requestAnimationFrame(() => this.endJourney())}>
+                                    <Text style={styles.buttonText}>End Journey</Text>
+                                </TouchableOpacity>
                         )
                     }
-                    
-                </View>                
+                </View>                                 
             </View>
         )}
 }
@@ -696,72 +614,78 @@ const stopwatchOptions = {
     },
     text: {
         fontSize: 28,
-        color: '#84828C',
+        color: 'white',
         alignSelf: 'center'
     }
 };
 
 const styles = StyleSheet.create({
-    main:{
-        flex: 7,
-        flexDirection: 'column',
-        justifyContent: 'space-between'
-    },
-    heading: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    headingtext: {
-        fontSize: 24,
-        paddingTop: 20,
-        color: '#007FF3',
-        justifyContent: 'center',
-        textAlign: 'center',
-        paddingBottom: 30
-    },  
-    content:{
-        flex: 5,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    button:{
-        flex: 1
-    },
-    summary:{
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-
     container: {
         flex: 1,
-        justifyContent: 'center',
+        backgroundColor: '#003f5c',
         alignItems: 'center',
-        backgroundColor: '#F5FCFF',
+        justifyContent: 'center',
       },
-      headline: {
-        fontSize: 30,
-        textAlign: 'center',
-        margin: 10,
+      logo:{
+        fontWeight:"bold",
+        fontSize:50,
+        color:"#fb5b5a",
+        marginBottom:40
       },
-      valueContainer: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
+      button:{
+        width:"80%",
+        backgroundColor:"#fb5b5a",
+        borderRadius:25,
+        height:50,
+        alignItems:"center",
+        justifyContent: 'center',
+        marginTop:30,
+        marginBottom:20,
+        
       },
-      valueValue: {
-        width: 200,
+      buttonText: {
+        color: 'white',
         fontSize: 20
       },
-      valueName: {
-        width: 50,
-        fontSize: 20,
-        fontWeight: 'bold'
+      buttonContainer: {
+          flex: 2,
+          width: '100%',
+          alignItems: 'center'
       },
-      instructions: {
-        textAlign: 'center',
-        color: '#333333',
-        marginBottom: 5,
-      },
+      contentContainer: {
+          flex: 6,
+          width: '100%',
+          alignItems: 'center',
+          marginTop: '40%'
+      }
 })
 
 export default TrackJourney;
+
+{/* <View>
+    <Text>SPEED</Text>
+    <Text>{this.round(speed)}</Text>
+
+    <Text>GYROSCOPE DATA</Text>
+    <Text style={styles.text}>
+        x: {this.round(gyroscopeData.x)} y: {this.round(gyroscopeData.y)} z: {this.round(gyroscopeData.z)}
+    </Text>
+    <Text>ACCELEROMETER DATA</Text>
+    <Text style={styles.text}>
+        x: {this.round(accelerometerData.x)} y: {this.round(accelerometerData.y)} z: {this.round(accelerometerData.z)}
+    </Text>
+
+    <Text>DEVICEMOTION DATA</Text>
+    <Text style={styles.text}>
+        x: {this.round(this.state.x)} y: {this.round(this.state.y)} z: {this.round(this.state.z)}
+    </Text>
+
+    <Text>ACCELEROMETER ACCELERATION FORMULA</Text>
+    <Text>{this.round(acceleration)}</Text>
+
+    <Text>GYROSCOPE ACCELERATION FORMULA</Text>
+    <Text>{this.round(gyroscope_acceleration)}</Text>
+
+    <Text>DEVICEMOTION ACCELERATION FORMULA</Text>
+    <Text>{this.round(devicemotion_acceleration)}</Text>
+</View> */}

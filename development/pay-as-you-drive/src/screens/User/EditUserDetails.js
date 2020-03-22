@@ -204,7 +204,7 @@ class EditUserDetails extends Component {
                             name="close"
                             type="antdesign"
                             style={{marginRight: 10}}
-                            color="#007FF3"
+                            color="#fb5b5a"
                         />
                     </TouchableOpacity>
                 </View>
@@ -217,7 +217,7 @@ const styles = StyleSheet.create({
     headingtext: {
         fontSize: 24,
         paddingTop: 20,
-        color: '#007FF3',
+        color: '#fb5b5a',
         justifyContent: 'center',
         textAlign: 'center',
         paddingBottom: 30,
@@ -234,6 +234,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         flex: 6,
         alignItems: 'center',
+        backgroundColor: '#003f5c'
     },
     cancel:{
         alignSelf: 'center',
@@ -241,7 +242,7 @@ const styles = StyleSheet.create({
         width: 250,
         backgroundColor: 'white',
         borderRadius: 400,
-        borderColor: '#007FF3',
+        borderColor: '#fb5b5a',
         borderWidth: 1,
         padding: 15,
         flexDirection: 'row',
@@ -251,7 +252,7 @@ const styles = StyleSheet.create({
     canceltext: {
         fontSize: 20,
         marginLeft: 20,
-        color: '#007FF3',
+        color: '#fb5b5a',
         fontWeight: 'normal'
     },
     image:{
