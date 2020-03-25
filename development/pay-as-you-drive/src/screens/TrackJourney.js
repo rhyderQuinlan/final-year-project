@@ -82,6 +82,7 @@ class TrackJourney extends Component {
             prevTimestamp: 0,
             prevCoords: {},
             journeyCost: 0,
+            acceleration: 0,
 
             updatesEnabled: true,
             location: {},
@@ -94,16 +95,7 @@ class TrackJourney extends Component {
             vehiclename: '',
             vehicletype: '',
             vehicleyear: 0,
-            vehiclekey: '',
-
-            accelerometerData: {},
-            gyroscopeData: {},
-            devicemotionData: {},
-            acceleration: 0,
-            gyroscope_acceleration: 0,
-            x: 0,
-            y: 0,
-            z: 0
+            vehiclekey: ''
         };
     }  
     
@@ -206,7 +198,7 @@ class TrackJourney extends Component {
           this.watchId = navigator.geolocation.watchPosition(
             (position) => {
               this.setState({ location: position });
-              const { distanceTravelled, prevCoords, prevTimestamp } = this.state
+              const { distanceTravelled, prevCoords, prevTimestamp, speed } = this.state
               
               const newCoords = {
                   latitude: position.coords.latitude, 
@@ -219,18 +211,23 @@ class TrackJourney extends Component {
               )
               
               const currentTimestamp = position.timestamp
+
+              const previous_speed = speed
               
-              const speed = this.calcSpeed(
+              const current_speed = this.calcSpeed(
                   prevTimestamp, 
                   currentTimestamp, 
                   distance
               )
+
+              const acceleration = this.calcAcceleration(previous_speed, current_speed, currentTimestamp - prevTimestamp)
               
               this.setState({
                   distanceTravelled: distanceTravelled + distance,
                   prevCoords: newCoords,
-                  speed: speed,
-                  prevTimestamp: currentTimestamp
+                  speed: current_speed,
+                  prevTimestamp: currentTimestamp,
+                  acceleration: acceleration
               })
 
               this.calcCost(this.state.distanceTravelled)
@@ -261,6 +258,7 @@ class TrackJourney extends Component {
         this.setState({
             running: true, 
             stopwatchStart: true, 
+            stopwatchReset: false,
             showCountdown: false, 
         })
 
@@ -316,8 +314,6 @@ class TrackJourney extends Component {
             nightdrive: false,
             updatesEnabled: false
         });
-
-        Toast.show("Journey has come to an end")
     }
 
     calcCost(distance){
@@ -377,6 +373,10 @@ class TrackJourney extends Component {
     calcDistance(start, end){
         const distance = haversine(start, end, {unit: 'km'}) || 0
         return distance
+    }
+
+    calcAcceleration(v_0, v, t){
+       return ((v/3.6) - (v_0/3.6))/t
     }
 
     journeyCreate(address, distance, duration, cost_total, date, humanized_date, nightdrive, vehiclename, vehiclekey, billing_month){
@@ -501,7 +501,7 @@ class TrackJourney extends Component {
                                 size={50}
                                 digitStyle={{backgroundColor: ''}}
                                 onFinish={() => this.startJourney()}
-                                digitTxtStyle={{color: '#007FF3'}}
+                                digitTxtStyle={{color: '#2E6CB5'}}
                                 timeToShow={['S']}
                                 timeLabels={{s: ' '}}
                             />
@@ -515,7 +515,7 @@ class TrackJourney extends Component {
                                     flexDirection: 'row',
                                     justifyContent: 'space-between',
                                     padding: 20,
-                                    borderColor: 'white',
+                                    borderColor: '#84828C',
                                     borderBottomWidth: 1,
                                     width: '100%'
                                 }
@@ -550,6 +550,8 @@ class TrackJourney extends Component {
                                 type='material'
                                 text={this.state.journeyCost.toFixed(2).toString() + " euro"}
                             />
+                            <Text>SPEED: {this.state.speed}</Text>
+                            <Text>ACCELERATION: {this.state.acceleration}</Text>
                             
                         </View>           
                     ) : (
@@ -558,7 +560,7 @@ class TrackJourney extends Component {
                             <Select2
                                 isSelectSingle
                                 style={{ borderRadius: 5, width: '80%' }}
-                                colorTheme={'#fb5b5a'}
+                                colorTheme={'#2E6CB5'}
                                 popupTitle='Select vehicle'
                                 title='Select vehicle'
                                 data={this.state.vehiclelist}
@@ -582,23 +584,32 @@ class TrackJourney extends Component {
                 <View style={styles.buttonContainer}>
                 {
                         !this.state.running ? (this.state.showCountdown ? (
-                            <TouchableOpacity style={styles.button} onPress={() => this.cancelPressed()}>
-                                <Text style={styles.buttonText}>Cancel</Text>
-                            </TouchableOpacity>
+                            <ButtonComponent 
+                                text="Cancel"
+                                icon="minuscircleo"
+                                type="antdesign"
+                                onPress={() => this.cancelPressed()}
+                            />
                         ) : (
-                            <TouchableOpacity style={styles.button} onPress={() => {
+                            <ButtonComponent 
+                                text="Start Journey"
+                                icon="pluscircleo"
+                                type="antdesign"
+                                onPress={() => {
                                     if(this.state.vehiclekey == '') {
                                         Toast.show("Please select a vehicle first")
                                         return
                                     }
                                     requestAnimationFrame(() => this.setState({showCountdown: true}))
-                                }}>
-                                <Text style={styles.buttonText}>Start Journey</Text>
-                            </TouchableOpacity>
+                                }}
+                            />
                             )) : (
-                                <TouchableOpacity style={styles.button} onPress={() => requestAnimationFrame(() => this.endJourney())}>
-                                    <Text style={styles.buttonText}>End Journey</Text>
-                                </TouchableOpacity>
+                                <ButtonComponent 
+                                    text="End Journey"
+                                    icon="closecircleo"
+                                    type="antdesign"
+                                    onPress={() => requestAnimationFrame(() => this.endJourney())}
+                                />
                         )
                     }
                 </View>                                 
@@ -614,7 +625,7 @@ const stopwatchOptions = {
     },
     text: {
         fontSize: 28,
-        color: 'white',
+        color: '#84828C',
         alignSelf: 'center'
     }
 };
@@ -622,70 +633,21 @@ const stopwatchOptions = {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#003f5c',
-        alignItems: 'center',
-        justifyContent: 'center',
       },
       logo:{
         fontWeight:"bold",
         fontSize:50,
-        color:"#fb5b5a",
+        color:"#2E6CB5",
         marginBottom:40
-      },
-      button:{
-        width:"80%",
-        backgroundColor:"#fb5b5a",
-        borderRadius:25,
-        height:50,
-        alignItems:"center",
-        justifyContent: 'center',
-        marginTop:30,
-        marginBottom:20,
-        
-      },
-      buttonText: {
-        color: 'white',
-        fontSize: 20
       },
       buttonContainer: {
           flex: 2,
-          width: '100%',
-          alignItems: 'center'
       },
       contentContainer: {
           flex: 6,
-          width: '100%',
           alignItems: 'center',
           marginTop: '40%'
       }
 })
 
 export default TrackJourney;
-
-{/* <View>
-    <Text>SPEED</Text>
-    <Text>{this.round(speed)}</Text>
-
-    <Text>GYROSCOPE DATA</Text>
-    <Text style={styles.text}>
-        x: {this.round(gyroscopeData.x)} y: {this.round(gyroscopeData.y)} z: {this.round(gyroscopeData.z)}
-    </Text>
-    <Text>ACCELEROMETER DATA</Text>
-    <Text style={styles.text}>
-        x: {this.round(accelerometerData.x)} y: {this.round(accelerometerData.y)} z: {this.round(accelerometerData.z)}
-    </Text>
-
-    <Text>DEVICEMOTION DATA</Text>
-    <Text style={styles.text}>
-        x: {this.round(this.state.x)} y: {this.round(this.state.y)} z: {this.round(this.state.z)}
-    </Text>
-
-    <Text>ACCELEROMETER ACCELERATION FORMULA</Text>
-    <Text>{this.round(acceleration)}</Text>
-
-    <Text>GYROSCOPE ACCELERATION FORMULA</Text>
-    <Text>{this.round(gyroscope_acceleration)}</Text>
-
-    <Text>DEVICEMOTION ACCELERATION FORMULA</Text>
-    <Text>{this.round(devicemotion_acceleration)}</Text>
-</View> */}

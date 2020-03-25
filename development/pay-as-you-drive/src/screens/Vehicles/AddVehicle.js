@@ -130,7 +130,7 @@ class AddVehicle extends Component {
                             name="close"
                             type="antdesign"
                             style={{marginRight: 10}}
-                            color="#fb5b5a"
+                            color="#2E6CB5"
                         />
                     </TouchableOpacity>
                 </View>
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     logo:{
         fontWeight:"bold",
         fontSize:50,
-        color:"#fb5b5a",
+        color:"#2E6CB5",
         marginBottom:40,
         textAlign: 'center'
       },
@@ -155,15 +155,14 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'column',
         flex: 6,
-        backgroundColor: '#003f5c'
     },
     button:{
         alignSelf: 'center',
         alignContent: 'center',
-        width: 250,
+        width: '70%',
         backgroundColor: 'white',
         borderRadius: 400,
-        borderColor: '#fb5b5a',
+        borderColor: '#2E6CB5',
         borderWidth: 1,
         padding: 15,
         flexDirection: 'row',
@@ -173,7 +172,7 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 20,
         marginLeft: 20,
-        color: '#fb5b5a',
+        color: '#2E6CB5',
         fontWeight: 'normal'
     },
 })

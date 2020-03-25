@@ -15,7 +15,7 @@ const JourneyOption = (props) => {
                     name={icon}
                     type={type}
                     style={styles.inputIcon}
-                    color="#fb5b5a"
+                    color="#2E6CB5"
                 />
                 <Text style={styles.text}>{text}</Text>
             </View>
@@ -27,14 +27,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-evenly',
         padding: 20,
-        borderColor: 'white',
+        borderColor: '#84828C',
         borderBottomWidth: 1,
         width: '100%'
     },
     text: {
         fontSize: 24,
         textAlignVertical: 'bottom',
-        color: 'white'
+        color: '#84828C'
     }
 }
 )

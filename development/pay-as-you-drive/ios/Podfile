@@ -47,4 +47,6 @@ target 'pay_as_you_drive' do
 
   pod 'RNSensors', :path => '../node_modules/react-native-sensors'
 
+  pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
+
 end

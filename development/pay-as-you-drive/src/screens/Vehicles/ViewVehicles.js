@@ -112,7 +112,7 @@ class ViewVehicles extends Component {
                     <Select2
                         isSelectSingle
                         style={{ borderRadius: 5, width: '80%', alignSelf: 'center' }}
-                        colorTheme={'#fb5b5a'}
+                        colorTheme={'#2E6CB5'}
                         popupTitle='Select vehicle to edit'
                         title='Select vehicle to edit'
                         data={this.state.vehiclelist}
@@ -129,13 +129,13 @@ class ViewVehicles extends Component {
 
                     />
                     {this.state.selected ? (
-                        <View style={{backgroundColor: 'white', borderRadius: 25, margin: 40}}>
+                        <View style={{backgroundColor: 'white', borderRadius: 25, margin: '5%'}}>
                             <View style={{ flexDirection: 'row', alignContent: 'space-around', padding: 30}}>
                                 <View style={{flex: 3}}>
                                     <TextInput
                                         style={styles.nameheader}
                                         placeholder={this.vehiclename}
-                                        placeholderTextColor='#fb5b5a'
+                                        placeholderTextColor='#2E6CB5'
                                         underlineColorAndroid='transparent'
                                         onChangeText={(vehiclename) => this.setState({vehiclename})}
                                     />
@@ -145,7 +145,7 @@ class ViewVehicles extends Component {
                                     <Icon 
                                         name="edit"
                                         type="antdesign"
-                                        color="#fb5b5a"
+                                        color="#2E6CB5"
                                         
                                     />
                                 </View>
@@ -227,7 +227,7 @@ class ViewVehicles extends Component {
                             name="close"
                             type="antdesign"
                             style={{marginRight: 10}}
-                            color="#fb5b5a"
+                            color="#2E6CB5"
                         />
                     </TouchableOpacity>
                 </View>
@@ -240,7 +240,7 @@ const styles = StyleSheet.create({
     logo:{
         fontWeight:"bold",
         fontSize:50,
-        color:"#fb5b5a",
+        color:"#2E6CB5",
         marginBottom:40,
         textAlign: 'center',
         paddingTop: 30
@@ -254,7 +254,6 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'column',
         flex: 6,
-        backgroundColor: '#003f5c',
     },
     dropdown:{
         height: 50,
@@ -267,17 +266,17 @@ const styles = StyleSheet.create({
       },
     nameheader: {
         fontSize: 24,
-        color: '#fb5b5a',
+        color: '#2E6CB5',
         justifyContent: 'center',
         textAlign: 'center'
     },
     cancel:{
         alignSelf: 'center',
         alignContent: 'center',
-        width: 250,
+        width: '70%',
         backgroundColor: 'white',
         borderRadius: 400,
-        borderColor: '#fb5b5a',
+        borderColor: '#2E6CB5',
         borderWidth: 1,
         padding: 15,
         flexDirection: 'row',
@@ -287,7 +286,7 @@ const styles = StyleSheet.create({
     canceltext: {
         fontSize: 20,
         marginLeft: 20,
-        color: '#fb5b5a',
+        color: '#2E6CB5',
         fontWeight: 'normal'
     },
 })

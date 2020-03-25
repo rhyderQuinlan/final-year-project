@@ -4,17 +4,7 @@
             "outputFile": "/home/rhyder/Dropbox/college/fourth-year/fyp-project/development/pay-as-you-drive/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v16/values-v16.xml",
             "map": [
                 {
-                    "source": "/root/.gradle/caches/transforms-1/files-1.1/core-1.1.0.aar/1ccc7b22b8551eb31d61fd38261c43df/res/values-v16/values-v16.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "65",
-                        "endOffsets": "116"
-                    }
-                },
-                {
-                    "source": "/root/.gradle/caches/transforms-1/files-1.1/appcompat-1.1.0.aar/4f2bb82c1f33baf42572776ea4b96218/res/values-v16/values-v16.xml",
+                    "source": "/home/rhyder/.gradle/caches/transforms-1/files-1.1/appcompat-1.1.0.aar/7d7c15c24de265eb73a9f57a79560680/res/values-v16/values-v16.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -30,6 +20,16 @@
                         "endLines": "6",
                         "endColumns": "12",
                         "endOffsets": "289"
+                    }
+                },
+                {
+                    "source": "/home/rhyder/.gradle/caches/transforms-1/files-1.1/core-1.1.0.aar/53787415c7e373b6626a871bf086142f/res/values-v16/values-v16.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "65",
+                        "endOffsets": "116"
                     }
                 }
             ]

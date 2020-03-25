@@ -10,6 +10,8 @@ import {
 } from 'react-native';
 import firebase from 'firebase';
 
+import ButtonComponent from '../components/ButtonComponent';
+
 class MoreScreen extends Component {
     logout(){
         Alert.alert(
@@ -32,20 +34,36 @@ class MoreScreen extends Component {
     render() {
         return(
             <View style={styles.container}>
-                <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('ViewVehicles')}>
-                    <Text style={styles.buttonText}>Vehicles</Text>
-                </TouchableOpacity>
+                <ButtonComponent 
+                        text="Vehicles"
+                        icon="car"
+                        type="antdesign"
+                        onPress={() => this.props.navigation.navigate('ViewVehicles')}
+                    />
 
-                <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('EditUserDetails')}>
-                    <Text style={styles.buttonText}>Profile</Text>
-                </TouchableOpacity>
+                <ButtonComponent 
+                        text="Profile"
+                        icon="user"
+                        type="antdesign"
+                        onPress={() => this.props.navigation.navigate('EditUserDetails')}
+                    />
 
-                <TouchableOpacity style={styles.button} onPress={() => alert("Make Claim Pressed")}>
-                    <Text style={styles.buttonText}>Make Claim</Text>
-                </TouchableOpacity>
+                <ButtonComponent 
+                        text="Claims"
+                        icon="solution1"
+                        type="antdesign"
+                        onPress={() => this.props.navigation.navigate('ClaimInfoScreen')}
+                    />
 
-                <TouchableOpacity style={styles.button} onPress={() => this.logout()}>
-                    <Text style={styles.buttonText}>Logout</Text>
+                <ButtonComponent 
+                        text="Logout"
+                        icon="logout"
+                        type="antdesign"
+                        onPress={() => this.logout()}
+                    />
+
+                <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('LineChartScreen')}>
+                    <Text style={styles.buttonText}>Line Chart</Text>
                 </TouchableOpacity>
             </View>
         )
@@ -55,30 +73,13 @@ class MoreScreen extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#003f5c',
-        alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'center'
       },
       logo:{
         fontWeight:"bold",
         fontSize:50,
         color:"#fb5b5a",
         marginBottom:40
-      },
-      button:{
-        width:"80%",
-        backgroundColor:"#fb5b5a",
-        borderRadius:25,
-        height:50,
-        alignItems:"center",
-        justifyContent: 'center',
-        marginTop:30,
-        marginBottom:20,
-        
-      },
-      buttonText: {
-        color: 'white',
-        fontSize: 20
       },
 });
 

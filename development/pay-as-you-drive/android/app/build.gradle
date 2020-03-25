@@ -146,6 +146,7 @@ def jscFlavor = 'org.webkit:android-jsc:+'
 def enableHermes = project.ext.react.get("enableHermes", false);
 
 dependencies {
+    implementation project(':react-native-image-picker')
     implementation project(':react-native-sensors')
     implementation project(':react-native-fused-location')
     implementation project(':react-native-location')

@@ -23,6 +23,10 @@ import AddVehicle from './src/screens/Vehicles/AddVehicle';
 import EditUserDetails from './src/screens/User/EditUserDetails';
 import SmartContractControl from './src/screens/Admin/SmartContractControl';
 import WelcomeScreen from './src/screens/WelcomeScreen';
+import LineChartScreen from './src/screens/LineChartScreen';
+import ClaimInfoScreen from './src/screens/Claim/ClaimInfoScreen'
+import FileClaim from './src/screens/Claim/FileClaim'
+import ClaimUploaded from './src/screens/Claim/ClaimUploaded'
 
 console.disableYellowBox = true;
 
@@ -77,10 +81,10 @@ const BottomTab = createMaterialBottomTabNavigator(
   },
   {
     initialRouteName: 'Home',
-    activeColor: '#fb5b5a',
+    activeColor: '#74A4D7',
     inactiveColor: 'white',
     barStyle: { 
-      backgroundColor: '#003f5c',
+      backgroundColor: '#373E45',
       elevation: 10
      },
   }
@@ -171,6 +175,27 @@ const MainNavigator = createStackNavigator(
     },
     BottomTab: {
       screen: BottomTab,
+      navigationOptions: {
+        headerShown: false
+      }
+    },
+    LineChartScreen: {
+      screen: LineChartScreen
+    },
+    ClaimInfoScreen: {
+      screen: ClaimInfoScreen,
+      navigationOptions: {
+        headerShown: false
+      }
+    },
+    FileClaim: {
+      screen: FileClaim,
+      navigationOptions: {
+        headerShown: false
+      }
+    },
+    ClaimUploaded: {
+      screen: ClaimUploaded,
       navigationOptions: {
         headerShown: false
       }

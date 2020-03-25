@@ -86,11 +86,12 @@ const styles=StyleSheet.create({
 
     },
     cost:{
-        fontSize: 20,
-        color: '#fb5b5a'
+        fontSize: 25,
+        color: '#2E6CB5'
     },
     date: {
         fontSize: 16,
+        fontWeight: 'bold'
     },
 
     icon_text_view: {

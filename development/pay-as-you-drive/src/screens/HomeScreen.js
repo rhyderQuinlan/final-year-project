@@ -6,6 +6,8 @@ import {
     View,
     Text,
     Dimensions,
+    RefreshControl,
+    ActivityIndicator
 } from 'react-native';
 import LineChart from "react-native-responsive-linechart";
 import firebase from 'firebase';
@@ -35,6 +37,7 @@ class HomeScreen extends Component {
             list: [],
             user_info: {},
             loading: true,
+            refreshing: false
         };
     }
 
@@ -51,7 +54,7 @@ class HomeScreen extends Component {
         } catch (error) {
             console.warn("Error fetching data ---------------------------- ", error)
         }
-        
+
         try {
             var amount = 0
             const db_list = await firebase.database().ref(`/users/${currentUser.uid}/journeys/`).once('value')
@@ -74,6 +77,7 @@ class HomeScreen extends Component {
         } catch (error) {
             console.warn("Error fetching data ---------------------------- ", error)
         }
+    
     }
 
     // buildAnalytics(){
@@ -86,6 +90,31 @@ class HomeScreen extends Component {
     //     })
     // }
 
+    async refreshList(){
+        const { currentUser } = firebase.auth()
+        try {
+            var amount = 0
+            const db_list = await firebase.database().ref(`/users/${currentUser.uid}/journeys/`).once('value')
+                .then(snapshot => {
+                    var journey_list = []
+                    var currentMonth = this.humanizedMonth(new Date().getMonth())
+                    snapshot.forEach((childSub) => {
+                        if(currentMonth == childSub.val().billing_month){
+                            amount = amount + childSub.val().cost
+                        }
+                        journey_list.push(childSub.val())
+                    })
+        
+                    return journey_list
+                }).catch(error => {
+                    Toast.show(error)
+                })
+
+                this.setState({totalAmount: amount, list: db_list.reverse(), refreshing: false})
+        } catch (error) {
+            console.warn("Error fetching data ---------------------------- ", error)
+        }
+    }
 
     renderJourney(distance, cost){
         return <Journey distance={distance} cost={cost} />
@@ -137,9 +166,7 @@ class HomeScreen extends Component {
 
     
     render() { 
-        const {loading, list} = this.state
-
-        console.log(list.length)
+        const {loading, refreshing, list} = this.state
         return(
             <View style={styles.main}>
                 <View style={styles.headerContainer}>
@@ -163,7 +190,14 @@ class HomeScreen extends Component {
                         !loading ? (
                             <View>
                                 <Text style={{alignSelf: 'flex-end', paddingRight: 10}}>{this.state.list.length} {humanize.pluralize(this.state.list.length, "past journey")}</Text>
-                                <ScrollView>
+                                <ScrollView
+                                    refreshControl={
+                                        <RefreshControl refreshing={refreshing} onRefresh={() => {
+                                            this.setState({refreshing: true})
+                                            this.refreshList()}
+                                            } />
+                                    }
+                                >
                                     <FlatList
                                         data={this.state.list}
                                         renderItem={({item, index}) => 
@@ -182,7 +216,11 @@ class HomeScreen extends Component {
                             </View>
                         ) : (
                             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                                <Text style={{ fontSize: 20, color: '#fb5b5a' }}>Loading Data ...</Text>
+                                <ActivityIndicator 
+                                    size='large'
+                                    color='#2E6CB5'
+                                />
+                                <Text style={{ fontSize: 20, paddingTop: 20}}>Loading Data ...</Text>
                             </View>
                         )
                     }
@@ -201,18 +239,19 @@ const styles = StyleSheet.create({
     },
     headerContainer:{
         flex: 3,
-        backgroundColor: '#003f5c',
-        paddingTop: '10%',
+        backgroundColor: '#373E45',
+        paddingTop: '12%',
         alignItems: 'center'
     },
     subheading: {
-        color: '#fb5b5a',
-        fontSize: 20
+        color: '#EFC066',
+        fontSize: 15,
+        paddingBottom: 10,
     },
     welcome:{
         fontWeight:"bold",
         fontSize:42,
-        color:"#fb5b5a",
+        color:"#EFC066",
       },
     amount:{
         flex: 2,
@@ -226,7 +265,7 @@ const styles = StyleSheet.create({
     amountHeader:{
         paddingTop: 20,
         textAlign: 'center',
-        fontSize: 35,
+        fontSize: 45,
         textAlignVertical: 'bottom',
         color: 'white'
     },
@@ -237,7 +276,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 24,
         paddingTop: 15,
-        color: '#fb5b5a'
+        fontWeight: 'bold',
+        color: '#2E6CB5'
     }
 });
 

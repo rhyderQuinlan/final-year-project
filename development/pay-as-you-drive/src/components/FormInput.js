@@ -8,7 +8,7 @@ import {
 import { Icon } from 'react-native-elements';
 
 const FormInput = (props) => {
-    const {icon, placeholder, onChangeText, type, ref, keyboardType, secureTextEntry} = props;
+    const {icon, placeholder, onChangeText, type, ref, keyboardType, secureTextEntry, onSubmitEditing} = props;
     return(
         <View style={styles.inputContainer}>
             <View style={styles.iconTextContainer}>
@@ -16,7 +16,7 @@ const FormInput = (props) => {
                         name={icon}
                         type={type}
                         style={styles.inputIcon}
-                        color="#fb5b5a"
+                        color="#2E6CB5"
                     />
                     <TextInput 
                         ref={ref}
@@ -26,6 +26,8 @@ const FormInput = (props) => {
                         underlineColorAndroid='transparent'
                         onChangeText={onChangeText}
                         secureTextEntry={secureTextEntry}
+                        onSubmitEditing={onSubmitEditing}
+                        required
                         />
             </View>
         </View>

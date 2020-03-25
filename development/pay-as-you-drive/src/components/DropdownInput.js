@@ -14,7 +14,7 @@ const DropdownInput = (props) => {
                 name={icon}
                 type={type}
                 style={styles.icon}
-                color="#fb5b5a"
+                color="#2E6CB5"
             />
             <Dropdown 
                 label={label}
