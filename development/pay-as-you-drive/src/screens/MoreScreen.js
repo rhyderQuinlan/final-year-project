@@ -49,11 +49,18 @@ class MoreScreen extends Component {
                     />
 
                 <ButtonComponent 
-                        text="Claims"
-                        icon="solution1"
-                        type="antdesign"
-                        onPress={() => this.props.navigation.navigate('ClaimInfoScreen')}
+                        icon='arrowright'
+                        type='antdesign'
+                        text='My Claims'
+                        onPress={() => this.props.navigation.navigate('ViewClaims')}
                     />
+
+                <ButtonComponent 
+                    icon='arrowright'
+                    type='antdesign'
+                    text='Make A Claim'
+                    onPress={() => this.props.navigation.navigate('ClaimInfoScreen')}
+                />
 
                 <ButtonComponent 
                         text="Logout"

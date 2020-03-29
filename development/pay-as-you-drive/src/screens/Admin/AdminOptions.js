@@ -131,6 +131,13 @@ class AdminOptions extends Component {
                     />
 
                     <ButtonComponent 
+                        text='Process Claims'
+                        icon='menu-fold'
+                        type='antdesign'
+                        onPress={() => this.props.navigation.navigate('ClaimsScreen')}
+                    />
+
+                    <ButtonComponent 
                         text='Generate Bills'
                         icon='shoppingcart'
                         type='antdesign'

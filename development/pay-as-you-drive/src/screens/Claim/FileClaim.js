@@ -11,6 +11,9 @@ import {
 import { Pages, Indicator } from 'react-native-pages';
 import * as ImagePicker from 'expo-image-picker';
 import firebase from 'firebase';
+import '@firebase/firestore'
+import 'firebase/storage'
+var uuid = require('react-native-uuid');
 
 import ButtonComponent from '../../components/ButtonComponent';
 import FormInput from '../../components/FormInput';
@@ -26,13 +29,16 @@ class FileClaim extends Component {
     this.state = {
         description: null,
         quoteImage: null,
+        qID: null,
         reportImage: null,
+        rID: null,
         contacts: [],
         contact_role: '',
         contact_name: '',
         contact_phone: '',
         contact_email: '',
-        validCount: 0
+        validCount: 0,
+        claimAmount: 0
         
     }
   }
@@ -53,11 +59,10 @@ class FileClaim extends Component {
            default:
                break;
        }
-        
-        console.log(result);
 
         if (!result.cancelled) {
-            this.setState({ quoteImage: result.uri, loading: false });
+            this.setState({ quoteImage: result.uri, qID: uuid.v4(), loading: false })
+            
         }
 
    }
@@ -74,13 +79,10 @@ class FileClaim extends Component {
             default:
                 break;
         }
-        
-        console.log(result);
 
         if (!result.cancelled) {
-            this.setState({ reportImage: result.uri, loading: false });
+            this.setState({ reportImage: result.uri, rID: uuid.v4(), loading: false });
         }
-
     }
 
    async _showCameraRoll(){
@@ -92,23 +94,57 @@ class FileClaim extends Component {
                 allowsEditing: true,
                 aspect: [4, 3],
                 quality: 1
-            });
+            })
 
             return result
         }
    }
 
    async _showCamera(){
-    if(!ImagePicker.getCameraPermissionsAsync()){
-        ImagePicker.requestCameraPermissionsAsync
-    } else{
-        let result = await ImagePicker.launchCameraAsync({
-            quality: 1
-        });
+        if(!ImagePicker.getCameraPermissionsAsync()){
+            ImagePicker.requestCameraPermissionsAsync
+        } else{
+            let result = await ImagePicker.launchCameraAsync({
+                quality: 1
+            });
 
-        return result
+            return result
+        }
     }
-    }
+
+    uriToBlob = (uri) => {
+        return new Promise((resolve, reject) => {
+          const xhr = new XMLHttpRequest();
+          xhr.onload = function() {
+            // return the blob
+            resolve(xhr.response);
+          };
+          
+          xhr.onerror = function() {
+            // something went wrong
+            reject(new Error('uriToBlob failed'));
+          };
+
+          xhr.responseType = 'blob';
+          xhr.open('GET', uri, true);
+          
+          xhr.send(null);
+        });
+      }
+
+    uploadToFirebase = (blob, id) => {
+        return new Promise((resolve, reject)=>{
+            var storageRef = firebase.storage().ref()
+            storageRef.child(`uploads/${firebase.auth().currentUser.uid}/${id}.jpeg`).put(blob, {
+                contentType: 'image/jpeg'
+            }).then((snapshot)=>{
+                blob.close();
+                resolve(snapshot);
+            }).catch((error)=>{
+                reject(error);
+            });
+        });
+      }
 
     appendInput(){
         const data = {
@@ -129,29 +165,64 @@ class FileClaim extends Component {
                 <Text style={{fontSize: 18}}>Phone Number: {item.phone}</Text>
                 <Text style={{fontSize: 18}}>Email: {item.email}</Text>
                 <TouchableOpacity
-                 onPress={() => console.log('Delete ' + index)}
+                 onPress={() => this.deleteContact(index)}
                 >
-                    <Text>Remove Contact</Text>
+                    <Text style={{textAlign: 'right', paddingRight: 20, color: '#2E6CB5'}}>Remove Contact</Text>
                 </TouchableOpacity>
 
             </View>
         )
     }
 
+    deleteContact(index){
+        var array = [...this.state.contacts]
+        array.splice(index, 1)
+        this.setState({contacts: array})
+    }
+
     submitClaim(){
         const { currentUser } = firebase.auth()
+        const amount = Number(this.state.claimAmount)
 
         if(this.state.contacts.length === 0
             || this.state.description === null
-            || this.state.quoteImage === null
+            || this.state.quoteImage.uri === null
             || this.state.reportImage === null){
                 Toast.show('Please complete all tasks before submitting')
+            } else if(amount < 0 || amount == undefined){
+                Toast.show('Please enter a valid amount')
             } else {
+                const day = new Date().getDate()
+                const month = new Date().getMonth()
+                const year = new Date().getFullYear()
+                const date = day + '/' + month + '/' + year
+
+                this.uriToBlob(this.state.quoteImage)
+                    .then(blob => {
+                        this.uploadToFirebase(blob, this.state.qID)
+                    }).then(snapshot => {
+                        console.log('Quote image uploaded')
+                    }).catch(e => console.log(e))
+
+                this.uriToBlob(this.state.reportImage)
+                    .then(blob => {
+                        this.uploadToFirebase(blob, this.state.rID)
+                    }).then(snapshot => {
+                        console.log('Report image uploaded')
+                    }).catch(e => console.log(e))
+
                 const data = {
                     complete: false,
                     contact_list: this.state.contacts,
-                    description: this.state.description
+                    description: this.state.description,
+                    quote_image_id: this.state.qID,
+                    report_image_id: this.state.rID,
+                    date_submitted: date,
+                    date_reviewed: '',
+                    outcome: '',
+                    amount: amount
                 }
+                
                 firebase.database().ref(`users/${currentUser.uid}/claims/`)
                     .push(data)
                 this.props.navigation.navigate('ClaimUploaded')
@@ -374,7 +445,16 @@ class FileClaim extends Component {
                             />
                         )}
                     </View>
-                </View>
+                    <View>
+                        <Text>Enter the amount you are requesting for this claim. Align this amount with the quote you have from a mechanic or bodyshop.</Text>
+                        <FormInput 
+                            icon=''
+                            type='antdesign'
+                            placeholder='Requested amount'
+                            onChangeText={value => this.setState({claimAmount: value})}
+                        />
+                    </View>
+                </View>                
 
                 <View style={{flex:1}}>
                     <ButtonComponent 

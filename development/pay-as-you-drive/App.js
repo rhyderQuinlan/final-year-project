@@ -13,20 +13,28 @@ import HomeScreen from './src/screens/HomeScreen';
 import TrackJourney from './src/screens/TrackJourney';
 import MoreScreen from './src/screens/MoreScreen';
 import LoginScreen from './src/screens/LoginScreen';
-import AdminOptions from './src/screens/Admin/AdminOptions';
-import AlgorithmScreen from './src/screens/Admin/AlgorithmScreen';
 import RNLocationScreen from './src/screens/RNLocationScreen';
 import UserRegistration from './src/screens/Registration/UserRegistration';
 import VehicleRegistration from './src/screens/Registration/VehicleRegistration';
 import ViewVehicles from './src/screens/Vehicles/ViewVehicles';
 import AddVehicle from './src/screens/Vehicles/AddVehicle';
 import EditUserDetails from './src/screens/User/EditUserDetails';
-import SmartContractControl from './src/screens/Admin/SmartContractControl';
 import WelcomeScreen from './src/screens/WelcomeScreen';
 import LineChartScreen from './src/screens/LineChartScreen';
+
+//Admin
+import AdminOptions from './src/screens/Admin/AdminOptions';
+import AlgorithmScreen from './src/screens/Admin/AlgorithmScreen';
+import SmartContractControl from './src/screens/Admin/SmartContractControl';
+import ClaimsScreen from './src/screens/Admin/ClaimsScreen'
+import ReviewClaim from './src/screens/Admin/ReviewClaim'
+
+//Claims
 import ClaimInfoScreen from './src/screens/Claim/ClaimInfoScreen'
 import FileClaim from './src/screens/Claim/FileClaim'
 import ClaimUploaded from './src/screens/Claim/ClaimUploaded'
+import ViewClaims from './src/screens/Claim/ViewClaims'
+import DisplayClaim from './src/screens/Claim/DisplayClaim'
 
 console.disableYellowBox = true;
 
@@ -199,7 +207,31 @@ const MainNavigator = createStackNavigator(
       navigationOptions: {
         headerShown: false
       }
-    }
+    },
+    ViewClaims: {
+      screen: ViewClaims,
+      navigationOptions: {
+        headerShown: false
+      }
+    },
+    DisplayClaim: {
+      screen: DisplayClaim,
+      navigationOptions: {
+        headerShown: false
+      }
+    },
+    ClaimsScreen: {
+      screen: ClaimsScreen,
+      navigationOptions: {
+        headerShown: false
+      }
+    },
+    ReviewClaim: {
+      screen: ReviewClaim,
+      navigationOptions: {
+        headerShown: false
+      }
+    },
   },
   {
     initialRouteName: 'WelcomeScreen',

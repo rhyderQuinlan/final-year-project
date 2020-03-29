@@ -51,7 +51,11 @@ class WelcomeScreen extends Component {
         this.setState({ email: email, password: password })
         firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then(() => {
             Toast.show('Logging you in')
-            this.props.navigation.navigate('BottomTab')        
+            if(this.state.email == 'admin@payasyoudrive.com'){
+              this.props.navigation.navigate('AdminOptions')  
+            } else {
+              this.props.navigation.navigate('BottomTab')  
+            }      
         }).catch((error) => {
           this.setState({error:error.message})
         });
