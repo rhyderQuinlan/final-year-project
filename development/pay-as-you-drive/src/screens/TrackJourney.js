@@ -15,25 +15,20 @@ import {
     Dimensions,
     PermissionsAndroid,
     Platform,
-    TouchableOpacity
+    TouchableOpacity,
+    Image
 } from 'react-native';
 
 import Toast from 'react-native-simple-toast';
 import firebase from 'firebase';
 import { CountDown } from 'react-native-countdown-component';
-import { Stopwatch } from 'react-native-stopwatch-timer';
+import { Stopwatch, Timer } from 'react-native-stopwatch-timer';
 import humanize from 'humanize-plus';
 import Geocoder from 'react-native-geocoding';
-import { 
-    Accelerometer,
-    Gyroscope,
-    DeviceMotion
- } from 'expo-sensors';
-import Geolocation from 'react-native-geolocation-service';
 import ButtonComponent from '../components/ButtonComponent';
 import Select2 from 'react-native-select-two';
 import _ from 'lodash';
-
+import { Icon } from 'react-native-elements';
 import { Client } from "@googlemaps/google-maps-services-js"; //speed limit task
 import { getSunrise, getSunset } from 'sunrise-sunset-js'; //sunrise-sunset task
 
@@ -44,6 +39,9 @@ const { width, height } = Dimensions.get('window')
 const haversine = require('haversine')
 
 var db_input = {}
+var provLicence = false
+var vehicleClass = null
+var olderCar = false
 
 Geocoder.init("AIzaSyBsJhvcHPCNm5heLKAO69RCtST6oqloGJE")
 
@@ -75,6 +73,8 @@ class TrackJourney extends Component {
             stopwatchReset: false,
             showCountdown: false,
             showStopwatch: false,
+            timerStart: false,
+            timerReset: false,
 
             distanceTravelled: 0,
             speed: 0,
@@ -95,7 +95,8 @@ class TrackJourney extends Component {
             vehiclename: '',
             vehicletype: '',
             vehicleyear: 0,
-            vehiclekey: ''
+            vehiclekey: '',
+            hardBraking: false
         };
     }  
     
@@ -109,7 +110,11 @@ class TrackJourney extends Component {
                 db_input.nightdrive_multiplier = snapshot.val().nightdrive_multiplier
                 db_input.lightclass = snapshot.val().lightclass
                 db_input.middleclass = snapshot.val().middleclass
-                db_input.heavyclass = snapshot.val().lightclass
+                db_input.heavyclass = snapshot.val().heavyclass
+                db_input.provisional_licence = snapshot.val().provisional_licence
+                db_input.age_conditional = snapshot.val().age_conditional
+                db_input.age_addition = snapshot.val().age_addition
+                db_input.acceleration_conditional = snapshot.val().acceleration_conditional
             })
             .catch((error) => {
                 console.log(error)
@@ -123,6 +128,12 @@ class TrackJourney extends Component {
                 vehicle_list.push({id: childSub.key, name: childSub.val().name, type: childSub.val().type, year: Number(childSub.val().year)})
             })
             this.setState({vehiclelist: vehicle_list})
+        })
+
+        firebase.database().ref(`users/${currentUser.uid}/`).once('value').then(snapshot => {
+            if(snapshot.val().licence == 'Provisional Licence'){
+                provLicence = true
+            }
         })
     }
     
@@ -230,7 +241,7 @@ class TrackJourney extends Component {
                   acceleration: acceleration
               })
 
-              this.calcCost(this.state.distanceTravelled)
+              this.calcCost(this.state.distanceTravelled, acceleration)
             },
             (error) => {
               this.setState({ location: error });
@@ -270,11 +281,38 @@ class TrackJourney extends Component {
             this.setState({ nightdrive: true })
         }
 
+        //assign selected vehicle to journey
         this.state.vehiclelist.forEach((child, index) => {
             if(child.checked == true){
                 this.setState({ vehiclename: child.name, vehicletype: child.type, vehicleyear: child.year })
             }
         })
+
+        //assign vehicle type
+        switch (this.state.vehicletype) {
+            case 'SUV':
+            case 'Pickup':
+            case 'Minivan':
+                vehicleClass = 'heavy_class'
+                break;
+            case 'Coupe':
+            case 'Roadster':
+            case 'Sedan':
+                vehicleClass = 'middle_class'
+                break;
+            case 'Hatchback':
+                vehicleClass = 'light_class'
+                break;
+            default:
+                vehicleClass = 'error'
+                break;
+        }
+
+        //check age of car against conditional
+        var year = new Date().getFullYear()
+        if((year - this.state.vehicleyear) > db_input.age_conditional){
+            olderCar = true
+        }
 
         this.getLocationUpdates()
     }
@@ -316,31 +354,22 @@ class TrackJourney extends Component {
         });
     }
 
-    calcCost(distance){
-        console.log(db_input)
-
-        console.log(this.state.vehicletype)
-        //driving after sunset or before sunrise multiplier
+    calcCost(distance, acceleration){
+        //driving after sunset or before sunrise multiplier (percentage %)
         var nightdrive_addition = 0
         if (this.state.nightdrive) {
             nightdrive_addition = distance * db_input.nightdrive_multiplier/100
         }
 
-        switch (this.state.vehicletype) {
-            case 'SUV':
-            case 'Pickup':
-            case 'Minivan':
-                console.log('CARTYPE: Heavy class')
+        //vehicle type multiplier (percentage %)
+        switch (vehicleClass) {
+            case 'heavy_class':
                 var vehicletype_addition = distance * (db_input.heavyclass / 100)
                 break;
-            case 'Coupe':
-            case 'Roadster':
-            case 'Sedan':
-                console.log('CARTYPE: Middle class')
+            case 'middle_class':
                 var vehicletype_addition = distance * (db_input.middleclass / 100)
                 break;
-            case 'Hatchback':
-                console.log('CARTYPE: Light class')
+            case 'light_class':
                 var vehicletype_addition = distance * (db_input.lightclass / 100)
                 break;
             default:
@@ -349,12 +378,29 @@ class TrackJourney extends Component {
                 break;
         }
 
+        //TODO: hard braking detection
+        if(acceleration <= (db_input.acceleration_conditional * -1)){
+            this.setState({hardBraking: true})
+            this.toggleTimer()
+        }
+
+
+        //Car age addition
+        var age_addition = 0
+        if(olderCar){
+            age_addition = distance * (db_input.age_addition / 100)
+        }
+        
+        //Provisional License addition
+        var licence_addition = 0
+        if(provLicence){
+            licence_addition = distance * (db_input.provisional_licence / 100)
+        }
+
+        //distance multiplier (cents/km)
         const distance_addition = distance * db_input.distance / 100
 
-        console.log("------------------------- Algorithm ---------------------------\nDistance: " + distance + " nightdrive_multiplier: " + db_input.nightdrive_multiplier + " vehicletype_addition: " + vehicletype_addition + "\n")
-        console.log(distance_addition + " + " + vehicletype_addition + " + " + nightdrive_addition + "\n---------------------------------------------------------")
-
-        const total = distance_addition + nightdrive_addition + vehicletype_addition
+        const total = distance_addition + nightdrive_addition + vehicletype_addition + licence_addition + age_addition
         this.setState({journeyCost: total})
         return total.toFixed(2)
     }
@@ -376,7 +422,8 @@ class TrackJourney extends Component {
     }
 
     calcAcceleration(v_0, v, t){
-       return ((v/3.6) - (v_0/3.6))/t
+        // console.info('---\nv: ' + v + '\nv_0: ' + v_0 + '\nt: ' + t)
+        return ((v/3.6) - (v_0/3.6))/t
     }
 
     journeyCreate(address, distance, duration, cost_total, date, humanized_date, nightdrive, vehiclename, vehiclekey, billing_month){
@@ -470,6 +517,14 @@ class TrackJourney extends Component {
         this.setState({showCountdown: true});
     }
 
+    toggleTimer() {
+        this.setState({timerStart: !this.state.timerStart, timerReset: false});
+    } 
+    
+    resetTimer() {
+        this.setState({timerStart: false, timerReset: true});
+    }
+
     cancelPressed() {
         this.setState({
             showCountdown: false
@@ -485,17 +540,21 @@ class TrackJourney extends Component {
       }
 
     render() {
-        const { gyroscopeData, accelerometerData, devicemotion_acceleration, acceleration, gyroscope_acceleration, speed } = this.state
+        const { hardBraking } = this.state
         return(
             <View style={styles.container}>
-                    
                 <View style={styles.contentContainer}>
-                <Text 
+                    <Text 
                         ref={(info) => this.errorMessage = info}
                     />
                     {this.state.showCountdown ? (
-                        <View>
-                            <Text style={styles.headingtext}>Beginning Journey</Text>
+                        <View style={{flex: 1, justifyContent: 'space-around'}}>
+                            <Image 
+                                    source={require('../../assets/key.png')}
+                                    style={styles.image}
+                                    alignSelf='center'
+                                />
+                            <Text style={styles.logo}>Beginning Journey</Text>
                             <CountDown
                                 until={3}
                                 size={50}
@@ -510,52 +569,121 @@ class TrackJourney extends Component {
                     ) : (
                         this.state.running ? (
                         <View style={styles.summary}>
-                            <View style={
-                                {
-                                    flexDirection: 'row',
-                                    justifyContent: 'space-between',
-                                    padding: 20,
-                                    borderColor: '#84828C',
-                                    borderBottomWidth: 1,
-                                    width: '100%'
-                                }
-                            }>
-                                <Stopwatch 
-                                    start={this.state.stopwatchStart}
-                                    reset={this.state.stopwatchReset}
-                                    options={stopwatchOptions}
-                                    getTime={(time) => this.getFormattedTime(time)} 
-                                /> 
+                            <View style={styles.summaryHeaderContainer}>
+                                <View style={{flex:1}}></View>
+                                <View style={{flex: 2}}>
+                                    <Image 
+                                        source={require('../../assets/gps.png')}
+                                        style={styles.placeholder}
+                                        alignSelf='center'
+                                    />
+                                </View>
+                                
+                                <View style={{flex:3, borderBottomColor: '#84828C', borderBottomWidth: 1, justifyContent: 'space-evenly'}}>
+                                    <Text style={styles.amount}>€{this.state.journeyCost.toFixed(2).toString()}</Text>
+                                    <Stopwatch 
+                                        start={this.state.stopwatchStart}
+                                        reset={this.state.stopwatchReset}
+                                        options={stopwatchOptions}
+                                        getTime={(time) => this.getFormattedTime(time)} 
+                                    /> 
+                                </View>
                             </View>
-                            { this.state.nightdrive ? 
-                                (<JourneyOption 
-                                    icon='moon'
-                                    type='feather'
-                                    text=' Night drive'
-                                />)
-                                :
-                                (<JourneyOption 
-                                    icon='sun'
-                                    type='feather'
-                                    text=' Day drive'
-                                />)
-                            }
-                            <JourneyOption 
-                                icon='map-marker-distance'
-                                type='material-community'
-                                text={this.state.distanceTravelled.toFixed(2).toString() + " Km"}
-                            />
-                            <JourneyOption 
-                                icon='attach-money'
-                                type='material'
-                                text={this.state.journeyCost.toFixed(2).toString() + " euro"}
-                            />
-                            <Text>SPEED: {this.state.speed}</Text>
-                            <Text>ACCELERATION: {this.state.acceleration}</Text>
-                            
+
+                            <View style={{flex: 3}}>
+                                <ScrollView>
+                                    <JourneyOption 
+                                        icon='map-marker-distance'
+                                        type='material-community'
+                                        text={this.state.distanceTravelled.toFixed(2).toString() + " Km"}
+                                        addition={db_input.distance}
+                                        mileage={true}
+                                    />
+
+                                    { this.state.nightdrive ? 
+                                        (<JourneyOption 
+                                            icon='moon'
+                                            type='feather'
+                                            text='Night drive'
+                                            addition={db_input.nightdrive_multiplier}
+                                        />)
+                                        :
+                                        (<JourneyOption 
+                                            icon='sun'
+                                            type='feather'
+                                            text='Day drive'
+                                            addition={null}
+                                        />)
+                                    }
+
+                                    { provLicence ? (
+                                        <JourneyOption 
+                                            icon='drivers-license-o'
+                                            type='font-awesome'
+                                            text="Provisional Licence"
+                                            addition={db_input.provisional_licence}
+                                        />
+                                    ) : (
+                                        <JourneyOption 
+                                            icon='drivers-license-o'
+                                            type='font-awesome'
+                                            text="Full Licence"
+                                            addition={null}
+                                        />
+                                    ) }
+
+                                    {
+                                        vehicleClass == 'heavy_class' ? (
+                                            <JourneyOption 
+                                                icon='car-pickup'
+                                                type='material-community'
+                                                text={this.state.vehiclename + ' (Heavy Class)'}
+                                                addition={db_input.heavyclass}
+                                            />
+                                        ) : vehicleClass == 'middle_class' ? (
+                                            <JourneyOption 
+                                                icon='car-sports'
+                                                type='material-community'
+                                                text={this.state.vehiclename + ' (Middle Class)'}
+                                                addition={db_input.middleclass}
+                                            />
+                                        ) : vehicleClass == 'light_class' ? (
+                                            <JourneyOption 
+                                                icon='car-hatchback'
+                                                type='material-community'
+                                                text={this.state.vehiclename + ' (Light Class)'}
+                                                addition={db_input.lightclass}
+                                            />
+                                        ) : (
+                                            <JourneyOption 
+                                                icon='drivers-license-o'
+                                                type='font-awesome'
+                                                text="Vehicle Class Error"
+                                                addition={null}
+                                            />
+                                        )
+                                    }
+
+                                    { olderCar ? (
+                                        <JourneyOption 
+                                            icon='calendar'
+                                            type='antdesign'
+                                            text={"Car older than " + db_input.age_conditional + " years"} 
+                                            addition={db_input.age_addition}
+                                        />
+                                    ):(
+                                        null
+                                    )}
+                                </ScrollView>
+                            </View>
                         </View>           
                     ) : (
-                        <View>
+                        <View style={{paddingTop: '40%'}}>
+                            <Image 
+                                source={require('../../assets/speedometer.png')}
+                                style={styles.image}
+                                alignSelf='center'
+                            />
                             <Text style={styles.logo}>Track Journey</Text>
                             <Select2
                                 isSelectSingle
@@ -630,24 +758,79 @@ const stopwatchOptions = {
     }
 };
 
+
+//center icons
 const styles = StyleSheet.create({
     container: {
         flex: 1,
       },
-      logo:{
+    summary: {
+        width: '100%',
+        flex: 1,
+    },
+    logo:{
         fontWeight:"bold",
-        fontSize:50,
-        color:"#2E6CB5",
-        marginBottom:40
-      },
-      buttonContainer: {
-          flex: 2,
-      },
-      contentContainer: {
-          flex: 6,
-          alignItems: 'center',
-          marginTop: '40%'
-      }
+        fontSize:32,
+        color:"#373E45",
+        marginBottom:40,
+        textAlign: 'center'
+    },
+    image:{
+        flex: 1,
+        height: 150,
+        width: 150,
+        resizeMode: 'contain'
+    },
+    placeholder: {
+        flex: 5,
+        height: 150,
+        width: 150,
+        resizeMode: 'contain'
+    },
+    buttonContainer: {
+        flex: 1,
+    },
+    contentContainer: {
+        flex: 6,
+        alignItems: 'center',
+    },
+    amount: {
+        fontSize: 40,
+        textAlign: 'center',
+        color: '#2E6CB5'
+    },
+    summaryHeaderContainer:{
+        flex: 2,
+        justifyContent: 'space-between'
+    }
 })
 
 export default TrackJourney;
+
+{/* <Timer 
+    start={this.state.timerStart}
+    reset={this.state.timerReset}
+    totalDuration={3000}
+    handleFinish={() => {
+        this.setState({hardBraking: false, resetTimer: true, timerStart: false})
+    }}
+    options={stopwatchOptions}
+/> */}
+
+// { hardBraking ? (
+//     <View style={{flexDirection: "row", justifyContent: 'space-evenly'}}>
+//         <Icon 
+//             name='warning'
+//             type='antdesign'
+//             color='#FFCC00'
+//         />
+//         <Text>Hard Braking Detected</Text>
+//     </View>
+// ) : (
+//     <View>
+
+//     </View>
+// )}
+
+// <Text>SPEED: {this.state.speed}</Text>
+// <Text>ACCELERATION: {this.state.acceleration}</Text>

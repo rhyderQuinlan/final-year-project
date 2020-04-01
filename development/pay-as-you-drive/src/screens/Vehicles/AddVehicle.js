@@ -142,7 +142,7 @@ class AddVehicle extends Component {
 const styles = StyleSheet.create({
     logo:{
         fontWeight:"bold",
-        fontSize:50,
+        fontSize:35,
         color:"#2E6CB5",
         marginBottom:40,
         textAlign: 'center'

@@ -16,8 +16,10 @@ import { Icon } from 'react-native-elements';
 import firebase from 'firebase';
 import Toast from 'react-native-simple-toast';
 import Dialog from "react-native-dialog";
-
 import _ from 'lodash';
+
+import FormInput from '../components/FormInput'
+import ButtonComponent from '../components/ButtonComponent';
 
 class LoginScreen extends Component {
   constructor(props) {
@@ -83,94 +85,117 @@ class LoginScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-          <Text style={styles.logo}>Welcome Back</Text>
+          <View style={styles.content}>
+            <View style={{flex:2}}>
 
-          <View style={styles.inputView}>
-            <TextInput  
-                style={styles.inputText}
-                placeholder="Email..." 
-                placeholderTextColor="#003f5c"
-                onChangeText={email => this.setState({email})}/>
-          </View>
-          <View style={styles.inputView}>
-            <TextInput  
-                style={styles.inputText}
-                placeholder="Password..." 
-                placeholderTextColor="#003f5c"
+            </View>
+
+            <View style={{flex: 3}}>
+              <Image 
+                source={require('../../assets/logo-yellow-blue.png')}
+                alignSelf='center'
+                style={styles.logo}
+              />
+              <Text style={styles.header}>
+                  <Text style={{color: '#EFC066'}}>P</Text>
+                  ay 
+                  <Text style={{color: '#EFC066'}}> A</Text>
+                  s 
+                  <Text style={{color: '#EFC066'}}> Y</Text>
+                  ou 
+                  <Text style={{color: '#EFC066'}}> D</Text>rive</Text>
+            </View>
+
+            <View style={{flex:6}}>
+              <FormInput 
+                icon='mail'
+                type='antdesign'
+                onChangeText={email => this.setState({email})}
+                placeholder='Email Address'
+              />
+
+              <FormInput 
+                icon='key'
+                type='antdesign'
                 onChangeText={password => this.setState({password})}
+                placeholder='Password'
                 secureTextEntry={true}
-                />
+              />
+
+            <View style={styles.rememberMecontainer}>
+                <View>
+                  <Text style={styles.rememberme}>Remember Me</Text>
+                </View>
+                
+                <View>
+                  <Switch
+                    value={this.state.rememberMe}
+                    onValueChange={(value) => this.toggleRememberMe(value)}
+                    trackColor='#2E6CB5'
+                    thumbColor='#2E6CB5'
+                  />
+                </View>
+            </View>
+
+            <View>
+                <Dialog.Container visible={this.state.resetPasswordDialog}>
+                    <Dialog.Title>Reset password</Dialog.Title>
+                    <Dialog.Description>
+                        Enter account email address. Then check your emails for reset link.
+                    </Dialog.Description>
+                    <Dialog.Input 
+                        onChangeText={(passwordChangeEmail) => this.passwordChangeEmail = passwordChangeEmail}
+                        label="Email Address"
+                        placeholder="Enter email"
+                        />
+                    <Dialog.Button label="Cancel" onPress={() => this.setState({ resetPasswordDialog: false})}/>
+                    <Dialog.Button label="Confirm" onPress={() => {
+                        this.setState({resetPasswordDialog: false})
+                        this.resetPassword()
+                        }}/>
+                </Dialog.Container>
+            </View>
+
+            <ButtonComponent 
+              icon='arrowright'
+              type='antdesign'
+              onPress={() => this.signinUser()}
+              text='Login'
+            />
+
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('WelcomeScreen')}>
+              <Text style={styles.signup}>Sign Up</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.buttonContainer} onPress={() => this.setState({resetPasswordDialog: true})}>
+                <Text style={styles.forgotpassword}>Forgot Password?</Text>
+            </TouchableOpacity>
+
+            <View style={styles.errorcontainer}>
+              <Text style={styles.error}>{this.state.error}</Text>
+            </View>
+
+            <View>
+                <Dialog.Container visible={this.state.resetPasswordDialog}>
+                    <Dialog.Title>Reset password</Dialog.Title>
+                    <Dialog.Description>
+                        Enter account email address. Then check your emails for reset link.
+                    </Dialog.Description>
+                    <Dialog.Input 
+                        onChangeText={(passwordChangeEmail) => this.passwordChangeEmail = passwordChangeEmail}
+                        label="Email Address"
+                        placeholder="Enter email"
+                        />
+                    <Dialog.Button label="Cancel" onPress={() => this.setState({ resetPasswordDialog: false})}/>
+                    <Dialog.Button label="Confirm" onPress={() => {
+                        this.setState({resetPasswordDialog: false})
+                        this.resetPassword()
+                        }}/>
+                </Dialog.Container>
+            </View>
+            </View>
           </View>
-
-          <View style={styles.rememberMecontainer}>
-              <View>
-                <Text style={styles.rememberme}>Remember Me</Text>
-              </View>
-              
-              <View>
-                <Switch
-                  value={this.state.rememberMe}
-                  onValueChange={(value) => this.toggleRememberMe(value)}
-                  trackColor='#fb5b5a'
-                  thumbColor='#fb5b5a'
-                />
-              </View>
-          </View>
-
-          <View>
-              <Dialog.Container visible={this.state.resetPasswordDialog}>
-                  <Dialog.Title>Reset password</Dialog.Title>
-                  <Dialog.Description>
-                      Enter account email address. Then check your emails for reset link.
-                  </Dialog.Description>
-                  <Dialog.Input 
-                      onChangeText={(passwordChangeEmail) => this.passwordChangeEmail = passwordChangeEmail}
-                      label="Email Address"
-                      placeholder="Enter email"
-                      />
-                  <Dialog.Button label="Cancel" onPress={() => this.setState({ resetPasswordDialog: false})}/>
-                  <Dialog.Button label="Confirm" onPress={() => {
-                      this.setState({resetPasswordDialog: false})
-                      this.resetPassword()
-                      }}/>
-              </Dialog.Container>
-          </View>
-
-          <TouchableOpacity style={styles.loginBtn} onPress={() => this.signinUser()}>
-            <Text style={styles.loginText}>LOGIN</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('WelcomeScreen')}>
-            <Text style={styles.loginText}>Sign Up</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.buttonContainer} onPress={() => this.setState({resetPasswordDialog: true})}>
-              <Text style={styles.back}>Forgot Password?</Text>
-          </TouchableOpacity>
-
-          <View style={styles.errorcontainer}>
-            <Text style={styles.error}>{this.state.error}</Text>
-          </View>
-
-          <View>
-              <Dialog.Container visible={this.state.resetPasswordDialog}>
-                  <Dialog.Title>Reset password</Dialog.Title>
-                  <Dialog.Description>
-                      Enter account email address. Then check your emails for reset link.
-                  </Dialog.Description>
-                  <Dialog.Input 
-                      onChangeText={(passwordChangeEmail) => this.passwordChangeEmail = passwordChangeEmail}
-                      label="Email Address"
-                      placeholder="Enter email"
-                      />
-                  <Dialog.Button label="Cancel" onPress={() => this.setState({ resetPasswordDialog: false})}/>
-                  <Dialog.Button label="Confirm" onPress={() => {
-                      this.setState({resetPasswordDialog: false})
-                      this.resetPassword()
-                      }}/>
-              </Dialog.Container>
-          </View>
-        </View>
+      </View>
     );
   }
 }
@@ -178,56 +203,45 @@ class LoginScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#003f5c',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#EFF1F3'
   },
-  inputView:{
-    width:"80%",
-    backgroundColor:"#465881",
-    borderRadius:25,
-    height:50,
-    marginBottom:20,
-    justifyContent:"center",
-    padding:20
+  content: {
+    flex: 1,
+    alignSelf:'center',
+    width: '80%'
+  },
+  header:{
+    flex: 2,
+    fontWeight:"bold",
+    fontSize:32,
+    color:"#373E45",
+    textAlign: 'center'
   },
   logo:{
-    fontWeight:"bold",
-    fontSize:50,
-    color:"#fb5b5a",
-    marginBottom:40
-  },
-  inputText:{
-    height:50,
-    color:"white"
-  },
-  back:{
-    color:"white",
-    fontSize:15,
-    marginTop: 20
-  },
-  loginBtn:{
-    width:"80%",
-    backgroundColor:"#fb5b5a",
-    borderRadius:25,
-    height:50,
-    alignItems:"center",
-    justifyContent:"center",
-    marginTop:30,
-    marginBottom:20
-  },
-  loginText: {
-    color: 'white',
-    fontSize: 20
+    flex: 2,
+    width: 150,
+    height: 150,
+    resizeMode: 'contain'
   },
   rememberMecontainer: {
     flexDirection: 'row',
+    alignSelf: 'center',
+    paddingVertical: 10
   },
   rememberme: {
-    color: 'white',
+    color: '#373E45',
     fontSize: 15,
     marginRight: 20,
-    textAlignVertical: 'bottom'
+    padding: 3,
+
+  },
+  signup: {
+    textAlign: 'center',
+    fontSize: 20
+  },
+  forgotpassword: {
+    textAlign: 'center',
+    paddingTop: 20,
   }
 });
 

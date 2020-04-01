@@ -170,7 +170,13 @@ class HomeScreen extends Component {
         return(
             <View style={styles.main}>
                 <View style={styles.headerContainer}>
-                    <Text style={styles.welcome}>Welcome {this.state.user_info.firstname}</Text>
+                    <View style={{flex:1}}>
+
+                    </View>
+                    <View>
+                        <Text style={styles.welcome}>Welcome {this.state.user_info.firstname}</Text>
+                    </View>
+                    
                     <View style={styles.amount}>
                         <View>
                             <Text style={styles.amountHeader}>€{this.state.totalAmount.toFixed(2)}</Text>
@@ -180,16 +186,13 @@ class HomeScreen extends Component {
                             <Text style={styles.subheading}>  Monthly bill</Text>
                         </View>
                     </View>
-                    <View style={styles.analytics}>
-                        {/* <LineChart style={{ flex: 1 }} config={config1} data={data1} /> */}
-                    </View>
                 </View>
                 <View style={styles.journeysContainer}>
                     <Text style={styles.journeysHeader}>Past Journeys</Text>
                     {
                         !loading ? (
                             <View>
-                                <Text style={{alignSelf: 'flex-end', paddingRight: 10}}>{this.state.list.length} {humanize.pluralize(this.state.list.length, "past journey")}</Text>
+                                <Text style={{alignSelf: 'flex-end', paddingRight: 20}}>{this.state.list.length} {humanize.pluralize(this.state.list.length, "past journey")}</Text>
                                 <ScrollView
                                     refreshControl={
                                         <RefreshControl refreshing={refreshing} onRefresh={() => {
@@ -232,26 +235,27 @@ class HomeScreen extends Component {
     }
 }
 
+//lower header
+
 const styles = StyleSheet.create({
     main: {
         flex: 5,
         flexDirection: 'column'
     },
     headerContainer:{
-        flex: 3,
-        backgroundColor: '#373E45',
+        flex: 2,
         paddingTop: '12%',
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'space-around'
     },
     subheading: {
-        color: '#EFC066',
         fontSize: 15,
         paddingBottom: 10,
     },
     welcome:{
         fontWeight:"bold",
-        fontSize:42,
-        color:"#EFC066",
+        fontSize:38,
+        color:"#2E6CB5",
       },
     amount:{
         flex: 2,
@@ -267,10 +271,11 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 45,
         textAlignVertical: 'bottom',
-        color: 'white'
+        color: '#EFC066'
     },
     journeysContainer:{
-        flex: 5
+        flex: 5,
+        backgroundColor: 'white'
     },
     journeysHeader: {
         textAlign: 'center',

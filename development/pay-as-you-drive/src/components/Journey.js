@@ -51,10 +51,16 @@ const Journey = (props) => {
                             type='feather'
                             color='#84828C'
                         />
-                        <Text style={{color: '#84828C'}}>   Day Drive</Text>
+                        <Text style={{color: '#84828C'}}>    Day Drive  </Text>
                     </View> 
                     )
                 }
+            </View>
+
+            <View style={{
+                borderBottomColor: '#84828C',
+                borderBottomWidth: 1,}}>
+
             </View>
         </View>
     )
@@ -67,17 +73,15 @@ const styles=StyleSheet.create({
     uppercontainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        paddingLeft: 40,
-        paddingRight: 40,
-        paddingBottom: 15,
-        paddingTop: 15
+        paddingHorizontal: 20,
+        paddingVertical: 15
     },
     lowercontainer: {
         flexDirection: 'row', 
-        justifyContent: 'space-around',
-        borderBottomColor: '#84828C',
-        borderBottomWidth: 1,
+        justifyContent: 'space-between',
         paddingBottom: 15,
+        width: '80%',
+        alignSelf: 'center'
     },
     leftContainer:{
 
@@ -91,7 +95,8 @@ const styles=StyleSheet.create({
     },
     date: {
         fontSize: 16,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        color: '#373E45'
     },
 
     icon_text_view: {

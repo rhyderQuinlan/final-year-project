@@ -61,7 +61,7 @@ class ViewClaims extends Component {
             <View style={styles.headerContainer}>
                 <View>
                     <Text style={styles.logo}>My Claims</Text>
-                    <Text style={{color: 'white', fontSize: 20}}>You can view the status of your claims below.</Text> 
+                    <Text style={{fontSize: 16}}>You can view the status of your claims below.</Text> 
                 </View>
             </View>
             <View style={styles.contentContainer}>
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
       flex: 1
   },
   headerContainer: {
-    backgroundColor: '#373E45',
+    backgroundColor: '#EFF1F3',
     flex: 3,
     flexDirection: 'row',
     alignItems: 'flex-end',
@@ -128,16 +128,18 @@ const styles = StyleSheet.create({
   contentContainer:{
     flex: 6,
     padding: 20,
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    backgroundColor: 'white'
   },
   text: {
     fontSize: 16
   },
   logo:{
     fontWeight:"bold",
-    fontSize:50,
+    fontSize:35,
     color:"#2E6CB5",
-    marginBottom:40
+    marginBottom:40,
+    textAlign: 'center'
   }
 });
 

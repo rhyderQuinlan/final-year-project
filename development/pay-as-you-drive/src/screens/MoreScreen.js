@@ -6,7 +6,8 @@ import {
     View,
     Text,
     TouchableOpacity,
-    Alert
+    Alert,
+    Image
 } from 'react-native';
 import firebase from 'firebase';
 
@@ -34,44 +35,50 @@ class MoreScreen extends Component {
     render() {
         return(
             <View style={styles.container}>
-                <ButtonComponent 
-                        text="Vehicles"
-                        icon="car"
-                        type="antdesign"
-                        onPress={() => this.props.navigation.navigate('ViewVehicles')}
+                <View style={{flex: 3}}>
+                    <Image 
+                        source={require('../../assets/driver.png')}
+                        style={styles.image}
+                        alignSelf='center'
                     />
+                </View>
+                
+                <View style={{flex: 4}}>
+                    <ButtonComponent 
+                            text="Vehicles"
+                            icon="car"
+                            type="antdesign"
+                            onPress={() => this.props.navigation.navigate('ViewVehicles')}
+                        />
 
-                <ButtonComponent 
-                        text="Profile"
-                        icon="user"
-                        type="antdesign"
-                        onPress={() => this.props.navigation.navigate('EditUserDetails')}
-                    />
+                    <ButtonComponent 
+                            text="Profile"
+                            icon="user"
+                            type="antdesign"
+                            onPress={() => this.props.navigation.navigate('EditUserDetails')}
+                        />
 
-                <ButtonComponent 
+                    <ButtonComponent 
+                            icon='arrowright'
+                            type='antdesign'
+                            text='My Claims'
+                            onPress={() => this.props.navigation.navigate('ViewClaims')}
+                        />
+
+                    <ButtonComponent 
                         icon='arrowright'
                         type='antdesign'
-                        text='My Claims'
-                        onPress={() => this.props.navigation.navigate('ViewClaims')}
+                        text='Make A Claim'
+                        onPress={() => this.props.navigation.navigate('ClaimInfoScreen')}
                     />
 
-                <ButtonComponent 
-                    icon='arrowright'
-                    type='antdesign'
-                    text='Make A Claim'
-                    onPress={() => this.props.navigation.navigate('ClaimInfoScreen')}
-                />
-
-                <ButtonComponent 
-                        text="Logout"
-                        icon="logout"
-                        type="antdesign"
-                        onPress={() => this.logout()}
-                    />
-
-                <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('LineChartScreen')}>
-                    <Text style={styles.buttonText}>Line Chart</Text>
-                </TouchableOpacity>
+                    <ButtonComponent 
+                            text="Logout"
+                            icon="logout"
+                            type="antdesign"
+                            onPress={() => this.logout()}
+                        />
+                </View>
             </View>
         )
     }
@@ -82,12 +89,12 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center'
       },
-      logo:{
-        fontWeight:"bold",
-        fontSize:50,
-        color:"#fb5b5a",
-        marginBottom:40
-      },
+    image:{
+        flex: 1,
+        height: 150,
+        width: 150,
+        resizeMode: 'contain'
+    },
 });
 
 export default MoreScreen;

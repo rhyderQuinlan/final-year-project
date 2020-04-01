@@ -62,7 +62,8 @@ const BottomTab = createMaterialBottomTabNavigator(
           return (
             <View>
               <Icon
-                name='add-circle'
+                name='dashboard'
+                type='antdesign'
                 color={tintColor}
               />
             </View>

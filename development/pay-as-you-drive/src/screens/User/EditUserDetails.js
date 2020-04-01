@@ -58,20 +58,21 @@ class EditUserDetails extends Component {
             currentPassword
         } = this.state
 
-        var Data = {
-            firstname: firstname,
-            lastname: lastname,
-            licence: licence
-        }
-        
-          var updates = {};
-          updates[`/${currentUser.uid}/`] = Data;
-        
-          return firebase.database().ref().update(updates)
+        if(this.reauthenticate(currentPassword)){
+            var Data = {
+                firstname: firstname,
+                lastname: lastname,
+                licence: licence
+            }
+            
+            return firebase.database().ref(`/users/${currentUser.uid}/`).update(Data)
             .then(result => {
                 alert('Changes submitted succesfully...')
             })
             .catch(error => { this.setState({error}) })
+        } else {
+            Toast.show('Invalid password entry')
+        }
     }
 
     changePassword = (currentPassword, newPassword) => {
@@ -83,11 +84,19 @@ class EditUserDetails extends Component {
         }).catch((error) => { this.setState({error}) });
       }
 
-    reauthenticate = (currentPassword) => {
+    async reauthenticate(currentPassword){
         var user = firebase.auth().currentUser;
         var cred = firebase.auth.EmailAuthProvider.credential(
             user.email, currentPassword);
-        return user.reauthenticateWithCredential(cred);
+        
+        return await user.reauthenticateWithCredential(cred)
+            .then(() => {
+                console.log('Success')
+            })
+            .catch(e => {
+                console.log(e)
+            })
+        
       }
 
     render(){

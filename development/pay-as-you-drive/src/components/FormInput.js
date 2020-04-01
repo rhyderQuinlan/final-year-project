@@ -36,14 +36,14 @@ const FormInput = (props) => {
 
 const styles = StyleSheet.create({
     inputContainer: {
-        borderBottomColor: 'transparent',
+        borderBottomColor: '#EFC066',
         backgroundColor: '#FFFFFF',
         borderBottomWidth: 2,
         height:55,
         marginBottom:20,
         flexDirection: 'row',
         alignItems:'center',
-        borderRadius: 25
+        borderRadius: 10
     },
     iconTextContainer:{
         marginLeft: 10,

@@ -5,12 +5,15 @@ import {
   View,
   TouchableOpacity,
   AsyncStorage,
+  Image,
+  ImageBackground
 } from 'react-native';
 import firebase from 'firebase';
-import Toast from 'react-native-simple-toast';
-import Dialog from "react-native-dialog";
+import Toast from 'react-native-simple-toast'
+import { Icon } from 'react-native-elements'
+import _ from 'lodash'
 
-import _ from 'lodash';
+import ButtonComponent from '../components/ButtonComponent';
 
 class WelcomeScreen extends Component {
   constructor(props) {
@@ -79,15 +82,54 @@ class WelcomeScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-            <Text style={styles.logo}>Pay As You Drive</Text>
+        <ImageBackground source={require('../../assets/holden-baxter-oxQ0egaQMfU-unsplash.jpg')} style={styles.image}>
+            <View style={{flex:1}}>
 
-            <TouchableOpacity style={styles.signupBtn} onPress={() => this.props.navigation.navigate('UserRegistration')}>
-              <Text style={styles.signupText}>Sign Up</Text>
-            </TouchableOpacity>
+            </View>
+            
+            <View style={{flex: 4}}>
+              <Image 
+                source={require('../../assets/logo-yellow-blue.png')}
+                alignSelf='center'
+                style={styles.logo}
+              />
+              <Text style={styles.header}>
+                <Text style={{color: '#EFC066'}}>P</Text>
+                ay 
+                <Text style={{color: '#EFC066'}}> A</Text>
+                s 
+                <Text style={{color: '#EFC066'}}> Y</Text>
+                ou 
+                <Text style={{color: '#EFC066'}}> D</Text>rive</Text>
+            </View>
 
-            <TouchableOpacity style={styles.loginBtn} onPress={() => this.props.navigation.navigate('LoginScreen')}>
-              <Text style={styles.loginText}>Login</Text>
-            </TouchableOpacity>
+            <View style={{flex: 1}}>
+
+              </View>
+
+            <View style={{flex: 3}}>
+                <ButtonComponent 
+                  text='Sign Up'
+                  icon='adduser'
+                  type='antdesign'
+                  onPress={() => this.props.navigation.navigate('UserRegistration')}
+                />
+
+                <View>
+                    <TouchableOpacity 
+                        style={styles.button}
+                        onPress={() => this.props.navigation.navigate('LoginScreen')}
+                    >
+                        <Text style={styles.text}>Login</Text>
+                        <Icon 
+                            name='arrowright'
+                            type='antdesign'
+                            color="#2E6CB5"
+                        />
+                    </TouchableOpacity>
+                </View>
+              </View>
+        </ImageBackground>
         </View>
     );
   }
@@ -96,49 +138,45 @@ class WelcomeScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#003f5c',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#EFF1F3'
+  },
+  image: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center"
+  },
+  header:{
+    flex: 2,
+    fontWeight:"bold",
+    fontSize:40,
+    color:"#373E45",
+    textAlign: 'center'
   },
   logo:{
-    fontWeight:"bold",
-    fontSize:50,
-    color:"#fb5b5a",
-    marginBottom:40
+    flex: 1,
+    width: 150,
+    height: 150,
+    resizeMode: 'contain'
   },
-  loginBtn:{
-    width:"80%",
-    backgroundColor:"white",
-    borderColor: '#fb5b5a',
-    borderWidth: 3,
-    borderRadius:25,
-    height:50,
-    alignItems:"center",
-    justifyContent:"center",
-    marginTop:30,
-    marginBottom:30
+  button:{
+    alignSelf: 'center',
+    alignContent: 'center',
+    width: '70%',
+    backgroundColor: 'white',
+    borderRadius: 400,
+    padding: 15,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: '5%',
+    borderWidth: 2,
+    borderColor: '#2E6CB5'
   },
-  loginText: {
-    color: '#fb5b5a',
-    fontSize: 20,
-    fontWeight: 'bold'
-  },
-  signupBtn:{
-    width:"80%",
-    backgroundColor:"#fb5b5a",
-    borderRadius:25,
-    borderColor: 'white',
-    borderWidth: 3,
-    height:50,
-    alignItems:"center",
-    justifyContent:"center",
-    marginTop:30,
-    marginBottom:30
-  },
-  signupText: {
-    color: 'white',
-    fontSize: 20,
-    fontWeight: 'bold'
+  text: {
+      fontSize: 20,
+      marginLeft: 20,
+      color: 'white',
+      fontWeight: 'normal',
+      color:"#2E6CB5",
   }
 });
 

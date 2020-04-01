@@ -26,21 +26,22 @@ const AlgorithmInput = (props) => {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        justifyContent: 'space-evenly',
-        padding: 20
+        justifyContent: 'space-between',
+        padding: 20,
+        width: '90%',
+        alignSelf: 'center'
     },
     text: {
-        fontSize: 24,
-        textAlignVertical: 'bottom'
+        fontSize: 16,
+        textAlignVertical: 'bottom',
     },
     input: {
         borderBottomWidth: 2,
         borderBottomColor: '#fb5b5a',
-        fontSize: 26,
-        width: '70%',
-        textAlign: 'center'
+        fontSize: 16,
+        textAlign: 'center',
     },
-    measurement: {
+    measurement:{
         textAlignVertical: 'bottom',
         fontSize: 16
     }

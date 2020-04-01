@@ -124,8 +124,8 @@ class AdminOptions extends Component {
                 </View>
                 <View style={styles.buttonContainer} >
                     <ButtonComponent 
-                        text='Admin Settings'
-                        icon='menu-fold'
+                        text='Algorithm Conditions'
+                        icon='find'
                         type='antdesign'
                         onPress={() => this.props.navigation.navigate('AlgorithmScreen')}
                     />
@@ -181,8 +181,6 @@ const styles = StyleSheet.create({
     buttonContainer:{
         flex: 2,
         flexDirection: 'column',
-        alignItems: 'center',
-        alignSelf: 'center'
     },
     error: {
         textAlign: 'center', 

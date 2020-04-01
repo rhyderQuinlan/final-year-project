@@ -36,7 +36,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems:'center',
         paddingLeft: 10,
-        borderRadius: 25
+        borderRadius: 10,
+        borderBottomColor: '#EFC066',
+        borderBottomWidth: 2
     },
     icon:{
         width:100,
