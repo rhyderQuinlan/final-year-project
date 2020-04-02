@@ -13,6 +13,18 @@ import Toast from 'react-native-simple-toast'
 import { Icon } from 'react-native-elements'
 import _ from 'lodash'
 
+import { 
+  FIREBASE_APIKEY,
+  MESSENGERSENDER_ID,
+  APP_ID,
+  MEASUREMENT_ID,
+  DATABASE,
+  AUTH_DOMAIN,
+  PROJECT_ID,
+  STORAGE_BUCKET,
+  ADMIN_EMAIL
+} from 'react-native-dotenv'
+
 import ButtonComponent from '../components/ButtonComponent';
 
 class WelcomeScreen extends Component {
@@ -26,14 +38,14 @@ class WelcomeScreen extends Component {
   async componentDidMount(){
     if (!firebase.apps.length) {
       firebase.initializeApp({
-        apiKey: "AIzaSyDKm0rXYcIzsl7sx3-e-GPsUFrco_Qhtqo",
-        authDomain: "pay-as-you-drive-2c4ca.firebaseapp.com",
-        databaseURL: "https://pay-as-you-drive-2c4ca.firebaseio.com",
-        projectId: "pay-as-you-drive-2c4ca",
-        storageBucket: "pay-as-you-drive-2c4ca.appspot.com",
-        messagingSenderId: "1015176964135",
-        appId: "1:1015176964135:web:d0b7c221fec9bb10ee0602",
-        measurementId: "G-E2XJQPSRZL"
+        apiKey: FIREBASE_APIKEY,
+        authDomain: AUTH_DOMAIN,
+        databaseURL: DATABASE,
+        projectId: PROJECT_ID,
+        storageBucket: STORAGE_BUCKET,
+        messagingSenderId: MESSENGERSENDER_ID,
+        appId: APP_ID,
+        measurementId: MEASUREMENT_ID
     });
     }
     
@@ -54,7 +66,7 @@ class WelcomeScreen extends Component {
         this.setState({ email: email, password: password })
         firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then(() => {
             Toast.show('Logging you in')
-            if(this.state.email == 'admin@payasyoudrive.com'){
+            if(this.state.email == ADMIN_EMAIL){
               this.props.navigation.navigate('AdminOptions')  
             } else {
               this.props.navigation.navigate('BottomTab')  
@@ -82,9 +94,8 @@ class WelcomeScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <ImageBackground source={require('../../assets/holden-baxter-oxQ0egaQMfU-unsplash.jpg')} style={styles.image}>
+        <ImageBackground source={require('../../assets/road-bkg.png')} style={styles.image}>
             <View style={{flex:1}}>
-
             </View>
             
             <View style={{flex: 4}}>

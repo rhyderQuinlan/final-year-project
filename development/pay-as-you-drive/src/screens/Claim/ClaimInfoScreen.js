@@ -49,6 +49,10 @@ class ClaimInfoScreen extends Component {
                 </View>
 
                 <View>
+                    <Text style={styles.text}>Once you have submitted your claim an admin will review your claim, check the 'My Claims' screen for a claims' status.</Text>
+                </View>
+
+                <View>
                     <ButtonComponent 
                         icon='arrowright'
                         type='antdesign'
@@ -75,7 +79,8 @@ const styles = StyleSheet.create({
   contentContainer:{
     flex: 6,
     padding: 35,
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    backgroundColor: 'white'
   },
   text: {
     fontSize: 16,

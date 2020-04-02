@@ -1,12 +1,3 @@
-//TODO car age algorithm
-//TODO aggressiveness
-
-//thoughts:
-//verification api
-//flat rate
-//acting as verify in system    
-
-
 import React, { Component, useState, useEffect } from 'react';
 import {
     View,
@@ -19,6 +10,10 @@ import {
     Image
 } from 'react-native';
 
+import { 
+    GEOCODER_KEY
+  } from 'react-native-dotenv'
+
 import Toast from 'react-native-simple-toast';
 import firebase from 'firebase';
 import { CountDown } from 'react-native-countdown-component';
@@ -28,14 +23,13 @@ import Geocoder from 'react-native-geocoding';
 import ButtonComponent from '../components/ButtonComponent';
 import Select2 from 'react-native-select-two';
 import _ from 'lodash';
+
 import { Icon } from 'react-native-elements';
-import { Client } from "@googlemaps/google-maps-services-js"; //speed limit task
 import { getSunrise, getSunset } from 'sunrise-sunset-js'; //sunrise-sunset task
 
 import { ScrollView, FlatList } from 'react-native-gesture-handler';
 import JourneyOption from '../components/JourneyOption';
 
-const { width, height } = Dimensions.get('window')
 const haversine = require('haversine')
 
 var db_input = {}
@@ -43,7 +37,7 @@ var provLicence = false
 var vehicleClass = null
 var olderCar = false
 
-Geocoder.init("AIzaSyBsJhvcHPCNm5heLKAO69RCtST6oqloGJE")
+Geocoder.init(GEOCODER_KEY)
 
 class TrackJourney extends Component {
     constructor(props) {
@@ -667,9 +661,6 @@ class TrackJourney extends Component {
 
                                         </View>
                                     )}
-
-                                    <Text>SPEED: {this.state.speed}</Text>
-                                    <Text>ACCELERATION: {this.state.acceleration}</Text>
 
                                 </ScrollView>
                             </View>
