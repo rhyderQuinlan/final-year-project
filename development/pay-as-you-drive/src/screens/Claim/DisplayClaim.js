@@ -88,7 +88,7 @@ class DisplayClaim extends Component {
                             />
 
                             <Text style={styles.contentHeader}>Description</Text>
-                            <Text style={{fontSize: 18}}>{claim_info.description}</Text>
+                            <Text style={styles.content}>{claim_info.description}</Text>
 
                             <Text style={styles.contentHeader}>Quote</Text>
                             <AsyncImage 
@@ -161,32 +161,22 @@ const styles = StyleSheet.create({
       },
       logo:{
         fontWeight:"bold",
-        fontSize:50,
-        color:"#fb5b5a",
+        fontSize:35,
+        color:"#2E6CB5",
         marginBottom:10,
-        paddingTop: '20%'
-      },
-      loginBtn:{
-        width:"80%",
-        backgroundColor:"#fb5b5a",
-        borderRadius:25,
-        height:50,
-        alignItems:"center",
-        justifyContent:"center",
-        marginTop:30,
-        marginBottom:20
-      },
-      loginText: {
-        color: 'white',
-        fontSize: 20
+        paddingTop: '10%'
       },
       contentHeader: {
-          color: '#fb5b5a',
-          fontSize: 32,
+          color: '#2E6CB5',
+          fontSize: 28,
           fontWeight: 'bold',
+          paddingTop: 20,
+          paddingLeft: '5%',
+          paddingBottom: 10
       },
       content: {
-          fontSize: 20
+          fontSize: 20,
+          paddingHorizontal: '5%'
       },
 })
 

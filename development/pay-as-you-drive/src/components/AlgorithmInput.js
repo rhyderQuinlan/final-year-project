@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     },
     input: {
         borderBottomWidth: 2,
-        borderBottomColor: '#fb5b5a',
+        borderBottomColor: '#EFC066',
         fontSize: 16,
         textAlign: 'center',
     },

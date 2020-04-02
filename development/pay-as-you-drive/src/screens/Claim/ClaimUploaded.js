@@ -40,7 +40,7 @@ class ClaimUploaded extends Component {
             </View>
             <View style={styles.contentContainer}>
                 <View>
-                    <Text style={styles.text}>Your claim will now be reviewed and you will be able ot see the outcome fo the claim on your 'Claims' screen.</Text>
+                    <Text style={styles.text}>Your claim will now be reviewed and you will be able ot see the outcome of the claim in your 'My Claims' screen.</Text>
                 </View>
 
                 <View>
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
       flex: 1
   },
   headerContainer: {
-    backgroundColor: '#373E45',
+    backgroundColor: '#EFF1F3',
     flex: 3,
     flexDirection: 'row',
     alignItems: 'flex-end',
@@ -77,9 +77,10 @@ const styles = StyleSheet.create({
   },
   logo:{
     fontWeight:"bold",
-    fontSize:50,
+    fontSize:35,
     color:"#2E6CB5",
-    marginBottom:40
+    marginBottom:40,
+    paddingLeft: '10%',
   }
 });
 

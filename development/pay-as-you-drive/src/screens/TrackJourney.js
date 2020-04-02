@@ -45,24 +45,6 @@ var olderCar = false
 
 Geocoder.init("AIzaSyBsJhvcHPCNm5heLKAO69RCtST6oqloGJE")
 
-//TODO Speed limit using Road API
-// const client = new Client({});
-
-// // client
-// //     .elevation({
-// //         params: {
-// //             locations: [{ lat: 45, lng: -110 }],
-// //             key: "AIzaSyCFtPuCVniR5CEPGkcvwnHHQAJuX_y-DsA"
-// //         },
-// //         timeout: 1000
-// //     })
-// //     .then(r => {
-// //         console.log(r.data.error_message);
-// //     })
-// //     .catch(e => {
-// //         console.log(e);
-// //     });
-
 class TrackJourney extends Component {
     constructor(props) {
         super(props);
@@ -115,6 +97,7 @@ class TrackJourney extends Component {
                 db_input.age_conditional = snapshot.val().age_conditional
                 db_input.age_addition = snapshot.val().age_addition
                 db_input.acceleration_conditional = snapshot.val().acceleration_conditional
+                db_input.hard_braking_penalty = snapshot.val().hard_braking_penalty
             })
             .catch((error) => {
                 console.log(error)
@@ -322,7 +305,7 @@ class TrackJourney extends Component {
 
         const duration = this.currentTime;
         const distance = Number(this.state.distanceTravelled).toFixed(3);
-        const cost_total = Number(this.calcCost(distance));
+        const cost_total = Number(this.calcCost(distance, 0));
         const nightdrive = this.state.nightdrive
         const address = this.state.address
         const vehiclename = this.state.vehiclename
@@ -378,12 +361,15 @@ class TrackJourney extends Component {
                 break;
         }
 
-        //TODO: hard braking detection
-        if(acceleration <= (db_input.acceleration_conditional * -1)){
+        //hard braking detection
+        var hardBrakingPenalty = 0
+        if(acceleration < (db_input.acceleration_conditional * -1) && !this.state.hardBraking){
+            hardBrakingPenalty = db_input.hard_braking_penalty / 100
             this.setState({hardBraking: true})
-            this.toggleTimer()
+            setTimeout(() => {
+                this.setState({hardBraking: false})
+            }, 5000);
         }
-
 
         //Car age addition
         var age_addition = 0
@@ -400,7 +386,7 @@ class TrackJourney extends Component {
         //distance multiplier (cents/km)
         const distance_addition = distance * db_input.distance / 100
 
-        const total = distance_addition + nightdrive_addition + vehicletype_addition + licence_addition + age_addition
+        const total = distance_addition + nightdrive_addition + vehicletype_addition + licence_addition + age_addition + hardBrakingPenalty
         this.setState({journeyCost: total})
         return total.toFixed(2)
     }
@@ -515,14 +501,6 @@ class TrackJourney extends Component {
     //3 2 1 countdown section
     countdown() {
         this.setState({showCountdown: true});
-    }
-
-    toggleTimer() {
-        this.setState({timerStart: !this.state.timerStart, timerReset: false});
-    } 
-    
-    resetTimer() {
-        this.setState({timerStart: false, timerReset: true});
     }
 
     cancelPressed() {
@@ -674,6 +652,25 @@ class TrackJourney extends Component {
                                     ):(
                                         null
                                     )}
+
+                                    { hardBraking ? (
+                                        <View style={{flexDirection: "row", justifyContent: 'space-evenly', paddingVertical: '2%'}}>
+                                            <Icon 
+                                                name='warning'
+                                                type='antdesign'
+                                                color='#FFCC00'
+                                            />
+                                            <Text>Hard Braking Detected</Text>
+                                        </View>
+                                    ) : (
+                                        <View>
+
+                                        </View>
+                                    )}
+
+                                    <Text>SPEED: {this.state.speed}</Text>
+                                    <Text>ACCELERATION: {this.state.acceleration}</Text>
+
                                 </ScrollView>
                             </View>
                         </View>           
@@ -816,21 +813,3 @@ export default TrackJourney;
     }}
     options={stopwatchOptions}
 /> */}
-
-// { hardBraking ? (
-//     <View style={{flexDirection: "row", justifyContent: 'space-evenly'}}>
-//         <Icon 
-//             name='warning'
-//             type='antdesign'
-//             color='#FFCC00'
-//         />
-//         <Text>Hard Braking Detected</Text>
-//     </View>
-// ) : (
-//     <View>
-
-//     </View>
-// )}
-
-// <Text>SPEED: {this.state.speed}</Text>
-// <Text>ACCELERATION: {this.state.acceleration}</Text>

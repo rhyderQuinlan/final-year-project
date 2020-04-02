@@ -87,102 +87,69 @@ class UserRegistration extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.logo}>Lets get started</Text>
+        <View style={styles.content}>
+          <Image 
+              source={require('../../../assets/start.png')}
+              alignSelf='center'
+              style={styles.image}
+            />
+          <Text style={styles.logo}>Lets get started</Text>
+          <FormInput 
+                  icon='user'
+                  type='antdesign'
+                  onChangeText={firstname => this.setState({firstname})}
+                  placeholder='Firstname'
+                />
 
-        <View style={styles.inputView}>
-          <Icon 
-            name='user'
+          <FormInput 
+            icon='user'
             type='antdesign'
-            color='#fb5b5a'
-            iconStyle={{ justifyContent: 'center', padding: 10 }}
-            size={26}
+            onChangeText={lastname => this.setState({lastname})}
+            placeholder='Lastname'
           />
-          <TextInput  
-              style={styles.inputText}
-              placeholder="Firstname..." 
-              placeholderTextColor="#003f5c"
-              onChangeText={firstname => this.setState({firstname})}/>
-        </View>
 
-        <View style={styles.inputView}>
-          <Icon 
-              name='user'
+          <FormInput 
+              icon='mail'
               type='antdesign'
-              color='#fb5b5a'
-              iconStyle={{ justifyContent: 'center', padding: 10 }}
-              size={26}
+              onChangeText={email => this.setState({email})}
+              placeholder='Email Address'
             />
-          <TextInput  
-              style={styles.inputText}
-              placeholder="Lastname..." 
-              placeholderTextColor="#003f5c"
-              onChangeText={lastname => this.setState({lastname})}/>
+
+          <FormInput 
+            icon='key'
+            type='antdesign'
+            onChangeText={password => this.setState({password})}
+            placeholder='Password'
+            secureTextEntry={true}
+          />
+
+          <DropdownInput 
+            icon='drivers-license-o'
+            type='font-awesome'
+            data={[{
+                value: 'Full Licence'
+            }, {
+                value: 'Provisional Licence'
+            }]}
+            onChangeText={(value) => this.setState({ licence: value})}
+            label='Licence Status'
+          />
+
+          <View>
+            <Text style={{ justifyContent: 'space-around', color: 'red' }}>{this.state.error}</Text>
+          </View>
+
+          <ButtonComponent 
+            icon='arrowright'
+            type='antdesign'
+            text='Next'
+            onPress={() => this.createUser()}
+          />
+
+          <TouchableOpacity style={styles.buttonContainer} onPress={() => this.props.navigation.navigate('LoginScreen')}>
+              <Text style={styles.back}>Already have an account? Sign in.</Text>
+          </TouchableOpacity>
         </View>
-
-        <View style={styles.inputView}>
-          <Icon 
-              name='email-outline'
-              type='material-community'
-              color='#fb5b5a'
-              iconStyle={{ justifyContent: 'center', padding: 10 }}
-              size={26}
-            />
-          <TextInput  
-              style={styles.inputText}
-              placeholder="Email Address..." 
-              placeholderTextColor="#003f5c"
-              onChangeText={(email) => this.setState({email})}/>
-        </View>
-
-        <View style={styles.inputView}>
-          <Icon 
-              name='key'
-              type='antdesign'
-              color='#fb5b5a'
-              iconStyle={{ justifyContent: 'center', padding: 10 }}
-              size={26}
-            />
-          <TextInput  
-              style={styles.inputText}
-              placeholder="Password..." 
-              placeholderTextColor="#003f5c"
-              onChangeText={(password) => this.setState({password})}
-              secureTextEntry={true}
-              />
-        </View>
-
-        <View style={styles.inputView}>
-            <Icon 
-              name='drivers-license-o'
-              type='font-awesome'
-              color='#fb5b5a'
-              iconStyle={{ justifyContent: 'center', padding: 10 }}
-              size={26}
-            />
-            <Dropdown 
-                label="Licence"
-                data={[{
-                    value: 'Full Licence'
-                }, {
-                    value: 'Provisional Licence'
-                }]}
-                containerStyle={styles.dropdown}
-                onChangeText={(value) => this.setState({ licence: value})}
-                baseColor='#003f5c'
-            />
-        </View>
-
-        <View>
-          <Text style={{ justifyContent: 'space-around', color: 'red' }}>{this.state.error}</Text>
-        </View>
-
-        <TouchableOpacity style={styles.loginBtn} onPress={() => this.createUser()}>
-          <Text style={styles.loginText}>Begin</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.buttonContainer} onPress={() => this.props.navigation.navigate('LoginScreen')}>
-            <Text style={styles.back}>Already have an account? Sign in.</Text>
-        </TouchableOpacity>
       </View>
     );
   }
@@ -191,55 +158,32 @@ class UserRegistration extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#003f5c',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#EFF1F3',
   },
-  inputView:{
-    width:"80%",
-    backgroundColor:"#465881",
-    borderRadius:25,
-    height:50,
-    marginBottom:20,
-    justifyContent:"center",
-    flexDirection: 'row',
-    justifyContent: 'flex-start'
+  content: {
+    flex: 1,
+    alignSelf:'center',
+    width: '80%',
+    paddingTop: '10%',
   },
   logo:{
     fontWeight:"bold",
-    fontSize:50,
-    color:"#fb5b5a",
-    marginBottom:40
-  },
-  inputText:{
-    color:"white",
-    width: '80%'
-  },
-  dropdown:{
-    height: 40,
-    width: '80%',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    paddingBottom: 10,
+    fontSize:35,
+    color:"#2E6CB5",
+    marginBottom:40,
+    textAlign: 'center'
   },
   back:{
-    color:"white",
-    fontSize:15
+    color:"#373E45",
+    fontSize:15,
+    textAlign: 'center'
   },
-  loginBtn:{
-    width:"80%",
-    backgroundColor:"#fb5b5a",
-    borderRadius:25,
-    height:50,
-    alignItems:"center",
-    justifyContent:"center",
-    marginTop:40,
-    marginBottom:10
+  image:{
+    flex: 2,
+    width: 150,
+    height: 150,
+    resizeMode: 'contain'
   },
-  loginText: {
-    color: 'white',
-    fontSize: 20
-  }
 });
 
 export default UserRegistration;

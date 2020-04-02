@@ -9,18 +9,24 @@ import {createStackNavigator} from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 
+//Homescreen
 import HomeScreen from './src/screens/HomeScreen';
+
+//Journey screen
 import TrackJourney from './src/screens/TrackJourney';
+
+//More settings screen
 import MoreScreen from './src/screens/MoreScreen';
+
+//Authentication
 import LoginScreen from './src/screens/LoginScreen';
-import RNLocationScreen from './src/screens/RNLocationScreen';
 import UserRegistration from './src/screens/Registration/UserRegistration';
+
 import VehicleRegistration from './src/screens/Registration/VehicleRegistration';
 import ViewVehicles from './src/screens/Vehicles/ViewVehicles';
 import AddVehicle from './src/screens/Vehicles/AddVehicle';
 import EditUserDetails from './src/screens/User/EditUserDetails';
 import WelcomeScreen from './src/screens/WelcomeScreen';
-import LineChartScreen from './src/screens/LineChartScreen';
 
 //Admin
 import AdminOptions from './src/screens/Admin/AdminOptions';
@@ -135,12 +141,6 @@ const MainNavigator = createStackNavigator(
         title: 'Smart Contract Control',
       }
     },
-    RNLocationScreen:{
-      screen: RNLocationScreen,
-      navigationOptions: {
-        title: 'RNLocation Screen',
-      }
-    },
     UserRegistration:{
       screen: UserRegistration,
       navigationOptions: {
@@ -187,9 +187,6 @@ const MainNavigator = createStackNavigator(
       navigationOptions: {
         headerShown: false
       }
-    },
-    LineChartScreen: {
-      screen: LineChartScreen
     },
     ClaimInfoScreen: {
       screen: ClaimInfoScreen,

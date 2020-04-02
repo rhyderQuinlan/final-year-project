@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
       flex: 1
   },
   headerContainer: {
-    backgroundColor: '#373E45',
+    backgroundColor: '#EFF1F3',
     flex: 3,
     flexDirection: 'row',
     alignItems: 'flex-end',
@@ -160,53 +160,18 @@ const styles = StyleSheet.create({
   contentContainer:{
     flex: 6,
     padding: 20,
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    backgroundColor: 'white'
   },
   text: {
     fontSize: 16
   },
   logo:{
     fontWeight:"bold",
-    fontSize:50,
+    fontSize:35,
     color:"#2E6CB5",
     marginBottom:40
   }
 });
 
 export default ClaimsScreen;
-
-{/* <View style={styles.contentContainer}>
-                    { !loading ? (
-                        <View>
-                            <Text style={{alignSelf: 'flex-end', paddingRight: 10}}>{this.state.pending_count}/{this.state.claims.length} pending claims</Text>
-                            <ScrollView>
-                                <FlatList
-                                    data={claims}
-                                    renderItem={({item, index}) => 
-                                        <View>
-                                            <TouchableOpacity onPress={() => {
-                                                this.props.navigation.navigate("DisplayClaim", item)
-                                            }}>
-                                                <Claim 
-                                                    date={item.date}
-                                                    id={item.id}
-                                                    status={item.complete}
-                                                />
-                                            </TouchableOpacity>
-                                            
-                                        </View>
-                                    }
-                                    keyExtractor={(item, index) => index.toString()}
-                                />
-                            </ScrollView>
-                        </View>
-                    ) : (
-                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                            <ActivityIndicator 
-                                size='large'
-                                color='#2E6CB5'
-                            />
-                            <Text style={{ fontSize: 20, paddingTop: 20}}>Loading Data ...</Text>
-                        </View>
-                    )}
-                </View> */}

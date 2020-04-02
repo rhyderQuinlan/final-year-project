@@ -445,8 +445,8 @@ class FileClaim extends Component {
                             />
                         )}
                     </View>
-                    <View>
-                        <Text>Enter the amount you are requesting for this claim. Align this amount with the quote you have from a mechanic or bodyshop.</Text>
+                    <View style={{width: '80%', alignSelf: 'center', paddingTop: '5%'}}>
+                        <Text style={{paddingBottom: 20}}>Enter the amount you are requesting for this claim. Align this amount with the quote you have from a mechanic or bodyshop.</Text>
                         <FormInput 
                             icon=''
                             type='antdesign'
@@ -525,9 +525,11 @@ const styles = StyleSheet.create({
   },
   logo:{
     fontWeight:"bold",
-    fontSize:50,
+    fontSize:35,
     color:"#2E6CB5",
-    marginBottom:40
+    marginBottom:40,
+    textAlign: 'center',
+    paddingTop: '10%'
   },
   form: {
     borderColor: '#2E6CB5',

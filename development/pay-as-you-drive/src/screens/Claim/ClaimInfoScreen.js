@@ -36,7 +36,7 @@ class ClaimInfoScreen extends Component {
             <View style={styles.headerContainer}>
                 <View>
                     <Text style={styles.logo}>Make Claim</Text>
-                    <Text style={{color: 'white', fontSize: 20}}>Please read below before continuing</Text> 
+                    <Text style={{color: '#373E45', fontSize: 20, paddingHorizontal: 20}}>Please read below before continuing</Text> 
                 </View>
             </View>
             <View style={styles.contentContainer}>
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
       flex: 1
   },
   headerContainer: {
-    backgroundColor: '#373E45',
+    backgroundColor: '#EFF1F3',
     flex: 3,
     flexDirection: 'row',
     alignItems: 'flex-end',
@@ -74,17 +74,18 @@ const styles = StyleSheet.create({
   },
   contentContainer:{
     flex: 6,
-    padding: 20,
+    padding: 35,
     justifyContent: 'space-between'
   },
   text: {
-    fontSize: 16
+    fontSize: 16,
   },
   logo:{
     fontWeight:"bold",
-    fontSize:50,
+    fontSize:35,
     color:"#2E6CB5",
-    marginBottom:40
+    marginBottom:40,
+    paddingHorizontal: 20
   }
 });
 

@@ -25,7 +25,9 @@ class AdminScreen extends Component {
             lightclass: 0,
             provisional_licence: 0,
             age_addition: 0,
-            age_conditional: 0
+            age_conditional: 0,
+            acceleration_conditional: 0,
+            hard_braking_penalty: 0
         }
         this.distance = ''
         this.nightdrive = ''
@@ -35,11 +37,11 @@ class AdminScreen extends Component {
         this.provLicence = ''
         this.ageAddition = ''
         this.ageConditional = ''
+        this.accelerationConditional = ''
+        this.brakingPenalty = ''
       }
 
     componentDidMount(){
-        const { currentUser } = firebase.auth();
-
         firebase.database().ref(`/algorithm/`).once('value').then((snapshot) => {
             this.distance = snapshot.val().distance
             this.nightdrive = snapshot.val().nightdrive_multiplier
@@ -49,6 +51,8 @@ class AdminScreen extends Component {
             this.provLicence = snapshot.val().provisional_licence
             this.ageConditional = snapshot.val().age_conditional
             this.ageAddition = snapshot.val().age_addition
+            this.accelerationConditional = snapshot.val().acceleration_conditional
+            this.brakingPenalty = snapshot.val().hard_braking_penalty
 
             this.setState({
                 distance: this.distance,
@@ -58,7 +62,9 @@ class AdminScreen extends Component {
                 lightclass: this.lightclass,
                 provisional_licence: this.provLicence,
                 age_conditional: this.ageConditional,
-                age_addition: this.ageAddition
+                age_addition: this.ageAddition,
+                acceleration_conditional: this.accelerationConditional,
+                hard_braking_penalty: this.brakingPenalty
             })
         })
     }
@@ -73,7 +79,9 @@ class AdminScreen extends Component {
             lightclass, 
             provisional_licence,
             age_conditional,
-            age_addition
+            age_addition,
+            acceleration_conditional,
+            hard_braking_penalty
          } = this.state
 
         var Data = {
@@ -84,7 +92,9 @@ class AdminScreen extends Component {
             lightclass: Number(lightclass),
             provisional_licence: Number(provisional_licence),
             age_conditional: Number(age_conditional),
-            age_addition: Number(age_addition)
+            age_addition: Number(age_addition),
+            acceleration_conditional: Number(acceleration_conditional),
+            hard_braking_penalty: Number(hard_braking_penalty)
           };
         
           var updates = {};
@@ -109,7 +119,7 @@ class AdminScreen extends Component {
                     </View>
 
                     <ScrollView>
-<View
+                    <View
                         style={{
                             borderBottomColor: 'black',
                             borderBottomWidth: 1,
@@ -204,6 +214,28 @@ class AdminScreen extends Component {
                             borderBottomWidth: 1,
                         }}
                     />
+
+                    <Text style={{width: '80%', paddingTop: 10, alignSelf: 'center'}}>4.2m/s^2 is the recommended aggressive braking criteria</Text>
+                    <AlgorithmInput
+                        text="Aggressive braking criteria"
+                        placeholder={this.accelerationConditional.toString()}
+                        onChangeText={(acceleration_conditional) => this.setState({acceleration_conditional})}
+                        measurement="m/s^2"
+                    />
+
+                    <AlgorithmInput
+                        text="Aggressive braking penalty"
+                        placeholder={this.brakingPenalty.toString()}
+                        onChangeText={(hard_braking_penalty) => this.setState({hard_braking_penalty})}
+                        measurement="cents"
+                    />    
+
+                    <View
+                        style={{
+                            borderBottomColor: 'black',
+                            borderBottomWidth: 1,
+                        }}
+                    />
                     </ScrollView>
                 </View>
 
@@ -232,27 +264,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         padding: 20,
         fontSize: 28,
-        color: '#fb5b5a'
-    },
-    cancel:{
-        alignSelf: 'center',
-        alignContent: 'center',
-        width: 250,
-        backgroundColor: 'white',
-        borderRadius: 400,
-        borderColor: '#fb5b5a',
-        borderWidth: 1,
-        padding: 15,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginBottom: '5%',
-    },
-    canceltext: {
-        fontSize: 20,
-        marginLeft: 20,
-        color: '#fb5b5a',
-        fontWeight: 'normal'
-    },
+        color: '#2E6CB5'
+    }
 })
 
 export default AdminScreen;
