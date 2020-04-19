@@ -47,13 +47,16 @@ class FileClaim extends Component {
 
    }
 
+   //upload quote image
    async quoteImage(type){
        let result = null
        switch (type) {
            case 'camera':
+                //camera upload
                 result = await this._showCamera()
                 break;
             case 'cameraroll':
+                //gallery upload
                 result = await this._showCameraRoll()
                 break;
            default:
@@ -67,13 +70,16 @@ class FileClaim extends Component {
 
    }
 
+   //upload report quote
    async reportImage(type){
         let result = null
         switch (type) {
             case 'camera':
+                //camera upload
                 result = await this._showCamera()
                 break;
             case 'cameraroll':
+                //gallery upload
                 result = await this._showCameraRoll()
                 break;
             default:
@@ -85,6 +91,7 @@ class FileClaim extends Component {
         }
     }
 
+    //display inbuilt gallery
    async _showCameraRoll(){
         if(!ImagePicker.getCameraRollPermissionsAsync()){
             ImagePicker.requestCameraRollPermissionsAsync()
@@ -100,6 +107,7 @@ class FileClaim extends Component {
         }
    }
 
+   //display camera
    async _showCamera(){
         if(!ImagePicker.getCameraPermissionsAsync()){
             ImagePicker.requestCameraPermissionsAsync
@@ -112,6 +120,7 @@ class FileClaim extends Component {
         }
     }
 
+    //convert local path to javascript blob
     uriToBlob = (uri) => {
         return new Promise((resolve, reject) => {
           const xhr = new XMLHttpRequest();
@@ -132,6 +141,7 @@ class FileClaim extends Component {
         });
       }
 
+      //upload images to storage
     uploadToFirebase = (blob, id) => {
         return new Promise((resolve, reject)=>{
             var storageRef = firebase.storage().ref()
@@ -146,6 +156,7 @@ class FileClaim extends Component {
         });
       }
 
+      //build contact list
     appendInput(){
         const data = {
             name: this.state.contact_name,
@@ -156,6 +167,7 @@ class FileClaim extends Component {
         this.setState(prevState => ({ contacts: prevState.contacts.concat([data]) }))
     }
 
+    //display contact within contact list
     renderContact(item, index){
         console.log(item)
         return (
@@ -174,16 +186,19 @@ class FileClaim extends Component {
         )
     }
 
+    //remove contact
     deleteContact(index){
         var array = [...this.state.contacts]
         array.splice(index, 1)
         this.setState({contacts: array})
     }
 
+    //EVENT: firebase upload
     submitClaim(){
         const { currentUser } = firebase.auth()
         const amount = Number(this.state.claimAmount)
 
+        //check all required fields are filled
         if(this.state.contacts.length === 0
             || this.state.description === null
             || this.state.quoteImage.uri === null
@@ -223,8 +238,11 @@ class FileClaim extends Component {
                     amount: amount
                 }
                 
+                //upload claim to /users/<uid>/claims
                 firebase.database().ref(`users/${currentUser.uid}/claims/`)
                     .push(data)
+                
+                //navigate to claim filed screen
                 this.props.navigation.navigate('ClaimUploaded')
             }
     }

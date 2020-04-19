@@ -29,6 +29,8 @@ class ReviewClaim extends Component {
     async componentDidMount(){
         console.log(this.state)
         try {
+            //EVENT: firebase call
+            //fetch claim /users/<uid>/claims/claim_id
             const ref = firebase.database().ref(`/users/${this.state.uid}/claims/${this.state.key}/`)
             const claim_info = await ref.once('value')
                 .then(snapshot => {
@@ -40,6 +42,8 @@ class ReviewClaim extends Component {
         }
     }
 
+    //update firebase db
+    //triggered after review decision
     async update(outcome){
         const {claim_info} = this.state
         const ref = firebase.database().ref(`/users/${this.state.uid}/claims/${this.state.key}/`)

@@ -28,6 +28,8 @@ class DisplayClaim extends Component {
     async componentDidMount(){
         console.log(this.state)
         try {
+            //EVENT: firebase call
+            //fetch claim information /users/<uid>/claims/claim_id
             const ref = firebase.database().ref(`/users/${firebase.auth().currentUser.uid}/claims/${this.state.id}/`)
             const claim_info = await ref.once('value')
                 .then(snapshot => {
@@ -40,15 +42,25 @@ class DisplayClaim extends Component {
         }
     }
 
+    //delete claim
     deleteClaim(){
         const { claim_info, id } = this.state
+
+        //updat firebase db
         firebase.database().ref(`/users/${firebase.auth().currentUser.uid}/claims/${id}/`).remove()
             .catch(e => console.warn(e))
+
+        //update cloud storage
+        //remove image
         firebase.storage().ref(`/uploads/${firebase.auth().currentUser.uid}/${claim_info.quote_image_id}.jpeg`).delete()
             .catch(e => console.warn(e))
+
+        //update cloud storage
+        //remove image
         firebase.storage().ref(`/uploads/${firebase.auth().currentUser.uid}/${claim_info.report_image_id}.jpeg`).delete()
             .catch(e => console.warn(e))
         
+        //navigate back to view claims
         this.props.navigation.navigate('ViewClaims')
     }
 

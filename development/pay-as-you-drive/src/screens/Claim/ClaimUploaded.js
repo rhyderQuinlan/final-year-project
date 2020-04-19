@@ -40,7 +40,7 @@ class ClaimUploaded extends Component {
             </View>
             <View style={styles.contentContainer}>
                 <View>
-                    <Text style={styles.text}>Your claim will now be reviewed and you will be able ot see the outcome of the claim in your 'My Claims' screen.</Text>
+                    <Text style={styles.text}>Your claim will now be reviewed and you will be able to see the outcome of the claim in your 'My Claims' screen.</Text>
                 </View>
 
                 <View>

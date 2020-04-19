@@ -22,6 +22,7 @@ class VehicleRegistration extends Component {
       error: ''  
     }
 
+    //populate year array going back 50 years
     const year = (new Date()).getFullYear();
     this.years = new Array()
     for (let index = 0; index < 50; index++) {
@@ -29,6 +30,8 @@ class VehicleRegistration extends Component {
     }
   }
 
+  //EVENT: firebase call
+  //add new vehicle
   async addVehicle(){
       const { currentUser } = firebase.auth()
 
@@ -38,6 +41,7 @@ class VehicleRegistration extends Component {
         type: this.state.type,
       }
 
+      //check if all required fields are filled
       if(this.vehicle.name != '' 
         && this.vehicle.year != '' 
         && this.vehicle.type != ''){
@@ -48,9 +52,11 @@ class VehicleRegistration extends Component {
         Toast.show("All fields are required")
       }
 
+      //upload new vehicle to db
       if(this.valid) {
         firebase.database().ref(`users/${currentUser.uid}/vehicles/`)
             .push(this.vehicle)
+            //navigate user to homescreen
         this.props.navigation.navigate('BottomTab')
       }
   }

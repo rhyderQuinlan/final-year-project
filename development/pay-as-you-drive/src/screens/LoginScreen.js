@@ -37,21 +37,29 @@ class LoginScreen extends Component {
    }
   
 
+   //on toggle
+   //remember user
   rememberUser = async () => {
     try {
+      //save email and password ot async storage
       await AsyncStorage.setItem('EMAIL', this.state.email);
       await AsyncStorage.setItem('PASSWORD', this.state.password);
     } catch (error) {
       console.log("async rememberMe error: " + error)
     }
-  };
+  }
+
+  //reset password
+  //call firebase reset password by email
   resetPassword(){
     firebase.auth().sendPasswordResetEmail(this.passwordChangeEmail)
       .then(() => alert("Password reset email sent"))
       .catch((error) => this.setState({error:error.message}))
   }
 
+  //sign in user
   signinUser(){
+    //compare email and password against firebase authentication
     firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then(() => {
         if(this.state.email == 'admin@payasyoudrive.com'){
           this.props.navigation.navigate('AdminOptions')
@@ -64,6 +72,7 @@ class LoginScreen extends Component {
     });
   }
 
+  //toggle remember me
   toggleRememberMe = value => {
     this.setState({ rememberMe: value })
       if (value === true) {
@@ -73,6 +82,7 @@ class LoginScreen extends Component {
     }
   }
 
+  //clear async storage
   async forgetUser(){
     try {
       await AsyncStorage.removeItem('EMAIL');

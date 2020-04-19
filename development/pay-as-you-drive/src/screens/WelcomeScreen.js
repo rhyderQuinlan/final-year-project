@@ -9,7 +9,6 @@ import {
   ImageBackground
 } from 'react-native';
 import firebase from 'firebase';
-import Toast from 'react-native-simple-toast'
 import { Icon } from 'react-native-elements'
 import _ from 'lodash'
 
@@ -36,6 +35,8 @@ class WelcomeScreen extends Component {
   }
 
   async componentDidMount(){
+    //initiate firebase connection
+    //only if the connection has not started already
     if (!firebase.apps.length) {
       firebase.initializeApp({
         apiKey: FIREBASE_APIKEY,
@@ -49,8 +50,10 @@ class WelcomeScreen extends Component {
     });
     }
     
+    //check is user is remembered
     await this.getRememberedUser();
 
+    //user logged out event listener
     firebase.auth().onAuthStateChanged((user) => {
       if (!user) {
         this.forgetUser()
@@ -58,17 +61,23 @@ class WelcomeScreen extends Component {
     });
    }
 
+   //check if user is previously remembered
   getRememberedUser = async () => {
     try {
+      //make call to async storage
       const email = await AsyncStorage.getItem('EMAIL');
       const password = await AsyncStorage.getItem('PASSWORD')
+
+      //user remembered
       if (email !== null) {
         this.setState({ email: email, password: password })
+        //authorise user
         firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then(() => {
-            Toast.show('Logging you in')
+            //admin check
             if(this.state.email == ADMIN_EMAIL){
               this.props.navigation.navigate('AdminOptions')  
             } else {
+              //direct user to homescreen
               this.props.navigation.navigate('BottomTab')  
             }      
         }).catch((error) => {
@@ -82,8 +91,10 @@ class WelcomeScreen extends Component {
     }
   }
 
+  //trigger forget user
   async forgetUser(){
     try {
+      //empty async storage
       await AsyncStorage.removeItem('EMAIL');
       await AsyncStorage.removeItem('PASSWORD')
     } catch (error) {

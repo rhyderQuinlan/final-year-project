@@ -14,7 +14,12 @@ import firebase from 'firebase';
 import ButtonComponent from '../components/ButtonComponent';
 
 class MoreScreen extends Component {
+
+    //on log out request
     logout(){
+
+        //prompt confirmation from user
+        //displays modal
         Alert.alert(
             'Logout',
             'Are you sure you would like to logout?',

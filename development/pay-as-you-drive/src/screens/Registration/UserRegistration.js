@@ -31,7 +31,8 @@ class UserRegistration extends Component {
       email: '',
       password: '',
       licence: '',
-      error: ''
+      error: '',
+       coverage: ''
     }
   }
 
@@ -39,19 +40,24 @@ class UserRegistration extends Component {
     
    }
 
+   //EVENT: firebase call
+   //create new user
   async createUser(){
     const data = await {
       email: this.state.email,
       firstname: this.state.firstname,
       lastname: this.state.lastname,
-      licence: this.state.licence
+      licence: this.state.licence,
+      coverage: this.state.coverage
     }
 
     this.valid = false
 
+    //check if all required fields are filled
     if(data.email != '' 
     && data.firstname != '' 
     && data.lastname != '' 
+    && data.licence != ''
     && data.licence != ''){
 
         this.valid = true
@@ -60,6 +66,8 @@ class UserRegistration extends Component {
       Toast.show("All fields are required")
     }
 
+    //create user
+    //return success
     if(this.valid){
       this.valid = await firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).catch((error) => { 
         this.setState({error: error.message})
@@ -67,6 +75,8 @@ class UserRegistration extends Component {
       });
     }
 
+    //login new user
+    //return success
     if (this.valid) {
       await firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then(() => {
         // this.passwordInput.clear()
@@ -76,11 +86,13 @@ class UserRegistration extends Component {
       });
     }
     
+    //upload information to db
     if (this.valid) {  
       const { currentUser } = firebase.auth();
       await firebase.database().ref(`users/${currentUser.uid}/`).set(data)
     }
 
+    //navigate to add vehicle screen
     { this.valid ? this.props.navigation.navigate('VehicleRegistration') : null}
   }
 
@@ -133,6 +145,20 @@ class UserRegistration extends Component {
             }]}
             onChangeText={(value) => this.setState({ licence: value})}
             label='Licence Status'
+          />
+
+          <DropdownInput 
+            icon='attach-money'
+            type='material'
+            data={[{
+                value: 'Third Party Insurance'
+            }, {
+                value: 'Third Party Fire & Theft'
+            }, {
+                value: 'Comprehensive'
+            }]}
+            onChangeText={(value) => this.setState({ coverage: value})}
+            label='Insurance Coverage'
           />
 
           <View>

@@ -24,6 +24,8 @@ class ClaimsScreen extends Component {
 
   async componentDidMount(){
     try {
+        //EVENT: firebase call
+        //fetch claims list
         await firebase.database().ref(`/users/`).once('value')
             .then(snapshot => {
                 var pending_list = []
@@ -33,6 +35,7 @@ class ClaimsScreen extends Component {
                         const uid = element.key
                         const user_claims = element.val().claims
                         Object.keys(user_claims).forEach(function(key) {
+                            //seperate pending and complete claims
                             if(user_claims[key].complete){
                                 complete_list.push({
                                     uid: uid,

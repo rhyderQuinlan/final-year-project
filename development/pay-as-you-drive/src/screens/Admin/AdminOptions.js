@@ -21,12 +21,17 @@ class AdminOptions extends Component {
         };
     }  
     componentDidMount(){
+        //security check
+        //make sure user is admin
+        //navigate back to log in screen if false
         if(firebase.auth().currentUser.email != 'admin@payasyoudrive.com'){
             firebase.auth().signOut()
             this.props.navigation.navigate('LoginScreen')
         }
     }
 
+    //logout admin
+    //prompt for confirmation
     logout(){
         Alert.alert(
             'Logout',

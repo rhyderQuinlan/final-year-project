@@ -14,6 +14,7 @@ class SmartContractControl extends Component {
         return(
             <View>
                 <Text>Smart Contract Control</Text>
+                <TouchableOpacity>Enroll Admin</TouchableOpacity>
             </View>
         )
     }

@@ -29,40 +29,49 @@ class EditUserDetails extends Component {
             newPassword: '',
             showchangesdialog: false,
             changepassworddialog: false,
-            error: ''
+            error: '',
+            coverage: ''
         };
     }  
     async componentDidMount(){
         const { currentUser } = firebase.auth();
-        
+
+        //EVENT: firebase call
+        //populate field placeholders from existing information on db
         firebase.database().ref(`/users/${currentUser.uid}/`).on('value', snapshot => {
             this.email = snapshot.val().email
             this.firstname = snapshot.val().firstname
             this.lastname = snapshot.val().lastname
             this.licence = snapshot.val().licence
+            this.coverage = snapshot.val().coverage
             this.setState({
                 email: this.email,
                 firstname: this.firstname,
                 lastname: this.lastname,
                 licence: this.licence,
+                coverage: this.coverage
             })
         })
     }
 
+    //event listener submit changes
     submitChanges(){
         const { currentUser } = firebase.auth();
         const {
             firstname,
             lastname,
             licence,
-            currentPassword
+            currentPassword,
+            coverage
         } = this.state
 
+        //check password entered is correct
         if(this.reauthenticate(currentPassword)){
             var Data = {
                 firstname: firstname,
                 lastname: lastname,
-                licence: licence
+                licence: licence,
+                coverage:  coverage
             }
             
             return firebase.database().ref(`/users/${currentUser.uid}/`).update(Data)
@@ -75,15 +84,19 @@ class EditUserDetails extends Component {
         }
     }
 
+    //change password modal
     changePassword = (currentPassword, newPassword) => {
+        //ceck entered password
         this.reauthenticate(currentPassword).then(() => {
           var user = firebase.auth().currentUser;
+          //firebase updatePassword function
           user.updatePassword(newPassword).then(() => {
             alert("Password changed succesfully")
           }).catch((error) => { this.setState({error}) });
         }).catch((error) => { this.setState({error}) });
       }
 
+      //compare $currentPassword to firebase auth password
     async reauthenticate(currentPassword){
         var user = firebase.auth().currentUser;
         var cred = firebase.auth.EmailAuthProvider.credential(
@@ -128,16 +141,30 @@ class EditUserDetails extends Component {
                             secureTextEntry={false}
                         />
                         <DropdownInput 
-                                icon="drivers-license-o"
-                                type="font-awesome"
-                                label={this.licence}
-                                data={[{
-                                    value: 'Full Licence'
-                                }, {
-                                    value: 'Provisional Licence'
-                                }]}
-                                onChangeText={(value) => this.setState({ licence: value})}
-                            />
+                            icon="drivers-license-o"
+                            type="font-awesome"
+                            label={this.licence}
+                            data={[{
+                                value: 'Full Licence'
+                            }, {
+                                value: 'Provisional Licence'
+                            }]}
+                            onChangeText={(value) => this.setState({ licence: value})}
+                        />
+
+                        <DropdownInput 
+                            icon='attach-money'
+                            type='material'
+                            data={[{
+                                value: 'Third Party Insurance'
+                            }, {
+                                value: 'Third Party Fire & Theft'
+                            }, {
+                                value: 'Comprehensive'
+                            }]}
+                            onChangeText={(value) => this.setState({ coverage: value})}
+                            label={this.coverage}
+                        />
                     </View>
                     <View style={{width: 250, alignSelf: 'center'}}>
                         <Text style={{textAlign: 'center', color: 'red'}}>{this.state.error}</Text>

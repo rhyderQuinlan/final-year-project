@@ -21,6 +21,8 @@ class ViewClaims extends Component {
 
   async componentDidMount(){
     try {
+        //EVENT: firebase call
+        //fetch claims list
         const claims_list = await firebase.database().ref(`/users/${firebase.auth().currentUser.uid}/claims/`).once('value')
             .then(snapshot => {
                 var temp_list = []

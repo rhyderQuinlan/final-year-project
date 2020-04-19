@@ -32,11 +32,15 @@ import JourneyOption from '../components/JourneyOption';
 
 const haversine = require('haversine')
 
+//global variables
 var db_input = {}
 var provLicence = false
 var vehicleClass = null
 var olderCar = false
+var coverage = ''
 
+//initiate geocoder api
+// with env.GEOCODER_KEY
 Geocoder.init(GEOCODER_KEY)
 
 class TrackJourney extends Component {
@@ -80,6 +84,7 @@ class TrackJourney extends Component {
         this.hasLocationPermission()
         this.getLocation()
 
+        //get database algorithm conditions
         await firebase.database().ref(`/algorithm/`).once('value')
             .then((snapshot) => {
                 db_input.distance = snapshot.val().distance
@@ -92,6 +97,9 @@ class TrackJourney extends Component {
                 db_input.age_addition = snapshot.val().age_addition
                 db_input.acceleration_conditional = snapshot.val().acceleration_conditional
                 db_input.hard_braking_penalty = snapshot.val().hard_braking_penalty
+                db_input.coverage_1 = snapshot.val().coverage_1
+                db_input.coverage_2 = snapshot.val().coverage_2
+                db_input.coverage_3 = snapshot.val().coverage_3
             })
             .catch((error) => {
                 console.log(error)
@@ -99,6 +107,8 @@ class TrackJourney extends Component {
 
         const { currentUser } = firebase.auth();
         
+        //EVENT: firebase call
+        //get user vehicle list
         firebase.database().ref(`/users/${currentUser.uid}/vehicles/`).on('value', snapshot => {
             var vehicle_list = []
             snapshot.forEach((childSub) => {
@@ -107,13 +117,18 @@ class TrackJourney extends Component {
             this.setState({vehiclelist: vehicle_list})
         })
 
+        //EVENT: firebase call
+        //get licence variable
+        //get coverage variable
         firebase.database().ref(`users/${currentUser.uid}/`).once('value').then(snapshot => {
             if(snapshot.val().licence == 'Provisional Licence'){
                 provLicence = true
             }
+            coverage = snapshot.val().coverage
         })
     }
     
+    //run permission check
     hasLocationPermission = async () => {
         if (Platform.OS === 'ios' ||
             (Platform.OS === 'android' && Platform.Version < 23)) {
@@ -124,14 +139,18 @@ class TrackJourney extends Component {
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
         );
     
+        //has permission already
         if (hasPermission) return true;
     
+        //prompt permission request
         const status = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
         );
     
+        //permission granted
         if (status === PermissionsAndroid.RESULTS.GRANTED) return true;
     
+        //permission denied
         if (status === PermissionsAndroid.RESULTS.DENIED) {
             Toast.show('Location permission denied by user.', Toast.LONG);
         } else if (status === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN) {
@@ -141,6 +160,7 @@ class TrackJourney extends Component {
         return false;
     }
 
+    //run one location update
     getLocation = async () => {
         const hasLocationPermission = await this.hasLocationPermission();
     
@@ -158,6 +178,8 @@ class TrackJourney extends Component {
                         longitude: position.coords.longitude 
                     } 
                 });
+                //get journey starting address
+                //stored in $address
               Geocoder.from(position.coords.latitude, position.coords.longitude)
                 .then(json => {
                     const json_address = json.results[0].address_components
@@ -177,11 +199,14 @@ class TrackJourney extends Component {
         });
     }
 
+    //start stream - fetch location updates
+    //trigger - geolocation.watchPosition
     getLocationUpdates = async () => {
         const hasLocationPermission = await this.hasLocationPermission();
     
         if (!hasLocationPermission) return;
     
+        //on location change
         this.setState({ updatesEnabled: true }, () => {
           this.watchId = navigator.geolocation.watchPosition(
             (position) => {
@@ -218,6 +243,7 @@ class TrackJourney extends Component {
                   acceleration: acceleration
               })
 
+              //update cost total
               this.calcCost(this.state.distanceTravelled, acceleration)
             },
             (error) => {
@@ -229,6 +255,8 @@ class TrackJourney extends Component {
         });
     }
 
+    //stop location stream
+    //trigger - geolocation.clearWatch
     removeLocationUpdates = () => {
         if (this.watchId !== null) {
             navigator.geolocation.clearWatch(this.watchId);
@@ -241,8 +269,12 @@ class TrackJourney extends Component {
         this.currentTime = time;
     };
 
+    //start journey event
     startJourney() {
         const { prevCoords  } = this.state
+
+        //start stopwatch
+        //hide countdown
         this.setState({
             running: true, 
             stopwatchStart: true, 
@@ -250,6 +282,7 @@ class TrackJourney extends Component {
             showCountdown: false, 
         })
 
+        //make single location call
         this.getLocation()
 
         //check driving time is unsafe
@@ -291,15 +324,18 @@ class TrackJourney extends Component {
             olderCar = true
         }
 
+        //start location stream
         this.getLocationUpdates()
     }
 
+    //end journey event
     endJourney() {
+        //stop tracking location
         this.removeLocationUpdates()
 
         const duration = this.currentTime;
         const distance = Number(this.state.distanceTravelled).toFixed(3);
-        const cost_total = Number(this.calcCost(distance, 0));
+        const cost_total = Number(this.calcCost(distance, 0)); //get final cost
         const nightdrive = this.state.nightdrive
         const address = this.state.address
         const vehiclename = this.state.vehiclename
@@ -310,6 +346,7 @@ class TrackJourney extends Component {
         const month = new Date().getMonth()
         const year = new Date().getFullYear()
 
+        //turn hour date month year into human friendly string
         const humanized_string = this.humanizeDate(hours, date, month);
 
         const billing_month = this.state.billing_month
@@ -317,6 +354,7 @@ class TrackJourney extends Component {
         const date_string = `${date}/${month}/${year}`
         this.journeyCreate(address, distance, duration, cost_total, date_string, humanized_string, nightdrive, vehiclename, vehiclekey, billing_month);
         
+        //reset variables
         this.setState({
             distanceTravelled: 0,
             speed: 0,
@@ -331,6 +369,7 @@ class TrackJourney extends Component {
         });
     }
 
+    //update current cost state
     calcCost(distance, acceleration){
         //driving after sunset or before sunrise multiplier (percentage %)
         var nightdrive_addition = 0
@@ -380,32 +419,59 @@ class TrackJourney extends Component {
         //distance multiplier (cents/km)
         const distance_addition = distance * db_input.distance / 100
 
-        const total = distance_addition + nightdrive_addition + vehicletype_addition + licence_addition + age_addition + hardBrakingPenalty
+        var total = distance_addition + nightdrive_addition + vehicletype_addition + licence_addition + age_addition + hardBrakingPenalty
+
+        //multiply total by insurance plan
+        switch (coverage) {
+            case 'Third Party Insurance':
+                total = total * db_input.coverage_1
+                break;
+            case 'Third Party Fire & Theft':
+                total = total * db_input.coverage_2
+                break;
+            case 'Comprehensive':
+                total = total * db_input.coverage_3
+                break;
+            default:
+                console.warn('ERROR: Coverage type error in calculation')
+                break;
+        }
+
+        //update current total
         this.setState({journeyCost: total})
         return total.toFixed(2)
     }
 
+    //return spped in km/hr
     calcSpeed(prevTimestamp, newTimestamp, distance) {
+        //get delta time in milliseconds
         const unix_time = new Date(newTimestamp).getTime() - new Date(prevTimestamp).getTime()
     
         var speed = 0
         if(distance != 0){
+            //speed = distance / time
             speed = distance / ((((unix_time)/1000)/60)/60) //convert to km/hr
         }
 
         return speed
     }
 
+    //return distance in km
     calcDistance(start, end){
+        //distance = difference in longitude and latitude
+        //using haversine algorithm
         const distance = haversine(start, end, {unit: 'km'}) || 0
         return distance
     }
 
+    //return acceleration in m/s^2
     calcAcceleration(v_0, v, t){
-        // console.info('---\nv: ' + v + '\nv_0: ' + v_0 + '\nt: ' + t)
+        //acceleration = v/seconds - v_0/seconds / time elapsed
         return ((v/3.6) - (v_0/3.6))/t
     }
 
+    //EVENT: firebase call
+    //push new journey to db
     journeyCreate(address, distance, duration, cost_total, date, humanized_date, nightdrive, vehiclename, vehiclekey, billing_month){
         const data = {
             address: address,
@@ -425,6 +491,7 @@ class TrackJourney extends Component {
             .push(data)
     }
 
+    //return human firendly date string
     humanizeDate(hours, date, month){
         switch (hours > 12) {
             case true:
@@ -497,6 +564,7 @@ class TrackJourney extends Component {
         this.setState({showCountdown: true});
     }
 
+    //cancel journey
     cancelPressed() {
         this.setState({
             showCountdown: false
@@ -646,6 +714,31 @@ class TrackJourney extends Component {
                                     ):(
                                         null
                                     )}
+
+                                    {
+                                        coverage == 'Third Party Insurance' ? (
+                                            <JourneyOption 
+                                                icon='attach-money'
+                                                type='material'
+                                                text={coverage}
+                                                addition={null}
+                                            />
+                                        ) : coverage == 'Third Party Fire & Theft' ? (
+                                            <JourneyOption 
+                                                icon='attach-money'
+                                                type='material'
+                                                text={coverage}
+                                                addition={null}
+                                            />
+                                        ) : coverage == 'Comprehensive' ? (
+                                            <JourneyOption 
+                                                icon='attach-money'
+                                                type='material'
+                                                text={coverage}
+                                                addition={null}
+                                            />
+                                        ) : ( null )
+                                    }
 
                                     { hardBraking ? (
                                         <View style={{flexDirection: "row", justifyContent: 'space-evenly', paddingVertical: '2%'}}>

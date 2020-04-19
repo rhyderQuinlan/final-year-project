@@ -9,19 +9,9 @@ import {
     RefreshControl,
     ActivityIndicator
 } from 'react-native';
-import LineChart from "react-native-responsive-linechart";
 import firebase from 'firebase';
 import humanize from 'humanize-plus';
 import Toast from 'react-native-simple-toast';
-
-// import {
-//     LineChart,
-//     BarChart,
-//     PieChart,
-//     ProgressChart,
-//     ContributionGraph,
-//     StackedBarChart
-//   } from 'react-native-chart-kit';
 
 import Journey from '../components/Journey'
 import { ScrollView, FlatList } from 'react-native-gesture-handler';
@@ -44,6 +34,7 @@ class HomeScreen extends Component {
     async componentDidMount(){
         const { currentUser } = firebase.auth()
         try {
+            //fetch user information /users/<uid>
             const ref = firebase.database().ref(`/users/${currentUser.uid}`)
             const user_info = await ref.once('value')
                 .then(snapshot => {
@@ -57,14 +48,17 @@ class HomeScreen extends Component {
 
         try {
             var amount = 0
+            //fetch past journeys /users/<uid>/journeys
             const db_list = await firebase.database().ref(`/users/${currentUser.uid}/journeys/`).once('value')
                 .then(snapshot => {
                     var journey_list = []
                     var currentMonth = this.humanizedMonth(new Date().getMonth())
                     snapshot.forEach((childSub) => {
+                        //calculate cost for this month
                         if(currentMonth == childSub.val().billing_month){
                             amount = amount + childSub.val().cost
                         }
+                        //push journey to list
                         journey_list.push(childSub.val())
                     })
         
@@ -80,20 +74,13 @@ class HomeScreen extends Component {
     
     }
 
-    // buildAnalytics(){
-    //     const { currentUser } = firebase.auth();
-    //     firebase.database().ref(`/users/${currentUser.uid}/journeys/`).on('value', snapshot => {
-    //         snapshot.forEach((childSub) => {
-    //             console.log(childSub.val())
-    //         })
-    //         this.setState({totalAmount: amount})
-    //     })
-    // }
-
+    //event listener
+    //on user refresh list
     async refreshList(){
         const { currentUser } = firebase.auth()
         try {
             var amount = 0
+            //fetch db journeys list
             const db_list = await firebase.database().ref(`/users/${currentUser.uid}/journeys/`).once('value')
                 .then(snapshot => {
                     var journey_list = []
@@ -116,10 +103,12 @@ class HomeScreen extends Component {
         }
     }
 
+    //build Journey component
     renderJourney(distance, cost){
         return <Journey distance={distance} cost={cost} />
     }
 
+    //return human friendly month string
     humanizedMonth(month){
         switch (month) {
             case 0:

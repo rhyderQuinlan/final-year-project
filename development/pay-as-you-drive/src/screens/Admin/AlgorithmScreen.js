@@ -42,6 +42,7 @@ class AdminScreen extends Component {
       }
 
     componentDidMount(){
+        //fetch firebase algorithm conditions
         firebase.database().ref(`/algorithm/`).once('value').then((snapshot) => {
             this.distance = snapshot.val().distance
             this.nightdrive = snapshot.val().nightdrive_multiplier
@@ -69,6 +70,7 @@ class AdminScreen extends Component {
         })
     }
 
+    //event listener
     submitChanges(){
         const { currentUser } = firebase.auth();
         const {
@@ -101,6 +103,7 @@ class AdminScreen extends Component {
           updates[`/algorithm/`] = Data;
           console.log(Data)
         
+          //update firebase /algorithms/ db
           return firebase.database().ref().update(updates)
             .then(result => {
                 alert('Changes submitted succesfully...')
