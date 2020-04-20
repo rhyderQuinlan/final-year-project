@@ -1,23 +1,30 @@
-import React, { Component, useState, useEffect } from 'react';
-import {
-    View,
-    Text,
-    StyleSheet,
-    Dimensions,
-    PermissionsAndroid,
-    Platform,
-    TouchableOpacity
-} from 'react-native';
+import React from "react";
+import { Button, View, Text, Form, NativeInput, StatusBar, AsyncStorage, Alert, StyleSheet, ActivityIndicator } from "react-native";
 
-class SmartContractControl extends Component {
-    render(){
-        return(
-            <View>
-                <Text>Smart Contract Control</Text>
-                <TouchableOpacity>Enroll Admin</TouchableOpacity>
-            </View>
-        )
-    }
+export default class SmartContractControl extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {  
+      key: '', 
+      address:'', 
+      wallet:'',
+    };
+  }
+
+  render() {
+    return (
+        <View>
+          <Text>This section is related to the Peer 2 Peer network coming in future iterations.</Text>
+        </View>
+          
+    )
+  }
 }
 
-export default SmartContractControl;
+const styles = StyleSheet.create({
+  root: {
+    width: '90%',
+    alignSelf: 'center',
+    margin:10,
+  },
+});
